@@ -1,0 +1,58 @@
+
+
+
+.ios, .md{
+    page-by-lead-payment {
+      .topArrow{
+        font-size: 2.5rem;
+        color:white;
+        padding-top:5px;
+      }  
+      .toprightArrow{
+        font-size: 1.6rem;
+        color:white;
+        padding-top:15px;
+      }  
+      ion-item{
+        padding: 5px !important;
+        margin-top:2px !important;
+      }
+      .list{
+                margin: 5px !important;
+
+      }
+      .lable{
+        margin: 0px !important;
+      }
+      ion-card{
+        background: white;
+        text-align: justify;
+        ion-item{
+            background: white;
+            padding: 0px !important;
+        }
+        .col-primary{
+            color: map-get($colors, primary);
+        }
+        .col-secondary{
+            color: map-get($colors, secondary);
+        }
+        .item-md.item-block .item-inner {
+            border-bottom: 1px solid #dedede !important;
+        }
+        .invalidMessage{
+            color: #DC1f26;
+        }
+        .input-cover{
+            display: none;
+        }
+        ion-row{
+            margin-top:3px;
+            padding: 0px;
+            ion-col{
+                padding: 0px !important;
+            }
+         }
+    }
+    }
+}

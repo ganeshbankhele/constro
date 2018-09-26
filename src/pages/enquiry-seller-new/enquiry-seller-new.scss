@@ -1,0 +1,40 @@
+.ios, .md {
+    page-enquiry-seller-new {
+     ion-card{
+         background: white;
+         //text-align: justify;
+         ion-item{
+             background: white;
+         }
+         .col-primary{
+             color: map-get($colors, primary);
+         }
+         .col-secondary{
+             color: map-get($colors, secondary);
+         }
+          div{
+             padding: 5px;
+         }
+         .padd-zero{padding: 0px!important}
+         .padd-top-bottom-zero{padding-top: 0px!important;padding-bottom: 0px!important}
+         .col-danger{color: map-get($colors, danger);}
+         
+     }
+     ion-list{
+         ion-item{
+             background: white !important;
+             padding:0px 5px 0px 5px !important;
+             ion-avatar{
+                 img{
+                     width: 55px !important;
+                     height: 55px !important;
+                 }
+             } 
+         }
+     }
+        
+     }
+ 
+ }
+ 
+ 

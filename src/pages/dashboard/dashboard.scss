@@ -1,0 +1,36 @@
+.ios, .md{
+    page-dashboard {
+
+       
+
+        ion-card{
+            background: white;
+            ion-item{
+                background: white;
+            }
+            .col-secondary{
+                color: map-get($colors, secondary);
+            }
+            ion-fab{
+                float:right;
+            }
+            .thumb-img{
+                width: 100%;
+                height:14rem;
+              // border:1px solid #edeeee
+            }
+            ion-col{
+                padding: 5 !important;
+            }
+            .datetime{
+                padding: 0px 8px 2px 16px !important;
+                border-bottom:1px solid #969696;
+            }
+          ion-card-content{
+              padding: 0px !important;
+          }
+        }   
+      
+    }
+    
+}

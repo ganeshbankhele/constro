@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Products/Services</ion-title>
+</ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-card [ngClass]="{'margin-top-0':i === 0}" *ngFor="let data of cat_short_data;let i=index;">
+    <ion-card-content>
+      <ion-row class="margin-top-0 padding-0">
+        <ion-col col-10>
+            {{data.product_name}}
+        </ion-col>
+          <ion-col col-1 class="text-center font-size-2" (click)="pushPage('CatPrdeditPage')">
+              <fa-icon name="pencil"></fa-icon>
+          </ion-col>
+        <ion-col col-1 class="text-center font-size-2" (click)="presentActionSheet()">
+          <fa-icon name="ellipsis-v"></fa-icon>
+        </ion-col>
+      </ion-row>
+      <ion-row class="margin-top-0 padding-0">
+        <ion-col col-4 class="padding-0">
+          <img [src]="data.product_image" />
+        </ion-col>
+        <ion-col col-8 class="padding-0">
+          <ion-row class="margin-top-0 padding-0">
+            <ion-col class="padding-0" col-7 class="col-title-head">
+              <div class="padding-top-10">Product Availability :</div>
+            </ion-col>
+            <ion-col class="padding-0" col-5>
+              <ion-item class="bg-white">
+                <ion-toggle></ion-toggle>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-row class="margin-top-0">
+            <ion-col col-7 class="col-title-head padding-0">Order Quantity :</ion-col>
+            <ion-col col-5 class="padding-0 text-center">
+                {{data.order_qty}}
+            </ion-col>
+          </ion-row>
+          <ion-row class="">
+            <ion-col class="padding-0 col-title-head">
+              Price Range :
+            </ion-col>
+            <ion-col class="padding-0">
+                {{data.price_range}}
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row class="padding-0">
+        <ion-col class="padding-0 col-title-head">
+          Delivery location :
+        </ion-col>
+      </ion-row>
+      <ion-row class="padding-0">
+        <ion-col class="padding-0">
+          1) Pune (Maharashtra 413003)
+          <br /> 2) Satara (Maharashtra 415002)
+          <br /> 3) Kolhapur (Maharashtra 415012)
+          <br />
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  
+</ion-content>

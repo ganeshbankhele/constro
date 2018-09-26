@@ -1,0 +1,33 @@
+.ios, .md{
+page-request-history {
+    .buyer{
+        background:#e1ffc7;
+        border-radius: 24px 0px 24px 24px;
+        border:1px solid #bdec90;
+        width:95%;float:right;
+        margin-right:3px;
+        height:auto;
+    }
+    .seller{
+        background:white;
+        border:1px solid rgb(221, 217, 217);
+        width:95%;
+        border-radius: 0px 24px 24px 24px;      
+        float:left;
+        margin-left:3px;
+        margin-top:10px;
+        height:auto;
+    }
+  
+    .close{
+        background:rgb(250, 202, 202);
+        border:1px solid rgb(255, 215, 215);
+        width:95%;
+        border-radius: 0px 24px 24px 24px;       
+        float:left;
+        margin-left:3px;
+        margin-top:10px;
+        height:auto;  
+    }
+}
+}

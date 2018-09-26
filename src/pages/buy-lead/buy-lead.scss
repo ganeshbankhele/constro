@@ -1,0 +1,33 @@
+.ios, .md {
+    page-buy-lead {
+        .tabbar{
+            background: map-get($colors, primary) !important;
+         box-shadow:0 8px 6px -6px rgba(8, 112, 102, 0.3);
+         margin-top:-2px;
+          // border:1px solid map-get($colors, primary) !important;
+         }
+         // .tab-button-text{
+         //     color: rgba(255, 255, 255, 0.7) !important;
+         // }
+         .tab-button-text[aria-selected=true]{
+             font-weight: bold
+         }
+         .tab-button{
+             min-height: 5rem;
+         }
+         .tab-button[aria-selected=false]{
+             color:rgba(255, 255, 255, 0.5) !important;
+             font-weight: bold
+         }
+         .tab-button[aria-selected=true]{
+             color:rgba(255, 255, 255, 1) !important;
+             font-weight: bold
+         }
+         .tab-highlight{
+             background:#fff !important;
+             min-height: 4px;
+            
+        }
+    }
+}   
+

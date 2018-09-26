@@ -1,0 +1,342 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <ion-title>Request History
+            <span class="font-size-1">Buyer</span>
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content #content>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher>
+    <div *ngFor="let his of responseHistory;let in=index">
+        <div *ngIf="his.flag=='buyer' && his.type=='getQuote'" class="buyer margin-top-10">
+            <div style="padding:5px;">
+                <ion-row>
+                    <ion-col col-auto style="color:green">
+                        <b>You</b>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-auto>
+                        <b>Product Name : </b>
+                    </ion-col>
+                    <ion-col> {{toHTML(his.productName)}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-auto>
+                        <b>Variant Name : </b>
+                    </ion-col>
+                    <ion-col>{{toHTML(his.variantName)}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-auto>
+                        <b>Qty :</b>
+                    </ion-col>
+                    <ion-col>{{his.quantity}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-auto>
+                        <b>End Date : </b>
+                    </ion-col>
+                    <ion-col>{{his.lastingDate}}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="his.creditDays!=''">
+                    <ion-col col-auto>
+                        <b>Credit Days : </b>
+                    </ion-col>
+                    <ion-col>{{his.creditdays}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-auto>
+                        <b>Location : </b>
+                    </ion-col>
+                    <ion-col>{{his.location}}</ion-col>
+                </ion-row>
+                <p class="padding-5 margin-0" *ngIf="his.specification!=''">
+                    <b>Specifications :</b>
+                    <!-- <span *ngIf="!his.showSpecification">{{ toHTML(his.specification) | truncate }}</span>
+                    <span *ngIf="his.showSpecification">{{ toHTML(his.specification) | truncate:2000 }}</span> -->
+                     {{toHTML(his.specification)}} 
+                    <!-- <u class="col-link" *ngIf="!his.showSpecification" (click)="readsp(his)">Read More</u>
+                    <u class="col-link" *ngIf="his.showSpecification" (click)="readsp(his)">Read Less</u> -->
+                </p>
+                <ion-row *ngIf="his.sampleVisitAddress!=''">
+                    <ion-col col-auto>
+                        <b>Sample Visit Address : </b>
+                    </ion-col>
+                    <ion-col>{{ toHTML(his.sampleVisitAddress) }}</ion-col>
+                </ion-row>
+                <ion-row class="col-title-head text-right">
+                    <ion-col> Quote Req. On : {{his.receivedOn}}</ion-col>
+                </ion-row>
+            </div>
+        </div>
+
+
+        <div *ngIf="his.flag=='seller'" class="seller">
+            <div style="padding:5px;">
+                <ion-row>
+                    <ion-col col-auto style="color:green">
+                        <b>Seller</b>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-auto>
+                        <b>Qty : </b>
+                    </ion-col>
+                    <ion-col>{{his.quantity}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-auto>
+                        <b>Unit Cost : </b>
+                    </ion-col>
+                    <ion-col>
+                        <fa-icon name="inr"></fa-icon> {{his.unitCost}}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="his.taxApplied.length != 0">
+                    <ion-col col-auto>
+                        <b>Tax : </b>
+                    </ion-col>
+                    <ion-col>
+                        <span *ngFor="let tax of his.taxApplied;let i=index">
+                            <span *ngIf="i!=0">,
+                                <br />
+                            </span>
+                            <fa-icon name="inr"></fa-icon> {{tax.taxAmount}} ( {{tax.taxPercentage}} % {{tax.taxTitle}} )
+                        </span>
+                    </ion-col>
+
+                </ion-row>
+                <ion-row *ngIf="his.discount != 0">
+                    <ion-col col-auto>
+                        <b>Discount :</b>
+                    </ion-col>
+                    <ion-col> {{his.discount}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-auto>
+                        <b>Total Amount :</b>
+                    </ion-col>
+                    <ion-col>
+                        <fa-icon name="inr"></fa-icon> {{his.totalAmount}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-auto>
+                        <b>Quote Validity : </b>
+                    </ion-col>
+                    <ion-col> {{his.quoteValidityDate}}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="his.creditDays!=''">
+                    <ion-col col-auto>
+                        <b>Credit Days : </b>
+                    </ion-col>
+                    <ion-col> {{his.creditDays}}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="his.isFinalQuote!=''">
+                        <ion-col col-auto>
+                            <b>Is Final Quote : </b>
+                        </ion-col>
+                        <ion-col> {{his.isFinalQuote}}</ion-col>
+                    </ion-row>
+                <p class="padding-5 margin-0" *ngIf="his.termsAndCondition!=''">
+                    <b>Terms & Conditions :</b>
+                    {{ toHTML(his.termsAndCondition) }}
+                    <!-- <span *ngIf="!his.termsShow">{{his.termsAndCondition | truncate }}</span>
+                    <span *ngIf="his.termsShow">{{his.termsAndCondition | truncate:2000 }}</span> -->
+                    <!-- <u class="col-link" *ngIf="!his.termsShow" (click)="read(his)">Read More</u>
+                    <u class="col-link" *ngIf="his.termsShow" (click)="read(his)">Read Less</u> -->
+                </p>
+                <ion-row class="col-title-head text-right">
+                    <ion-col> Response Recv. On : {{his.receivedOn}}</ion-col>
+                </ion-row>
+
+                <ion-row *ngIf="his.responseId==buttonStatus.responseId && buttonStatus.rfqClose==''">
+                    <ion-col *ngIf="buttonStatus.isFinale=='No' && buttonStatus.isPo=='0'">
+                        <button ion-button block (click)="reviseQuote(his.rfqProLineId)">Revise Quote</button>
+                    </ion-col>
+                    <ion-col *ngIf="buttonStatus.isPo=='0'">
+                        <button ion-button block (click)="purchaseOrder(his.rfqProLineId)">Purchase Order</button>
+                    </ion-col>
+                </ion-row>
+            </div>
+        </div>
+
+
+        <div *ngIf="his.flag=='buyer' && his.type=='revisedQuote'" class="buyer margin-top-10">
+            <div style="padding:5px;">
+                <ion-row>
+                    <ion-col col-auto style="color:green">
+                        <b>You</b>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-auto>
+                        <b>Qty : </b>
+                    </ion-col>
+                    <ion-col>{{his.quantity}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-auto>
+                        <b>Unit Cost : </b>
+                    </ion-col>
+                    <ion-col>
+                        <fa-icon name="inr"></fa-icon> {{his.unitCost}}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="his.taxApplied.length != 0">
+                    <ion-col col-auto>
+                        <b>Tax : </b>
+                    </ion-col>
+                    <ion-col>
+                        <span *ngFor="let tax of his.taxApplied;let i=index">
+                            <span *ngIf="i!=0">,
+                                <br />
+                            </span>
+                            <fa-icon name="inr"></fa-icon> {{tax.taxAmount}} ( {{tax.taxPercentage}} % {{tax.taxTitle}} )
+                        </span>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="his.discount != ''">
+                    <ion-col col-auto>
+                        <b>Discount :</b>
+                    </ion-col>
+                    <ion-col> {{his.discount}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-auto>
+                        <b>Total Amount :</b>
+                    </ion-col>
+                    <ion-col>
+                        <fa-icon name="inr"></fa-icon> {{his.totalAmount}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-auto>
+                        <b>Quote Validity : </b>
+                    </ion-col>
+                    <ion-col> {{his.quoteValidityDate}}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="his.creditDays!=''">
+                    <ion-col col-auto>
+                        <b>Credit Days : </b>
+                    </ion-col>
+                    <ion-col> {{his.creditDays}}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="his.sampleVisitAddress!=''">
+                    <ion-col col-auto>
+                        <b>Sample Visit Addr. : </b>
+                    </ion-col>
+                    <ion-col>{{ toHTML(his.sampleVisitAddress) }}</ion-col>
+                </ion-row>
+                <p class="padding-5 margin-0" *ngIf="his.termsAndCondition!=''">
+                    <b>Terms & Conditions :</b>
+                    {{ toHTML(his.termsAndCondition) }}
+                    <!-- <span *ngIf="!his.termsShow">{{his.termsAndCondition | truncate }}</span>
+                    <span *ngIf="his.termsShow">{{his.termsAndCondition | truncate:2000 }}</span>
+                    <u class="col-link" *ngIf="!his.termsShow" (click)="read(his)">Read More</u>
+                    <u class="col-link" *ngIf="his.termsShow" (click)="read(his)">Read Less</u> -->
+                </p>
+                <ion-row class="col-title-head text-right">
+                    <ion-col> Response Recv. On : {{his.receivedOn}}</ion-col>
+                </ion-row>
+            </div>
+        </div>
+
+        <div class="buyer margin-top-10" *ngIf="his.flag=='po' && his.responseId==buttonStatus.responseId &&  buttonStatus.isPo=='1'">
+            <div style="padding:5px;">
+                <ion-row>
+                    <ion-col col-auto style="color:green">
+                        <b>You - Purchase Order</b>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-auto>
+                        <b>Qty : </b>
+                    </ion-col>
+                    <ion-col>{{his.quantity}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-auto>
+                        <b>Unit Cost : </b>
+                    </ion-col>
+                    <ion-col>
+                        <fa-icon name="inr"></fa-icon> {{his.unitCost}}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="his.taxApplied.length != 0">
+                    <ion-col col-auto>
+                        <b>Tax : </b>
+                    </ion-col>
+                    <ion-col>
+                        <span *ngFor="let tax of his.taxApplied;let i=index">
+                            <span *ngIf="i!=0">,
+                                <br />
+                            </span>
+                            <fa-icon name="inr"></fa-icon> {{tax.taxAmount}} ( {{tax.taxPercentage}} % {{tax.taxTitle}} )
+                        </span>
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="his.discount != ''">
+                    <ion-col col-auto>
+                        <b>Discount :</b>
+                    </ion-col>
+                    <ion-col> {{his.discount}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-auto>
+                        <b>Total Amount :</b>
+                    </ion-col>
+                    <ion-col>
+                        <fa-icon name="inr"></fa-icon> {{his.totalAmount}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-auto>
+                        <b>Quote Validity : </b>
+                    </ion-col>
+                    <ion-col> {{his.quoteValidityDate}}</ion-col>
+                </ion-row>
+                <ion-row *ngIf="his.creditDays!=''">
+                    <ion-col col-auto>
+                        <b>Credit Days : </b>
+                    </ion-col>
+                    <ion-col> {{his.creditDays}}</ion-col>
+                </ion-row>
+
+                <p class="padding-5 margin-0" *ngIf="his.termsAndCondition!=''">
+                    <b>Terms & Conditions :</b>
+                    {{ toHTML(his.termsAndCondition) }}
+                    <!-- <span *ngIf="!his.termsShow">{{his.termsAndCondition | truncate }}</span>
+                    <span *ngIf="his.termsShow">{{his.termsAndCondition | truncate:2000 }}</span>
+                    <u class="col-link" *ngIf="!his.termsShow" (click)="read(his)">Read More</u>
+                    <u class="col-link" *ngIf="his.termsShow" (click)="read(his)">Read Less</u> -->
+                </p>
+                <ion-row class="col-title-head text-right">
+                    <ion-col> Order Placed On : {{his.receivedOn}}</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col>
+                        <button ion-button block (click)="viewPoDetails(his.poId)">View Details</button>
+                    </ion-col>
+                </ion-row>
+            </div>
+        </div>
+
+        <!-- <div class="buyer margin-top-10" style="padding:15px" *ngIf="his.responseId==buttonStatus.responseId && his.flag=='seller' && buttonStatus.isPo=='1'">
+                    <div style="padding:5px;">
+                        <span *ngIf="his.sellerId==buttonStatus.poToYou"> PO Sent To This Seller By You.</span>
+                        <span *ngIf="his.sellerId!=buttonStatus.poToYou"> You Sent PO To Other Seller</span>
+                    </div>
+                </div> -->
+
+        <div class="seller margin-top-10" style="padding:15px" *ngIf="his.responseId==buttonStatus.responseId && his.flag=='oa' && buttonStatus.oa!='' && his.sellerId==buttonStatus.poToYou">
+            <div style="padding:5px;">
+                <span> Order Confirmation Received On {{his.receivedOn}}</span>
+            </div>
+        </div>
+
+    </div>
+    <div class="close margin-top-10" *ngIf="responseHistory.length != 0 && buttonStatus.rfqClose!=''">
+        <div style="padding:5px">
+            RFQ Closed By You, For This Reason {{buttonStatus.rfqCloseReason}}
+        </div>
+    </div>
+</ion-content>

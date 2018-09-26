@@ -1,0 +1,14 @@
+<ion-content padding class="bg-white">
+    <br />
+    <br />
+    <!-- <ion-icon name="arrow-back" style="font-size: 2em;" (click)="back()"></ion-icon> -->
+    <br />
+    <br />
+  <div padding>
+      <h2>What's New</h2>
+      <p *ngFor="let msg of message">
+        {{msg.message}}
+      </p>
+  </div>
+  <button ion-button block (click)="update()">Update</button>
+</ion-content>

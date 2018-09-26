@@ -1,0 +1,232 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle (click)="closeSearchBar()">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{title}}</ion-title>
+    <ion-buttons end>
+      <button id="notification-button" ion-button clear (click)="openNotification('NotificationPage')">
+          <ion-icon name="notifications" style="font-size: 1.8em">
+            <ion-badge id="notifications-badge" color="danger" *ngIf="note.notificationCounterForAll != 0">{{note.notificationCounterForAll}}</ion-badge>
+          </ion-icon>              
+      </button>
+      <button ion-button clear (click)="search_tool(sP.showSearchbar)">
+        <ion-icon *ngIf="sP.showSearchbar==false" name="md-search" style="font-size: 1.8em"></ion-icon>
+        <ion-icon *ngIf="sP.showSearchbar==true" name="close" style="font-size: 1.8em"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+  <ion-toolbar color="primary" *ngIf="sP.showSearchbar">
+      <ion-grid style="color:white;border-bottom:1px solid #fff;padding:0px !important">
+        <ion-row>
+          <ion-col col-6 style="padding:0px !important">
+            <ion-label class="padding-left-5">Search By</ion-label>
+          </ion-col>
+          <ion-col col-6 style="padding:0px !important">
+            <ion-select #C interface="popover" (ionChange)="sP.changeSelect(C.value)" style="max-width: 100% !important;">
+              <ion-option *ngFor="let sel of sP.searchSelect" [value]="sel.type" [selected]="sel.status">{{sel.type}}</ion-option>
+            </ion-select>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-input class="padding-left-5" value="{{sP.product_text}}" (click)="productSearch()" style="color:white;border-bottom:1px solid #fff;"
+        clearInput type="text" placeholder="Product Or Service"></ion-input>
+      <ion-input class="padding-left-5" value="{{sP.location}}" (click)="locationSearch()" style="color:white;border-bottom:1px solid #fff;margin-top:2px"
+        clearInput type="text" placeholder="Delivery Location"></ion-input>
+      <button [@heroState]="state" ion-button block color="bg" (click)="setSearch(sP.product_text,sP.location)">Search</button>
+    </ion-toolbar>
+</ion-header>
+<ion-content style="margin-top:2px" class="has-header">
+  <!-- <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher> -->
+  <ion-card class="animated fadeIn item-remove-animate" *ngFor="let data of product_data;let i =index;">
+    <ion-card-content>
+      <div *ngIf="data.displaySimilar == 1 && resultFoundmsg=='' ">
+          <div class="clearfix"></div>
+          <div class="pull-left" class="norecords" style="width:95%">
+              SIMILAR {{this.SearchForType | uppercase}}
+          </div>
+          <div class="clearfix"></div>
+      </div>
+      <ion-row>
+        <ion-col col-11 class="span-head">
+          <span (click)="openCompanyPage(data.Variant_List[0].catId,data.Variant_List[0].subCatId,data.Variant_List[0].seller_product_id)">
+            <b> {{data.Company_Name | sliceWord:35 }} </b>
+            <span class="col-title-head padding-0">
+              ({{data.Seller_Type}})
+            </span>
+          </span>
+        </ion-col>
+        <ion-col col-1 class="text-center">
+          <ion-checkbox [(ngModel)]="selectedCheck[i]" [checked]="selectedCheck[i]" (click)="chkOpen(data,i);" color="primary"></ion-checkbox>
+        </ion-col>
+      </ion-row>
+      <ion-row class="margin-top-0" *ngIf="selectedCheck[i] && data.selectedSeller!= 0">
+        <ion-col class="text-right">
+          <span style="color:green"> {{ data.selectedSeller }} Selected </span>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-4>
+          <img width="95rem" height="95rem !important" src="{{data.thumbnail_image_url}}" />
+        </ion-col>
+        <ion-col col-8>
+          <ion-row class="margin-top-0">
+            <ion-col>
+              <span class=" font-size-1-5">{{data.Generic_Product_Name}}</span>
+              <span class=" font-size-1-2 col-title-head" *ngIf="data.Variant_List.length == 1 && data.Generic_Product_Name!=data.Variant_List[0].Variant_Name">
+                {{ data.Variant_List[0].Variant_Name }}
+              </span>
+              <span class=" font-size-1-2 col-title-head" *ngIf="data.Variant_List.length != 1 && data.Generic_Product_Name!=data.Variant_List[0].Variant_Name"
+                (click)="presentProfileModal(data.Variant_List,i)">
+                {{ data.Variant_List[0].Variant_Name }} <span *ngIf="data.Variant_List.length > 1" style="color:blue">
+                    <br /> {{data.Variant_List.length - 1}} more</span>
+              </span>
+              <br />
+              <div class="icons">
+                <span *ngIf="data.Package_Type=='Basic'" class="padding-right-5 ">
+                  <img [src]="data.subscriptionImg" style="width:18px;height:18px" (click)="showInfo('Basic Seller')" />
+                </span>
+                <span *ngIf="data.Package_Type=='Standard'" class="padding-right-5">
+                  <img [src]="data.subscriptionImg" style="width:18px;height:18px" (click)="showInfo('Standard Seller')" />
+                </span>
+                <span *ngIf="data.Package_Type=='Premium'" class="padding-right-5">
+                  <img [src]="data.subscriptionImg" style="width:18px;height:18px" (click)="showInfo('Premium Seller')" />
+                </span>
+                <span *ngIf="data.IsVerified!=''" class="padding-right-5">
+                  <img [src]="data.IsVerified" style="width:18px;height:18px" (click)="showInfo('Verified Seller')" />
+                </span>
+                <span *ngIf="data.Variant_List[0].Innovation_Marker=='1'" class="padding-right-5">
+                  <fa-icon name="lightbulb-o" size="lg" (click)="showInfo('Innovative Product')"></fa-icon>
+                </span>
+                <span *ngIf="data.Variant_List[0].Latest_Launch_Marker=='1'" class="padding-right-5">
+                  <fa-icon name="bullhorn" size="lg" (click)="showInfo('Latest Launch')"></fa-icon>
+                </span>
+              </div>
+
+            </ion-col>
+          </ion-row>
+          <ion-row class="padding-0 margin-top-0 col-title-head" *ngIf="data.Location!=''">
+            <ion-col class="padding-0">
+              <fa-icon name="map-marker"></fa-icon> {{data.Location}}
+            </ion-col>
+          </ion-row>
+          <ion-row class="padding-0 margin-top-0" *ngIf="data.Variant_List[0].Min_Product_Price!='Not Provided'">
+            <ion-col class="padding-0">
+              <span class=" font-size-1-2">
+                <b>
+                  <fa-icon name="inr"></fa-icon> {{data.Variant_List[0].Min_Product_Price}} To {{data.Variant_List[0].Max_Product_Price}} </b>
+              </span>
+            </ion-col>
+          </ion-row>
+          <ion-row class="padding-0 margin-top-0">
+            <ion-col class="padding-0">
+              MOQ -
+              <span class=" font-size-1-2">{{data.Variant_List[0].Min_Order_Qty}}</span>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row style="margin-top: 10px;margin-bottom: 10px;">
+        <ion-col col-6>
+          <div (click)="showContact(data.Variant_List[0].seller_product_id)" class="bottom-button  text-center">
+            <fa-icon name="phone"></fa-icon> Contact </div>
+        </ion-col>
+        <ion-col col-6>
+          <div class="bottom-button  text-center" (click)="chkOpenbottom(data,i)">
+            <fa-icon name="bars"></fa-icon> Get Quote</div>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="!noResult">
+    <ion-card-content>
+      <ion-row>
+        <ion-col>
+          No seller found for the
+          <span style="color:red">{{title}}</span> you were searching.
+        </ion-col>
+      </ion-row>
+      <br />
+      <ion-row>
+        <ion-col>
+          <h2>
+            <b>Suggestions:</b>
+          </h2>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ul>
+            <li>Please check whether all words are spelled correctly.</li>
+            <li>Avoid searching multiple products or services name at one time.</li>
+            <li>Avoid using special characters in your search.</li>
+            <li>Avoid using specific keywords in your search (e.g., Solitaire - 80x80 cm).</li>
+          </ul>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+  <div style="height:6%">
+    <div *ngIf="noMoreResult" class="text-center padding-top-10">No More Result Found</div>
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="!noMoreResult">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+</ion-content>
+<ion-footer class="bg-white" *ngIf="showFilter">
+  <!-- <ion-row class="">
+      <ion-col  class="text-center  ">
+          <ion-row class="text-center">
+              <ion-col class="padding-3">
+          <ion-icon name="send" class="font-size-2"></ion-icon>
+          </ion-col>
+          </ion-row>
+       <ion-row class="padding-top-bottom-zero">
+         <ion-col class="padding-top-bottom-zero">
+            <div class="font-size-1"> Get Quote </div>
+         </ion-col>
+       </ion-row>
+        </ion-col>
+    
+      <ion-col  class="text-center " (click)="openFilter()">
+          <ion-row class="text-center">
+              <ion-col class="padding-3">
+          <ion-icon name="funnel" class="font-size-2"></ion-icon></ion-col></ion-row>
+          <ion-row class="padding-top-bottom-zero font-size-1 text-center padding-top-0">
+              <ion-col class="padding-top-bottom-zero"> Filter</ion-col>
+            </ion-row>
+      </ion-col>
+      <ion-col  class="text-center ">
+        <ion-row class="text-center">
+          <ion-col>
+            <fa-icon name="sort-alpha-desc" size="lg"></fa-icon>
+          </ion-col>
+        </ion-row>
+        <ion-row class="padding-top-bottom-zero font-size-1 text-center">
+          <ion-col class="padding-top-bottom-zero">Sort</ion-col>
+        </ion-row>
+      </ion-col> -->
+  <!-- <ion-col  class="text-center" (click)="moreOption()">
+        <ion-row class="text-center">
+          <ion-col>
+            <fa-icon name="ellipsis-v" size="lg"></fa-icon>
+          </ion-col>
+  
+        </ion-row>
+        <ion-row class="padding-top-bottom-zero font-size-1 text-center  ">
+          <ion-col class="padding-top-bottom-zero">More</ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row> -->
+  <ion-row *ngIf="noResult">
+    <ion-col class="bottombtn" (click)="openFilter()" style="border-right:1px dotted #fff">
+        <fa-icon name="filter" style="margin-right: 3px;margin-top: -3px;"></fa-icon> Filter
+    </ion-col>
+    <ion-col class="bottombtn" (click)="getQuotes()">
+       <fa-icon name="bars" style="margin-right: 3px;margin-top: -3px;"></fa-icon> Get Quote
+    </ion-col>
+  </ion-row>
+</ion-footer>

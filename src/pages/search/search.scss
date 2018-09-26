@@ -1,0 +1,88 @@
+.ios, .md{
+  page-search {
+    
+    ion-col {
+      &[width-30] {
+        flex: 0 0 30%;
+        max-width:30%;
+        }
+
+      &[width-28] {
+      flex: 0 0 28%;
+      max-width:28%;
+      }
+      
+      &[width-14] {
+      flex: 0 0 14%;
+      max-width: 14%;
+      }
+      }
+      .bg-bottom{
+        background: map-get($colors, primary);
+        color:#fff;
+      }
+
+  ion-card{
+  background: white;
+  margin-top:1px !important;
+  animation-duration: 1.5s;
+  animation-delay: 0.5s;
+  //text-align: justify;
+  ion-item{
+      background: white;
+  }
+  ion-col{
+    padding: 0px 5px 0px 5px !important;
+  }
+  
+  ion-row{
+    padding: 0px !important;
+  }
+  .col-primary{
+      color: map-get($colors, primary);
+  }
+  .col-secondary{
+      color: map-get($colors, secondary);
+  }
+  ion-row{
+      margin-top:7px;
+     // padding: 5px;
+      font-size:1.3rem;
+  }
+ion-card-content{
+  padding: 0px  5px 0px 5px !important;
+}
+  .span-title{
+    color:color($colors, secondary);
+    font-weight: bold;
+  }
+  .span-head{
+     color:color($colors, black);
+//font-weight: bold;
+    font-size: 1.6rem;
+    margin-top: -4px;
+  }
+  .span-body{
+      color:#000;
+  }
+  .bottom-button{
+    padding: 5px !important;
+    border: 1px solid #969696;
+  }
+  .icons{
+    img{
+     display: inline
+   }
+  }
+}
+  .bottombtn{
+    background: color($colors, primary);
+    color:white;
+  //  border-top: 1px solid color($colors, primary);
+    padding: 14px;
+    text-align: center;
+    font-weight: bold;
+  }
+
+}
+}

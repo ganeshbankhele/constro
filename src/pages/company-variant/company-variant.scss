@@ -1,0 +1,40 @@
+page-company-variant {
+    .card-bg{
+      background-color: #fff;
+    }
+    ion-grid{
+      padding: 5px 10px 5px 10px !important;
+    }
+    .topArrow{
+        font-size: 2.5rem;
+        color:white;
+        padding-top:5px;
+        margin-left: 10px !important;
+      }  
+  .col{
+    padding: 5px !important;
+  }
+  .span-title{
+    color: map-get($colors, secondary);
+   // font-weight: bold;
+  }
+  .span-head{
+    color: map-get($colors, primary);
+    font-weight: bold;
+  }
+  .span-body{
+      padding-top:10px !important;
+  }
+  ion-col{
+       &[width-15]{
+      flex:0 0 15%;
+      max-width: 15%;
+    }
+   &[width-35]{
+      flex:0 0 35%;
+      max-width: 35%;
+     
+    }
+  }
+  }
+  

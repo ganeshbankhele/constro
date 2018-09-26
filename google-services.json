@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "659671475982",
+    "firebase_url": "https://constrobazaar-34136.firebaseio.com",
+    "project_id": "constrobazaar-34136",
+    "storage_bucket": "constrobazaar-34136.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:659671475982:android:88ccca975c0eee3e",
+        "android_client_info": {
+          "package_name": "pkg.cb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "659671475982-qu7kee5dqbin9u9naqul89dspvb3gokc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACIuGnuFQJAoIydsr-xW6p3AfX_OdIvcU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

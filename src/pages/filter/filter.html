@@ -1,0 +1,101 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Filter</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+
+  <ion-card class="margin-top-0">
+    <ion-card-content>
+      <ion-row class="padding-top-bottom-zero">
+        <ion-col col-auto class="padding-top-bottom-zero">
+          <strong>Price Range</strong>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="padding-0">
+          <ion-item>
+            <ion-label color="primary" floating>Min</ion-label>
+            <ion-input type="tel" [(ngModel)]="sp.priceRangeLower"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col class="padding-0 text-center" style="margin-top:2.9em" col-1>
+
+          <span color="primary">To</span>
+
+        </ion-col>
+        <ion-col class="padding-0">
+          <ion-item>
+            <ion-label color="primary" floating>Max ( {{sp.Price.Filter_Max_Value}} )</ion-label>
+            <ion-input type="tel" [(ngModel)]="sp.priceRangeUpper"></ion-input>
+          </ion-item>
+        </ion-col>
+
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <!-- <ion-row class="padding-top-bottom-zero">
+        <ion-col col-auto class="padding-top-bottom-zero">
+          MOQ (min - {{sp.Price.Filter_Min_Value}})
+        </ion-col>
+      </ion-row> -->
+
+      <ion-item>
+        <ion-label color="primary" floating><strong>Min. Order Qty.</strong></ion-label>
+        <ion-input type="tel" [(ngModel)]="sp.moqRange"></ion-input>
+      </ion-item>
+
+    </ion-card-content>
+  </ion-card>
+
+  <div *ngFor="let ftr of sp.Other" (click)="openFilter(ftr)">
+    <ion-card *ngIf="ftr.Filter_Name !='Rating'">
+      <ion-card-content>
+        <ion-row>
+          <ion-col class="padding-top-bottom-zero" col-auto>
+            <!-- <strong *ngIf="ftr.Filter_Name!='CompanyLocation' && ftr.Filter_Name!='SellerType'">{{ftr.Filter_Name}}</strong> -->
+            <strong *ngIf="ftr.Filter_Name=='CompanyLocation'">Company Location</strong>
+            <strong *ngIf="ftr.Filter_Name=='SellerType'">Seller Type</strong>
+            <strong *ngIf="ftr.Filter_Name=='Sellers'">Company Name</strong>
+            <strong *ngIf="ftr.Filter_Name=='Brand'">Brands</strong>
+            <strong *ngIf="ftr.Filter_Name=='Variant Name'">Variants</strong>
+          </ion-col>
+          <ion-col class="padding-top-bottom-zero" col-auto>
+            ( {{ftr.Filter_Value.length }} )
+          </ion-col>
+        </ion-row>
+        <ion-row class="padding-top-bottom-zero">
+          <ion-col col-12 class="padding-top-bottom-zero font-size-1-2">
+        <!-- //  <span *ngFor="let ftrv of ftr.Filter_Value;let i =index;"> -->
+            <!-- <span *ngIf="ftrv.applied===true;" style="color:green"> <strong style="color:green" *ngIf="count=='0';count++">Applied Filter :</strong><span *ngIf="i!='0'">,</span> {{ftrv.value}}</span> -->
+            <span *ngFor="let sel of sp.selectedFilterString">
+              <span  style="color:green" *ngIf="ftr.Filter_Name == sel.filterName">{{ sel.note }}</span>              
+            </span>
+            
+          <!-- </span> -->
+            
+             
+           
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+</ion-content>
+<ion-footer>
+<ion-row>
+    <ion-col class="bottombtn" (click)="resetFilter()" style="border-right:1px dotted #fff">
+        <fa-icon name="refresh" style="margin-right: 3px;margin-top: -3px;"></fa-icon> Clear filter
+    </ion-col>
+    <ion-col class="bottombtn" (click)="applyFilter()">
+       <fa-icon name="filter" style="margin-right: 3px;margin-top: -3px;"></fa-icon> Apply filter
+    </ion-col>
+  </ion-row>
+</ion-footer>

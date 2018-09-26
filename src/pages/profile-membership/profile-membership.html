@@ -1,0 +1,93 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <ion-title>Brochure & Trademark
+            <span class="font-size-1">{{authProvider.userType}}</span>
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-card class="margin-top-0">
+        <ion-label floating style="color: #DC1f26;font-size: 12px;margin-left:2px">(Note:Upload image only in .jpg,.png,.gif file format)</ion-label>
+        <br>
+        <ion-card-content>
+            <div class="pan">
+                <ion-item>
+                    <ion-label color="primary">Company Brochures :</ion-label>
+                </ion-item>
+            </div>
+            <!-- <ion-row *ngIf="membershipPhotos.length==0">
+                        <ion-col>
+                            Awards Photos Not Uploaded.
+                        </ion-col>
+                    </ion-row> -->
+            <ion-row class="padding-0">
+                <ion-col class="file_upload">
+                    <div class="borderAlli" *ngFor="let brt of brochures">
+                        <ion-col>
+                            <ion-row>
+                                <div style="position:relative">
+                                    <img src="{{brt.Image}}">
+                                </div>
+                            </ion-row>
+                            <br>
+                            <ion-row>
+                                <ion-icon ios="ios-trash" md="md-trash" (click)="showConfirmAlert(brt.Id,'BR',brt.Id)" style="color: #DC1f26;margin-left: 40px;"></ion-icon>
+                            </ion-row>
+                        </ion-col>
+                    </div>
+                    <div class="borderAlli" *ngFor="let brt of brochuresPdf">
+                        <div style="position:relative">
+                            <img src="assets/icon/pdf-icon.png" style="padding: 2rem;">
+                        </div>
+                    </div>
+                    <div class="borderAll">
+                        <br>
+                        <div (click)="presentActionSheet('BR')">
+                            <ion-icon name="cloud-upload"></ion-icon>
+                            <br /> Upload Brochures
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+        <ion-card-content>
+            <div class="pan">
+                <ion-item>
+                    <ion-label color="primary">Company Trademark :</ion-label>
+                </ion-item>
+            </div>
+            <ion-row class="padding-0">
+                <ion-col class="file_upload">
+                    <div class="borderAlli" *ngFor="let trk of trademark">
+                        <ion-col>
+                            <ion-row>
+                                <div style="position:relative">
+                                    <img src="{{trk.Image}}">
+                                </div>
+                            </ion-row>
+                            <br>
+                            <ion-row>
+                                <ion-icon ios="ios-trash" md="md-trash" (click)="showConfirmAlert(trk.Id,'TRI',trk.Id);" style="color: #DC1f26;margin-left: 40px;"></ion-icon>
+                            </ion-row>
+                        </ion-col>
+                    </div>
+                    <div class="borderAlli" *ngFor="let trk of trademarkPdf">
+                        <div style="position:relative">
+                            <img src="assets/icon/pdf-icon.png" style="padding: 2rem;">
+                        </div>
+                    </div>
+                    <div class="borderAll">
+                        <br>
+                        <div (click)="presentActionSheetTred('TRI')">
+                            <ion-icon name="cloud-upload"></ion-icon>
+                            <br /> Upload Trademark
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

@@ -1,0 +1,286 @@
+<ion-menu id="menu1" [content]="content">
+    <ion-header>
+        <ion-toolbar class="navToolbar">
+            <ion-item class="navHeader" no-lines>
+                <ion-avatar item-start class="" *ngIf="authProvider.userImage == '' || authProvider.userImage == ''">
+                    <img src="./assets/icon/profile.png">
+                </ion-avatar>
+                <ion-avatar item-start *ngIf="authProvider.userImage != '' || authProvider.userImage != ''">
+                    <img [src]="authProvider.userImage">
+                </ion-avatar>
+                <h2 *ngIf="authProvider.firstLastName != '' || authProvider.firstLastName != ''">Hi {{authProvider.firstLastName}}</h2>
+                <ion-row *ngIf="authProvider.userType != '' || authProvider.userImage != ''">
+                    <ion-col class="padding-0">
+                        <h3>{{authProvider.userType}}</h3>
+                    </ion-col>
+                    <ion-col class="text-center font-size-1-2" menuClose *ngIf="authProvider.havingBuyerAccount=='Yes' && authProvider.userType == 'Seller'"
+                        style="border:1px solid #fff" (click)="switchUser('Buyer')">
+                        Switch to Buyer
+                    </ion-col>
+                    <ion-col class="text-center font-size-1-2" menuClose *ngIf="authProvider.havingSellerAccount=='Yes' && authProvider.userType == 'Buyer'"
+                        style="border:1px solid #fff" (click)="switchUser('Seller')">
+                        Switch to Seller
+                    </ion-col>
+                    <ion-col class="text-center font-size-1-2" menuClose *ngIf="authProvider.havingSellerAccount=='No' && authProvider.userType == 'Buyer'"
+                        style="border:1px solid" (click)="checkUser('Seller')">
+                        Be a Seller
+                    </ion-col>
+                    <ion-col class="text-center font-size-1-2" menuClose *ngIf="authProvider.havingBuyerAccount=='No' && authProvider.userType == 'Seller'"
+                        style="border:1px solid #fff" (click)="checkUser('Buyer')">
+                        Be a Buyer
+                    </ion-col>
+                </ion-row>
+                <ion-row *ngIf="authProvider.userType == ''">
+                    <ion-col>
+                        ConstroBazaar
+                        <!-- <img src="./assets/imgs/logo.png"> -->
+                    </ion-col>
+                </ion-row>
+            </ion-item>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content class="bg-white">
+        <ion-list>
+            <button class="bg-white" *ngIf="authProvider.userId == ''" menuClose ion-item (click)="openlogin()">
+                <ion-row class="padding-top-bottom-zero">
+                    <ion-col class="padding-top-bottom-zero width-12">
+                        <fa-icon class="col-title-head" name="sign-in"></fa-icon>
+                    </ion-col>
+                    <ion-col class="padding-top-bottom-zero width-88">Sign In</ion-col>
+                </ion-row>
+            </button>
+            <button class="bg-white" *ngIf="authProvider.userId != '' && authProvider.userType != ''" menuClose ion-item (click)="openPage('ProfilePage')">
+                <ion-row class="padding-top-bottom-zero">
+                    <ion-col class="padding-top-bottom-zero width-12">
+                        <fa-icon class="col-title-head" name="user"></fa-icon>
+                    </ion-col>
+                    <ion-col class="padding-top-bottom-zero width-88"> My Profile</ion-col>
+                </ion-row>
+            </button>
+            <!-- buyer start menu -->
+            <div *ngIf="authProvider.userId != ''  && authProvider.userType == 'Buyer'">
+
+                <button class="bg-white" menuClose ion-item (click)="openPage('DashboardPage')">
+                    <ion-row class="padding-top-bottom-zero">
+                        <ion-col class="padding-top-bottom-zero width-12">
+                            <fa-icon class="col-title-head" name="dashboard"></fa-icon>
+                        </ion-col>
+                        <ion-col class="padding-top-bottom-zero width-88">Dashboard</ion-col>
+                    </ion-row>
+                </button>
+
+                <button class="bg-white" menuClose ion-item (click)="openPage('RequestPage')">
+                    <ion-row class="padding-top-bottom-zero">
+                        <ion-col class="padding-top-bottom-zero width-12">
+                            <fa-icon class="col-title-head" name="paper-plane"></fa-icon>
+                        </ion-col>
+                        <ion-col class="padding-top-bottom-zero width-88">Requests</ion-col>
+                    </ion-row>
+                </button>
+
+                <button class="bg-white" menuClose ion-item (click)="openPage('OrderPage')">
+                    <ion-row class="padding-top-bottom-zero">
+                        <ion-col class="padding-top-bottom-zero width-12">
+                            <fa-icon class="col-title-head" name="clipboard"></fa-icon>
+                        </ion-col>
+                        <ion-col class="padding-top-bottom-zero width-88">Orders</ion-col>
+                    </ion-row>
+                </button>
+                <button class="bg-white" menuClose ion-item (click)="openPage('EnquiryNewPage')">
+                    <ion-row class="padding-top-bottom-zero">
+                        <ion-col class="padding-top-bottom-zero width-12">
+                            <fa-icon class="col-title-head" name="envelope"></fa-icon>
+                        </ion-col>
+                        <ion-col class="padding-top-bottom-zero width-88"> My Enquiry</ion-col>
+                    </ion-row>
+                </button>
+                <!-- <button class="bg-white" menuClose ion-item (click)="openPage('RatingsandreviewPage')">
+                  <ion-row class="padding-top-bottom-zero">
+                      <ion-col class="padding-top-bottom-zero width-12">
+                          <fa-icon class="col-title-head" name="star"></fa-icon>
+                      </ion-col>
+                      <ion-col class="padding-top-bottom-zero width-88"> Ratings & Reviews</ion-col>
+                  </ion-row>
+              </button> -->
+                <button class="bg-white" menuClose ion-item (click)="openPage('NotificationPage')">
+                  <ion-row class="padding-top-bottom-zero">
+                      <ion-col class="padding-top-bottom-zero width-12">
+                          <fa-icon class="col-title-head" name="bell"></fa-icon>
+                      </ion-col>
+                      <ion-col class="padding-top-bottom-zero width-88"> Notification
+
+                        <ion-badge id="notifications-badge" color="danger" *ngIf="note.notificationCounterForAll != 0">{{note.notificationCounterForAll}}</ion-badge>
+                      </ion-col>
+                  </ion-row>
+              </button>
+            </div>
+
+            <!-- buyer end menu -->
+
+            <!-- seller start menu -->
+
+            <div *ngIf="authProvider.userId != ''  && authProvider.userType == 'Seller'">
+                <button class="bg-white" menuClose ion-item (click)="openPage('DashboardSellerPage')">
+                    <ion-row class="padding-top-bottom-zero">
+                        <ion-col class="padding-top-bottom-zero width-12">
+                            <fa-icon class="col-title-head" name="dashboard"></fa-icon>
+                        </ion-col>
+                        <ion-col class="padding-top-bottom-zero width-88">Dashboard</ion-col>
+                    </ion-row>
+                </button>
+                <button class="bg-white" menuClose ion-item (click)="openPage('ReuestSellerPage')">
+                    <ion-row class="padding-top-bottom-zero">
+                        <ion-col class="padding-top-bottom-zero width-12">
+                            <fa-icon class="col-title-head" name="paper-plane"></fa-icon>
+                        </ion-col>
+                        <ion-col class="padding-top-bottom-zero width-88">Requests</ion-col>
+                    </ion-row>
+                </button>
+                <button class="bg-white" menuClose ion-item (click)="openPage('OrderSellerPage')">
+                    <ion-row class="padding-top-bottom-zero">
+                        <ion-col class="padding-top-bottom-zero width-12">
+                            <fa-icon class="col-title-head" name="clipboard"></fa-icon>
+                        </ion-col>
+                        <ion-col class="padding-top-bottom-zero width-88">Orders</ion-col>
+                    </ion-row>
+                </button>
+                <button class="bg-white" menuClose ion-item (click)="openPage('BuyLeadPage')">
+                    <ion-row class="padding-top-bottom-zero">
+                        <ion-col class="padding-top-bottom-zero width-12">
+                            <fa-icon class="col-title-head" name="envelope"></fa-icon>
+                        </ion-col>
+                        <ion-col class="padding-top-bottom-zero width-88"> Buy Leads</ion-col>
+                    </ion-row>
+                </button>
+                <button class="bg-white" menuClose ion-item (click)="openPage('EnquirySellerNewPage')">
+                    <ion-row class="padding-top-bottom-zero">
+                        <ion-col class="padding-top-bottom-zero width-12">
+                            <fa-icon class="col-title-head" name="envelope"></fa-icon>
+                        </ion-col>
+                        <ion-col class="padding-top-bottom-zero width-88"> My Lead</ion-col>
+                    </ion-row>
+                </button>
+                <button class="bg-white" menuClose ion-item (click)="openPage('CatlogPage')">
+                    <ion-row class="padding-top-bottom-zero">
+                        <ion-col class="padding-top-bottom-zero width-12">
+                            <fa-icon class="col-title-head" name="product-hunt"></fa-icon>
+                        </ion-col>
+                        <ion-col class="padding-top-bottom-zero width-88"> Products/Services</ion-col>
+                    </ion-row>
+                </button>
+                <button class="bg-white" menuClose ion-item (click)="openPage('MySubscriptionPage')">
+                    <ion-row class="padding-top-bottom-zero">
+                        <ion-col class="padding-top-bottom-zero width-12">
+                            <fa-icon class="col-title-head" name="money"></fa-icon>
+                        </ion-col>
+                        <ion-col class="padding-top-bottom-zero width-88"> Subscription</ion-col>
+                    </ion-row>
+                </button>
+                <!-- <button class="bg-white" menuClose ion-item (click)="openPage('RatingsandreviewPage')">
+                  <ion-row class="padding-top-bottom-zero">
+                      <ion-col class="padding-top-bottom-zero width-12">
+                          <fa-icon class="col-title-head" name="star"></fa-icon>
+                      </ion-col>
+                      <ion-col class="padding-top-bottom-zero width-88"> Ratings & Reviews</ion-col>
+                  </ion-row>
+              </button> -->
+
+                <button class="bg-white" menuClose ion-item (click)="openPage('NotificationPage')">
+                  <ion-row class="padding-top-bottom-zero">
+                      <ion-col class="padding-top-bottom-zero width-12">
+                          <fa-icon class="col-title-head" name="bell"></fa-icon>
+                      </ion-col>
+                      <ion-col class="padding-top-bottom-zero width-88"> Notification               <ion-badge id="notifications-badge" color="danger" *ngIf="note.notificationCounterForAll != 0">{{note.notificationCounterForAll}}</ion-badge>
+                      </ion-col>
+                  </ion-row>
+              </button>
+
+            </div>
+
+            <!-- seller End menu -->
+
+
+
+
+            <!-- 
+          <button class="bg-white" *ngIf="authProvider.userId != '' && authProvider.userType != ''" menuClose ion-item (click)="openPage('SettingsPage')">
+              <ion-row class="padding-top-bottom-zero">
+                  <ion-col class="padding-top-bottom-zero width-12">
+                      <fa-icon class="col-title-head" name="cog"></fa-icon>
+                  </ion-col>
+                  <ion-col class="padding-top-bottom-zero width-88"> Settings</ion-col>
+              </ion-row>
+          </button> -->
+            <button *ngIf="authProvider.userType != 'Seller'" class="bg-white" menuClose ion-item (click)="openPage('PosturrequirementPage')">
+                <ion-row class="padding-top-bottom-zero">
+                    <ion-col class="padding-top-bottom-zero width-12">
+                        <fa-icon class="col-title-head" name="paper-plane"></fa-icon>
+                    </ion-col>
+                    <ion-col class="padding-top-bottom-zero width-88"> Post Your Requirement</ion-col>
+                </ion-row>
+            </button>
+            <button class="bg-white" menuClose ion-item (click)="openPagePush('AboutusPage')">
+                <ion-row class="padding-top-bottom-zero">
+                    <ion-col class="padding-top-bottom-zero width-12">
+                        <fa-icon class="col-title-head" name="users"></fa-icon>
+                    </ion-col>
+                    <ion-col class="padding-top-bottom-zero width-88"> About Us</ion-col>
+                </ion-row>
+            </button>
+
+            <button class="bg-white" menuClose ion-item (click)="openPagePush('PrivacypolicyPage')">
+                <ion-row class="padding-top-bottom-zero">
+                    <ion-col class="padding-top-bottom-zero width-12">
+                        <img src="assets/icon/terms.png" style="height:1.8rem;width:2rem;" />
+                    </ion-col>
+                    <ion-col class="padding-top-bottom-zero width-88"> Privacy Policy</ion-col>
+                </ion-row>
+            </button>
+
+            <button class="bg-white" menuClose ion-item (click)="openPagePush('TermsofusePage')">
+                <ion-row class="padding-top-bottom-zero">
+                    <ion-col class="padding-top-bottom-zero width-12">
+                        <img src="assets/icon/terms.png" style="height:1.8rem;width:2rem;" />
+                    </ion-col>
+                    <ion-col class="padding-top-bottom-zero width-88"> Terms Of Use</ion-col>
+                </ion-row>
+            </button>
+
+            <!-- <button class="bg-white" *ngIf="authProvider.userId" menuClose ion-item (click)="logOut()">
+              <ion-row class="padding-top-bottom-zero">
+                  <ion-col class="padding-top-bottom-zero width-12">
+                      <fa-icon class="col-title-head" name="sign-out" class="margin-left-5"></fa-icon>
+                  </ion-col>
+                  <ion-col class="padding-top-bottom-zero width-88"> Log Out</ion-col>
+              </ion-row>
+          </button> -->
+        </ion-list>
+    </ion-content>
+    <ion-footer>
+        <div class="container">
+            <div (click)="openFacebook('constrobazaar')">
+                <fa-icon size="2x" name="facebook" style="color:#3b5998"></fa-icon>
+            </div>
+            <div (click)="openTwitter('constrobazaar')">
+                <fa-icon size="2x" name="twitter" style="color:#00aced"></fa-icon>
+            </div>
+            <div (click)="openLinkedin()">
+                <fa-icon size="2x" name="linkedin" style="color:#007bb6"></fa-icon>
+            </div>
+            <div (click)="openGooglePlus()">
+                <fa-icon size="2x" name="google-plus-square" style="color:#DB4437"></fa-icon>
+            </div>
+            <div (click)="openYoutube()">
+                <fa-icon size="2x" name="youtube" style="color:#FF0000"></fa-icon>
+            </div>
+            <div (click)="openWhatsapp()">
+                <fa-icon size="2x" name="whatsapp" style="color:#25D366"></fa-icon>
+            </div>
+        </div>
+        <div align="right">
+        version 2.1.8</div>
+    </ion-footer>
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

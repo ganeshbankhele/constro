@@ -1,0 +1,73 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <button ion-button menuToggle>
+          <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Subscription Packages</ion-title>
+        <ion-buttons end>
+            <button id="notification-button" ion-button clear (click)="openNotification('NotificationPage')">
+                    <ion-icon name="notifications" style="font-size: 1.8em">
+                      <ion-badge id="notifications-badge" color="danger" *ngIf="note.notificationCounterForAll != 0">{{note.notificationCounterForAll}}</ion-badge>
+                    </ion-icon>              
+                </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    
+
+            <ion-slides style="height: auto" pager class="pricing-table" (ionSlideDidChange)="slideChanged()" (ionSlideDrag)="slideMoved()">
+                <ion-slide *ngFor="let package of packages;let i=index">
+
+
+                    <div [ngClass]="{ 'pricing-featured':package.Is_Popular === 'Yes'}" class="pricing-item{{i}}">
+                        <div class='selected' *ngIf="package.UserCurrentPackage === 'Yes'">Current Package</div>
+                        <div class="pricing-title">
+                            {{package.Package_Caption}}
+                        </div>
+                        <div class="pricing-value">
+                            <fa-icon name="inr"></fa-icon>
+                            {{package.Package_Amount}}
+                            <span class="smallText"></span>
+                            <span class="undertext" *ngIf="package.Package_Amount !=0">{{package.Package_Validity_Days}}
+                        <br/>
+                        <small style="color:#fff">+GST 18% </small>
+                    </span>
+                            <span class="undertext" *ngIf="package.Package_Amount === '0'">Free</span>
+                        </div>
+
+                        <div align="center">
+                            <div>
+                                <select style="background: #ffffff;font-size: 14px;" *ngIf='package.Package_Caption!="Regular"' (change)="monthsChanged($event.target.value,package)">
+                                <option value="3" selected>3 Months</option>
+                                <option value="6">6 Months</option>
+                                <option value="12">12 Months</option>
+                        </select>
+                                <div *ngIf='package.Package_Caption=="Regular"'>
+                                    <p style="padding: 9px;">&nbsp;</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <ul class="pricing-features">
+                            <li *ngFor="let feature of package.Package_Features">
+                                {{feature.Feature_Short_Name}}
+                                <span [ngClass]="package.Is_Popular === 'Yes' ? 'redcolor' : 'keywords'">{{feature.Package_Additional_Text}} </span>
+                            </li>
+                        </ul>
+                        <div *ngIf="package.Package_Amount != '0'" [ngClass]="package.Is_Popular === 'Yes' ? 'buttonselected' : 'button'+i" (click)="openPayment(package.Package_Id,package.selectedMonth)">
+                            <span *ngIf="package.UserCurrentPackage=='Yes'">Current Package</span>
+                            <span *ngIf="package.UserCurrentPackage=='No'">Get Started</span>
+                        </div>
+                        <div *ngIf="package.Package_Amount === '0'" [ngClass]="package.Is_Popular === 'Yes' ? 'buttonselected' : 'button'+i">
+                            <span *ngIf="package.UserCurrentPackage=='Yes'">Current Package</span>
+                            <span *ngIf="package.UserCurrentPackage=='No'">Free Package</span>
+                        </div>
+                    </div>
+
+                </ion-slide>
+            </ion-slides>
+
+        
+
+</ion-content>

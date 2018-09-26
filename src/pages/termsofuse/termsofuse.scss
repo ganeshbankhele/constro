@@ -1,0 +1,23 @@
+.ios, .md {
+    page-termsofuse {
+ 
+    ion-card{
+        background: white;
+        text-align: justify;
+        ion-item{
+            background: white;
+        }
+        .col-primary{
+            color: map-get($colors, primary);
+        }
+        .col-secondary{
+            color: map-get($colors, secondary);
+        }
+        ion-row{
+            margin-top:8px;
+            padding: 5px;
+            font-size:1.3rem;
+        }
+    }
+    }
+}

@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Notification <span class="font-size-1">{{authProvider.userType}}</span></ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-card class="animated fadeIn item-remove-animate" [ngClass]="{'margin-top-0':i === 0}" *ngFor="let note of note.allNotifications | async;let i = index;" (click)="openPage(note)">
+    <ion-card-content class="animated slideInUp item-remove-animate">
+      <ion-row>
+        <ion-col col-2>
+          <img *ngIf='note.payload.val().icon!=""' [src]="note.payload.val().icon" style="width:40px;height:40px;">
+          <img *ngIf='note.payload.val().icon==""' src="https://www.constrobazaar.com/assets/images/noimage.png" style="width:40px;height:40px;"> </ion-col>
+        <ion-col col-10 class="padding-0">
+          <ion-row>
+            <ion-col col-12 class="text-left">
+              {{note.payload.val().message}}
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-5 class="text-left col-title-head">
+              <span *ngIf='note.payload.val().isRead=="No"' style="color:red">New</span>
+            </ion-col>
+            <ion-col col-7 class="text-right col-title-head">
+              {{note.payload.val().postedDate}}
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

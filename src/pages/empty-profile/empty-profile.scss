@@ -1,0 +1,57 @@
+
+.ios, .md{
+    page-empty-profile {
+       ion-content{
+            background: white;
+            ion-col{
+                padding: 5px !important;
+            }
+            ion-item{
+                background: white;
+                padding: 0px !important;
+            }
+            .bold{
+                font-weight: bolder;
+                color:map-get($colors, primary );
+                padding-top: 15px !important;
+                padding-bottom: 15px !important;
+                border-top: 2px solid map-get($colors, primary);
+            }
+            .normal{
+                color:#969696;
+                font-weight: normal;
+                padding-top: 15px !important;
+                padding-bottom: 15px !important;
+                border-bottom: 2px solid map-get($colors, primary);   
+            }
+            .borderRight{border-right:2px solid map-get($colors, primary);}
+            .padding-15{padding: 15px !important;}
+            .invalid {
+               color: #DC1f26;
+            }
+            .invalidMessage{
+                color: #DC1f26;
+                
+            }           
+            .radioStyle{
+                .item-inner{
+                    border: none !important;
+                }
+            }
+            .topArrow{
+                font-size: 2.5rem;
+                color:black;
+                padding-top:5px;
+              }  
+              .toprightArrow{
+                font-size: 1.6rem;
+                color:black;
+                padding-top:15px;
+              }  
+              .topskip{
+                color:#969696;
+                padding-top:10px;
+              }
+    }
+}
+}

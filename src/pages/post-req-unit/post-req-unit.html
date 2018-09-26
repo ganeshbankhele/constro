@@ -1,0 +1,28 @@
+<ion-header>
+    <ion-navbar color="primary">
+      <ion-row>
+        <ion-col col-1>
+          <div  (click)="dismiss()" class="topArrow">
+            <ion-icon name="arrow-back"></ion-icon>
+          </div>
+        </ion-col>
+        <ion-col col-11>
+            <ion-input style="color:white" class="out-line-none" clearInput type="text" maxLength="100" (keyup)="updateList($event)" placeholder="Enter Your Units" autofocus></ion-input>
+        </ion-col>
+     </ion-row>
+    </ion-navbar>
+  </ion-header>
+  <ion-content class="bg-white">
+    <ion-list inset>
+      <div *ngFor="let unit of units">
+          <ion-item *ngIf="unit.UnitName!='null'" class="bg-white"  (click)="slected(unit)">
+              {{unit.UnitName}}
+          </ion-item>
+      </div>
+      <ion-item class="bg-white" *ngIf="units.length==0  && keyword!=''" (click)="slectedString(keyword)">
+        {{keyword}}
+      </ion-item>
+    </ion-list>
+  </ion-content>
+  
+  

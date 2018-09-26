@@ -1,0 +1,323 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle (click)="closeSearchBar()">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Dashboard
+      <span class="font-size-1">Buyer</span>
+    </ion-title>
+    <ion-buttons end>
+        <button id="notification-button" ion-button clear (click)="openNotification('NotificationPage')">
+            <ion-icon name="notifications" style="font-size: 1.8em">
+              <ion-badge id="notifications-badge" color="danger" *ngIf="note.notificationCounterForAll != 0">{{note.notificationCounterForAll}}</ion-badge>
+            </ion-icon>              
+        </button>
+
+      <button ion-button clear (click)="search_tool(sP.showSearchbar)">
+        <ion-icon *ngIf="sP.showSearchbar==false" name="md-search" style="font-size: 1.8em"></ion-icon>
+        <ion-icon *ngIf="sP.showSearchbar==true" name="ios-arrow-dropup-outline" style="font-size: 1.8em"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+  <ion-toolbar color="primary" *ngIf="sP.showSearchbar">
+    <ion-grid style="color:#fff;border-bottom:1px solid #fff;padding:0px !important">
+      <ion-row>
+        <ion-col col-6 style="padding:0px !important">
+          <ion-label class="padding-left-5">Search By</ion-label>
+        </ion-col>
+        <ion-col col-6 style="padding:0px !important">
+          <ion-select #C interface="popover" (ionChange)="sP.changeSelect(C.value)" style="max-width: 100% !important;">
+            <ion-option value="Product/Service" selected>Product/Service</ion-option>
+            <ion-option value="Company">Company</ion-option>
+            <ion-option value="Brand">Brand</ion-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-input class="padding-left-5" value="{{sP.product_text}}" (click)="productSearch()" style="color:#fff;border-bottom:1px solid #fff;"
+      clearInput type="text" placeholder="Product Or Service"></ion-input>
+    <ion-input class="padding-left-5" value="{{sP.location}}" (click)="locationSearch()" style="color:#fff;border-bottom:1px solid #fff;margin-top:2px"
+      clearInput type="text" placeholder="Delivery Location"></ion-input>
+    <button [@heroState]="state" ion-button block color="bg" (click)="setSearch(sP.product_text,sP.location)">Search</button>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <!-- <ion-card class="margin-top-0">
+    <ion-card-content>
+      <ion-row>
+        <ion-col col-6 class="margin-top-4">
+          Business Readiness
+          <br />
+          <progress-bar [progress]="profileCount"></progress-bar>
+        </ion-col>
+        <ion-col col-1></ion-col>
+        <ion-col col-5 class="margin-top-4">
+          Want to sell ?
+          <br />
+          <span style="color:blue" *ngIf="authProvider.havingSellerAccount=='No'" (click)="createUser('Seller')">
+            <u>Be a seller</u>
+          </span>
+          <span style="color:blue" *ngIf="authProvider.havingSellerAccount=='Yes'" (click)="switchUser('Seller')">
+            <u>Switch to seller</u>
+          </span>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card> -->
+  <ion-card class="margin-top-0">
+    <ion-card-content>
+      <ion-row>
+        
+        <ion-col col-8>
+         <span style="font-size: 1.6rem;"><strong> Do you have any requirement ?</strong></span><br />
+         <span class="col-title-head">get quick response from sellers</span> 
+        </ion-col>
+        <ion-col col-4>
+          <button ion-button block (click)="postRequirement()">Post here</button>
+        </ion-col>
+      
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+ 
+    <!-- <button ion-button block (click)="postRequirement()">Post Your Requirement Here</button> -->
+  <ion-card (click)="openPage('RequestPage')" style="background-color: rgb(208, 226, 240)">
+      <ion-card-content>
+        <ion-row class="padding-top-5 padding-bottom-3  padding-left-5">
+          <ion-col col-9>
+            <fa-icon name="location-arrow"></fa-icon> Request
+            <!-- <ion-chip style="background-color:#fff;color:#052E70;height: 16px;line-height: 19px;">
+                  <ion-label>{{TotalRequestCount}}</ion-label>
+                </ion-chip> -->
+          </ion-col>
+          <ion-col col-3 class="text-center">
+            <span>View All</span>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+
+    </ion-card>
+    <ion-card class="margin-top-0" (click)="openPage('RequestPage')">
+      <ion-card-content>
+        <ion-row class="padding-top-10 padding-bottom-3  padding-left-5 border-bottom-1 animated fadeIn item-remove-animate" *ngIf="TotalRequestCount=='0'">
+          <ion-col col-12>
+            No Request under your account
+          </ion-col>
+        </ion-row>
+        <ion-row class="padding-top-10 padding-bottom-3  padding-left-5 border-bottom-1 animated fadeIn item-remove-animate" *ngFor="let req of request">
+          <ion-col col-9>
+            {{req.Generic_Product_Name}} By {{req.Company_Name | sliceWord:20}}
+          </ion-col>
+          <ion-col col-3 class="text-center">
+            {{req.Status}}
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+    <ion-card (click)="openPage('OrderPage')" style="background-color: rgb(208, 226, 240)">
+      <ion-card-content>
+        <ion-row class="padding-top-5 padding-bottom-3  padding-left-5">
+          <ion-col col-9>
+            <fa-icon name="list-alt"></fa-icon> Orders
+            <ion-chip style="height: 16px;line-height: 19px;">
+              <ion-label>{{TotalOrderCount}}</ion-label>
+            </ion-chip>
+          </ion-col>
+          <ion-col col-3 class="text-center">
+            <span>View All</span>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+    <ion-card class="margin-top-0" (click)="openPage('OrderPage')">
+      <ion-card-content>
+        <ion-row class="padding-top-10 padding-bottom-3  padding-left-5 border-bottom-1 animated fadeIn item-remove-animate" *ngIf="TotalOrderCount=='0'">
+          <ion-col col-12>
+            No Order under your account
+          </ion-col>
+        </ion-row>
+        <ion-row class="padding-top-10 padding-bottom-3  padding-left-5 border-bottom-1 animated fadeIn item-remove-animate" *ngFor="let ord of orders">
+          <ion-col col-8>
+            {{ord.Company}}
+          </ion-col>
+          <ion-col col-4 class="text-center">
+            {{ord.Date}}
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+    <ion-card (click)="openPage('EnquiryNewPage')" style="background-color: rgb(208, 226, 240)">
+      <ion-card-content>
+        <ion-row class="padding-top-5 padding-bottom-3 padding-left-5">
+          <ion-col col-9>
+            <fa-icon name="rocket"></fa-icon> My Enquiry
+            <ion-chip style="height: 16px;line-height: 19px;">
+              <ion-label>{{TotalEnquiryCount}}</ion-label>
+            </ion-chip>
+          </ion-col>
+          <ion-col col-3 class="text-center">
+            <span>View All</span>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+    <ion-card class="margin-top-0" (click)="openPage('EnquiryNewPage')">
+      <ion-card-content>
+        <ion-row class="padding-top-10 padding-bottom-3  padding-left-5 border-bottom-1 animated fadeIn item-remove-animate" *ngIf="TotalEnquiryCount=='0'">
+          <ion-col col-12>
+            No Enquiry under your account
+          </ion-col>
+        </ion-row>
+        <ion-row class="padding-top-10 padding-bottom-3  padding-left-5 border-bottom-1 animated fadeIn item-remove-animate" *ngFor="let enq of enquiry">
+          <ion-col col-12>
+            {{enq.Seller_Product_Name}} <br /> from {{enq.Company | sliceWord:25}}
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+
+  <ion-card [hidden]="!requestGraph">
+    <ion-card-content>
+      <ion-row class="padding-5 text-center">
+        <ion-col>
+          Last 5 Month Transaction Details.
+        </ion-col>
+      </ion-row>
+      <ion-row class="">
+        <canvas #barCanvas></canvas>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+  <ion-row class="margin-top-10">
+    <ion-col class="slider_h padding-0" col-12>
+      <ion-row class="padding-top-10 padding-left-10">
+        <ion-col class="padding-0 col-title-head" col-12>
+          <strong> Product</strong>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="padding-0" col-12>
+          <ion-slides class="image-slider" slidesPerView="2.3">
+            <ion-slide class="padding-5" *ngFor="let recom of recommendation">
+              <ion-card>
+                <ion-card-content>
+                  <ion-row class="font-size-1-2 text-center" (click)="openCompanyPage(recom.Cat_Id,recom.Sub_Cat_Id,recom.Seller_Product_Id)">
+                    <img [src]="recom.Generic_Product_Img" class="thumb-img">
+                  </ion-row>
+                  <ion-row class="font-size-1-5" (click)="openCompanyPage(recom.Cat_Id,recom.Sub_Cat_Id,recom.Seller_Product_Id)">
+                    <ion-col class="padding-0 ">{{recom.Generic_Product_Name | sliceWord:15}} </ion-col>
+                  </ion-row>
+                  <ion-row class="font-size-1-5 text-center">
+                    <ion-col class="padding-0 ">
+                      <button ion-button block color="primary" outline (click)="openGetQuote(recom.Seller_Product_Id)">Get Quote</button>
+                    </ion-col>
+                  </ion-row>
+                </ion-card-content>
+              </ion-card>
+            </ion-slide>
+          </ion-slides>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row class="margin-top-10">
+    <ion-col class="slider_h padding-0" col-12>
+      <ion-row class="padding-top-10 padding-left-10">
+        <ion-col class="padding-0 col-title-head" col-12>
+          <strong>Innovation</strong>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="padding-0" col-12>
+          <ion-slides class="image-slider" slidesPerView="2.3">
+            <ion-slide class="padding-5" *ngFor="let innov of innovations">
+              <ion-card>
+                <ion-card-content>
+                  <ion-row class="font-size-1-2 text-center" (click)="openCompanyPage(innov.Cat_Id,innov.Sub_Cat_Id,innov.Seller_Product_Id)">
+                    <img [src]="innov.Generic_Product_Img" class="thumb-img">
+                  </ion-row>
+                  <ion-row class="font-size-1-5" (click)="openCompanyPage(innov.Cat_Id,innov.Sub_Cat_Id,innov.Seller_Product_Id)">
+                    <ion-col class="padding-0 ">{{innov.Generic_Product_Name | sliceWord:15}} </ion-col>
+                  </ion-row>
+                  <ion-row class="font-size-1-5 text-center">
+                    <ion-col class="padding-0 ">
+                      <button ion-button block outline (click)="openGetQuote(innov.Seller_Product_Id)">Get Quote</button>
+                    </ion-col>
+                  </ion-row>
+                </ion-card-content>
+              </ion-card>
+            </ion-slide>
+          </ion-slides>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row class="margin-top-10">
+    <ion-col class="slider_h padding-0" col-12>
+      <ion-row class="padding-top-10 padding-left-10">
+        <ion-col class="padding-0 col-title-head" col-12>
+          <strong>Latest Launch</strong>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="padding-0" col-12>
+          <ion-slides class="image-slider" slidesPerView="2.3">
+            <ion-slide class="padding-5" *ngFor="let latt of latest_launch">
+              <ion-card>
+                <ion-card-content>
+                  <ion-row class="font-size-1-2 text-center" (click)="openCompanyPage(latt.Cat_Id,latt.Sub_Cat_Id,latt.Seller_Product_Id)">
+                    <img [src]="latt.Generic_Product_Img" class="thumb-img">
+                  </ion-row>
+                  <ion-row class="font-size-1-5" (click)="openCompanyPage(latt.Cat_Id,latt.Sub_Cat_Id,latt.Seller_Product_Id)">
+                    <ion-col class="padding-0 ">{{latt.Generic_Product_Name | sliceWord:15}} </ion-col>
+                  </ion-row>
+                  <ion-row class="font-size-1-5 text-center">
+                    <ion-col class="padding-0 ">
+                      <button ion-button block outline (click)="openGetQuote(latt.Seller_Product_Id)">Get Quote</button>
+                    </ion-col>
+                  </ion-row>
+                </ion-card-content>
+              </ion-card>
+            </ion-slide>
+          </ion-slides>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row class="margin-top-10">
+    <ion-col class="slider_h padding-0" col-12>
+      <ion-row class="padding-top-10 padding-left-10">
+        <ion-col class="padding-0 col-title-head" col-12>
+          <strong>Top Brands</strong>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="padding-0" col-12>
+          <ion-slides class="image-slider" slidesPerView="2.3">
+            <ion-slide class="padding-5" *ngFor="let feat of topBrands">
+              <ion-card (click)="openBrand(feat.Brand_Name)">
+                <ion-card-content>
+                  <ion-row class="font-size-1-2 text-center">
+                    <img [src]="feat.Brand_Logo" class="thumb-img">
+                  </ion-row>
+                  <ion-row class="font-size-1-5">
+                    <ion-col class="padding-0 ">{{feat.Brand_Name | sliceWord:15}} </ion-col>
+                  </ion-row>
+
+                </ion-card-content>
+              </ion-card>
+            </ion-slide>
+          </ion-slides>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <!-- <div style="height:60px">
+    
+      </div>
+      <ion-fab bottom right>
+        <button ion-fab mini (click)="openChat();"><ion-icon name="md-chatbubbles" ></ion-icon></button>
+      </ion-fab> -->
+
+
+</ion-content>

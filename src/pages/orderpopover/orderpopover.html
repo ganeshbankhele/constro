@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{user}} Details</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content class="bg-white" padding>
+    <ion-item>
+        <ion-label color="primary" floating>Company Name :</ion-label>
+        <ion-input *ngIf="details.CompName!=''" readonly [value]="details.CompName" ></ion-input>
+        <ion-input *ngIf="details.CompName==''" readonly value="Not Available" ></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label color="primary" floating>Address :</ion-label>
+        <ion-input *ngIf="details.Address!=''" readonly [value]="details.Address.trim()" ></ion-input>
+        <ion-input *ngIf="details.Address==''" readonly value="Not Available" ></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label color="primary" floating>GST Number :</ion-label>
+        <ion-input *ngIf="details.gstNo!=''" readonly [value]="details.gstNo" ></ion-input>
+        <ion-input *ngIf="details.gstNo==''" readonly value="Not Available" ></ion-input>        
+      </ion-item>
+    <ion-item>
+        <ion-label color="primary" floating>Contact Person Name :</ion-label>
+        <ion-input readonly *ngIf="details.contactPersonName!=''" [value]="details.contactPersonName" ></ion-input>
+        <ion-input readonly *ngIf="details.contactPersonName==''" value="Not Available" ></ion-input>        
+      </ion-item>
+    <ion-item>
+        <ion-label color="primary" floating>Contact Person Number :</ion-label>
+        <ion-input readonly *ngIf="details.contactPersonNo!=''" [value]="details.contactPersonNo" ></ion-input>
+        <ion-input readonly *ngIf="details.contactPersonNo==''" value="Not Available" ></ion-input>        
+      </ion-item>
+
+
+</ion-content>

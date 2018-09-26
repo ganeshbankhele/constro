@@ -1,0 +1,396 @@
+<ion-content class="bg-white">
+    <ion-row class="padding-10">
+        <ion-col col-1>
+            <div *ngIf="otpStatus=='Send'" (click)="goBack()" class="topArrow">
+                <ion-icon name="arrow-back"></ion-icon>
+            </div>
+        </ion-col>
+        <ion-col class="text-right" col-11>
+            <div *ngIf="title_head!='Confirm SignUp'" (click)="goBack()" class="topskip">
+                <span (click)="dismiss()">Back</span>
+            </div>
+            <div *ngIf="title_head=='Confirm SignUp'" (click)="goBack()" class="topskip">
+                <span (click)="goshignUpBack()">Back</span>
+            </div>
+        </ion-col>
+    </ion-row>
+
+    <div *ngIf="title_head=='Sign In'">
+        <ion-row class="text-center">
+            <ion-col>
+                <img src="./assets/imgs/logo.png" />
+            </ion-col>
+        </ion-row>
+        <div class="padding-15">
+            <ion-row *ngIf="loginForm.status == 'INVALID' && submitAttempt && loginType=='Password'" class="invalidMessage">
+                <ion-col col-12>
+                    Please Enter Email / Mobile Number And Password.
+                </ion-col>
+            </ion-row>
+            <form [formGroup]="loginForm" *ngIf="loginType=='Password'">
+                <ion-item>
+                    <ion-label color="primary" floating [class.invalid]="!loginForm.controls.username.valid && (loginForm.controls.username.dirty || submitAttempt)">Email id / Mobile Number
+                        <span style="color:red">*</span>
+                    </ion-label>
+                    <ion-input formControlName="username" value="montu2121@yopmail.com" clearInput></ion-input>
+                </ion-item>
+                <ion-item>
+                    <ion-label color="primary" floating [class.invalid]="!loginForm.controls.password.valid && (loginForm.controls.password.dirty || submitAttempt)">Password
+                        <span style="color:red">*</span>
+                    </ion-label>
+                    <ion-input type="password" formControlName="password" value="123456" clearInput></ion-input>
+                </ion-item>
+
+                <ion-row>
+                    <ion-col col-12>
+                        <br /> By logging in, you agree to our
+                        <u class="col-link" (click)="openTerms()">Terms Of Use</u> and
+                        <u class="col-link" (click)="openPolicy()">Privacy Policy</u>.
+                    </ion-col>
+                </ion-row>
+                <ion-row class="text-center">
+                    <ion-col col-12>
+                        <br />
+                        <button ion-button block (click)="login()">SIGN IN</button>
+                    </ion-col>
+                </ion-row>
+                <br />
+                <ion-row>
+                    <ion-col col-6 class="text-left col-link">
+                        <u (click)="goForget()">Forgot/Reset Password ?</u>
+                    </ion-col>
+                    <ion-col col-6 class="text-right col-link">
+                        <u (click)="changeType('Otp')">Sign In With OTP</u>
+                    </ion-col>
+                </ion-row>
+                <ion-row class="text-center">
+                    <ion-col col-12>
+                        <br />
+                        <br /> Don't have an account?
+                        <span class="col-link" (click)="changeForm('Sign Up')">
+                            <strong>
+                                <u>Sign Up here</u>
+                            </strong>
+                        </span>
+                    </ion-col>
+                </ion-row>
+            </form>
+
+            <ion-row *ngIf="otp.status == 'INVALID' && otpsubmitAttempt && loginType=='Otp'" class="invalidMessage">
+                <ion-col col-12>
+                    Please Enter Email / Mobile Number.
+                </ion-col>
+            </ion-row>
+
+            <form [formGroup]="otp" *ngIf="loginType=='Otp' && otpStatus!='Send'">
+                <ion-item>
+                    <ion-label color="primary" floating [class.invalid]="!otp.controls.username.valid && (otp.controls.username.dirty || otpsubmitAttempt)">Email id / Mobile Number
+                        <span style="color:red">*</span>
+                    </ion-label>
+                    <ion-input formControlName="username" clearInput></ion-input>
+                </ion-item>
+
+                <ion-row class="text-center">
+                    <ion-col col-12>
+                        <br />
+                        <button *ngIf="loginType=='Otp' && otpStatus!='Send'" (click)="sendOtp()" ion-button>Send OTP</button>
+                        <br />
+                        <br />
+                        <u class="col-link" (click)="changeType('Password')">Sign In With Password</u>
+
+                    </ion-col>
+                </ion-row>
+                <ion-row class="text-center">
+                    <ion-col col-12>
+                        <br />
+                        <br /> Don't have an account?
+                        <span class="col-link" (click)="changeForm('Sign Up')">
+                            <strong>
+                                <u>Sign Up here</u>
+                            </strong>
+                        </span>
+                    </ion-col>
+                </ion-row>
+            </form>
+            <ion-row *ngIf="otpStatus=='Send'">
+                <ion-col col-12>
+                    {{otpSentMessage}}
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="otpverify.status == 'INVALID' && otpverifysubmitAttempt && loginType=='Otp'" class="invalidMessage">
+                <ion-col col-12>
+                    <br /> Please Enter Otp To Verify.
+                </ion-col>
+            </ion-row>
+
+            <form [formGroup]="otpverify" *ngIf="loginType=='Otp' && otpStatus=='Send'">
+                <ion-item>
+                    <ion-label color="primary" floating [class.invalid]="!otpverify.controls.otp.valid && (otpverify.controls.otp.dirty || otpverifysubmitAttempt)">OTP
+                        <span style="color:red">*</span>
+                    </ion-label>
+                    <ion-input type="password" formControlName="otp" clearInput></ion-input>
+                </ion-item>
+                <ion-row class="text-center">
+                    <ion-col col-12>
+                        <br />
+                        <button ion-button block (click)="verifyOtp()">Verify Otp</button>
+                    </ion-col>
+                </ion-row>
+            </form>
+        </div>
+    </div>
+
+    <div *ngIf="title_head=='Sign Up'">
+        <form [formGroup]="signUpForm">
+            <div class="padding-15">
+                <ion-row class="text-center">
+                    <ion-col>
+                        <img src="./assets/imgs/logo.png" />
+                    </ion-col>
+                </ion-row>
+
+                <ion-item>
+                    <ion-label color="primary" floating [class.invalid]="!signUpForm.controls.mobile.valid && (signUpForm.controls.mobile.dirty || signUpAttempt)">Mobile Number
+                        <span style="color:red">*</span>
+                    </ion-label>
+                    <ion-input formControlName="mobile" minlength="10" maxlength="16" clearInput type="number"></ion-input>
+                </ion-item>
+                <ion-row *ngIf="!signUpForm.controls.mobile.valid && (signUpForm.controls.mobile.dirty || signUpAttempt)" class="invalidMessage">
+                    <ion-col col-12>
+                        <br /> Please Enter Valid Mobile Number.
+                    </ion-col>
+                </ion-row>
+
+                <ion-item>
+                    <ion-label color="primary" floating>Email Id</ion-label>
+                    <ion-input formControlName="email" maxlength="80" clearInput type="text"></ion-input>
+                </ion-item>
+                <ion-row *ngIf="!signUpForm.controls.email.valid && (signUpForm.controls.signUpPassword.dirty || signUpAttempt)" class="invalidMessage">
+                    <ion-col col-12>
+                        <br /> Please Enter Valid Email Id.
+                    </ion-col>
+                </ion-row>
+                <ion-item>
+                    <ion-label color="primary" floating [class.invalid]="!signUpForm.controls.signUpPassword.valid && (signUpForm.controls.signUpPassword.dirty || signUpAttempt)">Password
+                        <span style="color:red">*</span>
+                    </ion-label>
+                    <ion-input formControlName="signUpPassword" maxlength="30" type="password" clearInput></ion-input>
+                </ion-item>
+                <ion-row *ngIf="!signUpForm.controls.signUpPassword.valid && (signUpForm.controls.signUpPassword.dirty || signUpAttempt)"
+                    class="invalidMessage">
+                    <ion-col col-12>
+                        <br /> Please enter password of minimum 4 digit long.
+                    </ion-col>
+                </ion-row>
+
+                <ion-item>
+                    <ion-label color="primary" floating [class.invalid]="!signUpForm.controls.signUpcPassword.valid && (signUpForm.controls.signUpcPassword.dirty || signUpAttempt)">Confirm Password
+                        <span style="color:red">*</span>
+                    </ion-label>
+                    <ion-input formControlName="signUpcPassword" type="password" clearInput></ion-input>
+                </ion-item>
+                <ion-row *ngIf="signUpForm.controls.signUpcPassword.errors?.MatchPassword" class="invalidMessage">
+                    <ion-col col-12>
+                        <br />Password Not Match.
+                    </ion-col>
+                </ion-row>
+
+
+                <ion-row class="radioStyle padding-top-10 padding-bottom-5" radio-group value="Buyer">
+                    <ion-col col-4>
+                        <ion-item style="border-bottom:none !important">
+                            I am a :
+                        </ion-item>
+                    </ion-col>
+                    <ion-col col-4>
+                        <ion-item style="border-bottom:none !important">
+
+                            <ion-radio value="Buyer" checked (click)="selectedType('Buyer')"></ion-radio>
+                            <ion-label>Buyer</ion-label>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col col-4>
+                        <ion-item style="border-bottom:none !important">
+
+                            <ion-radio value="Seller" (click)="selectedType('Seller')"></ion-radio>
+                            <ion-label>Seller</ion-label>
+                        </ion-item>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-12>
+                        <br /> By creating this account, you agree to our
+                        <u class="col-link" (click)="openTerms()">Terms Of Use</u> and
+                        <u class="col-link" (click)="openPolicy()">Privacy Policy</u>.
+                    </ion-col>
+                </ion-row>
+                <ion-row class="text-center">
+
+                    <ion-col col-12>
+                        <br />
+                        <button ion-button block (click)="signUp()">SIGN UP</button>
+                    </ion-col>
+
+                </ion-row>
+
+                <ion-row class="text-center">
+                    <ion-col col-12>
+                        <br />
+                        <br /> Already have an account?
+                        <span class="col-link" (click)="changeForm('Sign In')">
+                            <strong>
+                                <u>Sign In here</u>
+                            </strong>
+                        </span>
+                    </ion-col>
+                </ion-row>
+
+            </div>
+        </form>
+    </div>
+    <div *ngIf="title_head=='Confirm SignUp'" class="padding-15">
+        <ion-row>
+            <ion-col col-12>
+                {{otpSentMessageconfirm}}
+            </ion-col>
+        </ion-row>
+        <ion-row *ngIf="confirmOtp.status == 'INVALID' && confirmOtpsubmitAttempt" class="invalidMessage">
+            <ion-col col-12>
+                <br /> Please Enter Otp To Verify.
+            </ion-col>
+        </ion-row>
+
+        <form [formGroup]="confirmOtp">
+            <ion-item>
+                <ion-label color="primary" floating [class.invalid]="!confirmOtp.controls.otp.valid && (confirmOtp.controls.otp.dirty || confirmOtpsubmitAttempt)">OTP
+                    <span style="color:red">*</span>
+                </ion-label>
+                <ion-input type="number" formControlName="otp" clearInput></ion-input>
+            </ion-item>
+            <ion-row class="text-center">
+                <ion-col col-12>
+                    <br />
+                    <span class="col-link" (click)="resendOtp()">
+                        <u>Resend Otp</u>
+                    </span>
+                </ion-col>
+            </ion-row>
+            <ion-row class="text-center">
+                <ion-col col-12>
+                    <br />
+                    <button ion-button block (click)="confirmSignupOtp()">Verify Otp</button>
+                </ion-col>
+            </ion-row>
+        </form>
+    </div>
+
+    <div *ngIf="title_head=='change password'">
+        <ion-row class="text-center">
+            <ion-col>
+                <img src="./assets/imgs/logo.png" />
+            </ion-col>
+        </ion-row>
+        <div class="padding-15">
+            <!-- start send otp -->
+            <div *ngIf="sendOtpScreen">
+                <br />
+                <ion-row *ngIf="sendOtpForm.status == 'INVALID' && sendOtpSubmitAttempt" class="invalidMessage">
+                    <ion-col col-12>
+                        Please Enter Mobile Number.
+                    </ion-col>
+                </ion-row>
+                <form [formGroup]="sendOtpForm">
+                    <ion-item>
+                        <ion-label color="primary" floating [class.invalid]="!sendOtpForm.controls.chusername.valid && (sendOtpForm.controls.chusername.dirty || sendOtpSubmitAttempt)">Mobile Number
+                            <span style="color:red">*</span>
+                        </ion-label>
+                        <ion-input type="number" maxLength="16" formControlName="chusername" clearInput></ion-input>
+                    </ion-item>
+                    <ion-row class="text-center ">
+                        <ion-col col-12>
+                            <br />
+                            <button (click)="sendOtpCh()" ion-button>Send OTP</button>
+                        </ion-col>
+                    </ion-row>
+                </form>
+            </div>
+            <!-- end dend otp -->
+            <!-- start verify screen -->
+            <div *ngIf="verifyOtpScreen">
+                <br />
+                <ion-row>
+                    <ion-col col-12>
+                        {{chotpSentMessage}}
+                    </ion-col>
+                </ion-row>
+                <br />
+                <ion-row *ngIf="verifyOtpForm.status == 'INVALID' && verifyOtpSubmitAttempt" class="invalidMessage">
+                    <ion-col col-12>
+                        Please Enter otp to verify.
+                    </ion-col>
+                </ion-row>
+                <form [formGroup]="verifyOtpForm">
+                    <ion-item>
+                        <ion-label color="primary" floating [class.invalid]="!verifyOtpForm.controls.chotp.valid && (verifyOtpForm.controls.chotp.dirty || verifyOtpSubmitAttempt)">OTP
+                            <span style="color:red">*</span>
+                        </ion-label>
+                        <ion-input type="number" formControlName="chotp" clearInput></ion-input>
+                    </ion-item>
+                    <ion-row class="text-center col-link">
+                        <ion-col col-12>
+                            <p>
+                                <u (click)="sendOtpCh()">Resend OTP</u>
+                            </p>
+                            <br />
+                            <button (click)="verifyOtpCh()" ion-button>Verify OTP</button>
+
+                        </ion-col>
+                    </ion-row>
+
+                </form>
+            </div>
+            <!-- end verify screen -->
+            <!-- change password screen -->
+            <div *ngIf="changePasswordScreen">
+                <br />
+                <ion-row>
+                        <ion-col col-12>
+                            Update Your Password.
+                        </ion-col>
+                    </ion-row>
+                    <br />  
+                <ion-row *ngIf="changePasswordForm.status == 'INVALID' && changeSubmitAttempt" class="invalidMessage">
+                    <ion-col col-12>
+                        Please Enter Password And Confirm Password.
+                    </ion-col>
+                </ion-row>
+                
+                <form [formGroup]="changePasswordForm">
+                    <ion-item>
+                        <ion-label color="primary" floating [class.invalid]="!changePasswordForm.controls.chpassword.valid && (changePasswordForm.controls.chpassword.dirty || changeSubmitAttempt)">New Password
+                            <span style="color:red">*</span>
+                        </ion-label>
+                        <ion-input type="password" maxLength="30" formControlName="chpassword" clearInput></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label color="primary" floating [class.invalid]="!changePasswordForm.controls.chcpassword.valid && (changePasswordForm.controls.chcpassword.dirty || changeSubmitAttempt)">Confirm Password
+                            <span style="color:red">*</span>
+                        </ion-label>
+                        <ion-input type="password" maxLength="30" formControlName="chcpassword" clearInput></ion-input>
+                    </ion-item>
+                    <div style="color:red" *ngIf="changePasswordForm.controls.chcpassword.errors?.MatchPassword">Password not match</div>
+                    <ion-row class="text-center ">
+                        <ion-col col-12>
+                            <br />
+                            <button (click)="changePassword()" ion-button>Update</button>
+                        </ion-col>
+                    </ion-row>
+                </form>
+            </div>
+        </div>
+        <!-- change password screen -->
+    </div>
+
+
+
+</ion-content>

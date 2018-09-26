@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Product Catalog</ion-title>
+    <ion-buttons end>
+        <button id="notification-button" ion-button clear (click)="openNotification('NotificationPage')">
+            <ion-icon name="notifications" style="font-size: 1.8em">
+              <ion-badge id="notifications-badge" color="danger" *ngIf="note.notificationCounterForAll != 0">{{note.notificationCounterForAll}}</ion-badge>
+            </ion-icon>              
+        </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-card *ngIf="noProduct">
+    <ion-card-content>
+      
+          You Have No Product Added Yet.
+          Please Login To Web constrobazaar.com To Add Product.
+       
+    </ion-card-content>
+   </ion-card>
+  <ion-card [ngClass]="{'margin-top-0':i === 0}" *ngFor="let data of catShortData;let i=index;">
+    <ion-card-content>
+      <ion-row class="margin-top-0 padding-0">
+        <ion-col class="padding-0"  col-11>
+          <span class="font-size-1-5">
+            <strong [innerHtml]="data.Seller_Product_Name"></strong>
+          </span>
+          <br />
+          <!-- <span class="col-title-head"> Variant Name : </span> -->
+          <span style="color:red" [innerHtml]="data.Variant_Name"></span>
+        </ion-col>
+
+        <ion-col col-1 class="text-center font-size-2" (click)="presentActionSheet()">
+          <fa-icon name="ellipsis-v"></fa-icon>
+        </ion-col>
+      </ion-row>
+      <ion-row class="margin-top-0 padding-0">
+        <ion-col col-8 class="padding-0">
+          <ion-row class="padding-0">
+            <ion-col col-12 class="padding-0">
+              <span class="col-title-head">Code :</span> {{data.Seller_Produst_Code}}
+            </ion-col>
+          </ion-row>
+          <ion-row class="padding-0">
+            <ion-col col-12 class="padding-0">
+              <span class="col-title-head">MOQ :</span> {{data.MOQ}}
+            </ion-col>
+          </ion-row>
+          <ion-row class="padding-0">
+            <ion-col col-12 class=" padding-0">
+              <span class="col-title-head">Price : </span>
+              <span class="text-right" *ngIf="data.Price_Range!=0">
+                <fa-icon name="inr"></fa-icon> {{data.Price_Range }}
+              </span>
+              <span class="text-right" *ngIf="data.Price_Range==0">
+                Not Provided
+              </span>
+            </ion-col>
+          </ion-row>
+          <ion-row class="margin-top-0 padding-0">
+            <ion-col class="padding-0" col-4>
+              <div class="padding-top-10 col-title-head">Avaibility :</div>
+            </ion-col>
+            <ion-col class="padding-0" col-4>
+              <ion-item class="bg-white">
+                <ion-toggle [checked]="data.Is_Available=== '1' ? true : false" (ionChange)="updateproduct($event, data.Seller_Product_Id)"></ion-toggle>
+              </ion-item>
+            </ion-col>
+            <ion-col col-4></ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col col-4 class="padding-0">
+          <img [src]="data.Seller_Product_Image" (click)="openImage(data.Seller_Product_Image,'0')" />
+        </ion-col>
+      </ion-row>
+      <ion-row class="margin-top-0 padding-0">
+        <ion-col col-2 class="padding-0 col-title-head">
+          Location : 
+        </ion-col>
+        <ion-col col-10 class="padding-0" [innerHtml]="data.Delivery_Location">
+
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<!--<ion-footer>
+  <ion-row>
+    <ion-col class="bottombtn" (click)="addNewProduct()">
+      Add New Product
+    </ion-col>
+  </ion-row>
+</ion-footer>-->

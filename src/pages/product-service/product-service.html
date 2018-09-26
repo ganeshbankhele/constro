@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-row>
+      <ion-col col-1>
+        <div (click)="dismiss()" class="topArrow">
+          <ion-icon name="arrow-back"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col col-11>
+        <ion-input class="out-line-none" style="color:white" clearInput type="text" (keyup)="updateList($event)" placeholder="Product/Service"
+          autofocus></ion-input>
+      </ion-col>
+      <!-- <ion-col col-2 class="text-right toprightArrow">
+        <div  (click)="dismiss(pro.value)" class="">
+          <!-- <ion-icon name="checkmark"></ion-icon> Done 
+          
+        </div>
+      </ion-col> -->
+    </ion-row>
+  </ion-navbar>
+</ion-header>
+<ion-content class="bg-white">
+  <ion-list inset>
+    <ion-item class="bg-white" *ngFor="let pro of product" (click)="slected(pro)">
+      {{pro.Text}}
+    </ion-item>
+    <ion-item class="bg-white" *ngIf="product.length==0 && keyword!=''" (click)="slectedString(keyword)">
+      {{keyword}}
+    </ion-item>
+
+  </ion-list>
+</ion-content>

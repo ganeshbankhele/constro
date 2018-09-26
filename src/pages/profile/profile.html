@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Profile  <span class="font-size-1">{{authProvider.userType}}</span></ion-title>
+    <ion-buttons end>
+        <button id="notification-button" ion-button clear (click)="openNotification('NotificationPage')">
+            <ion-icon name="notifications" style="font-size: 1.8em">
+              <ion-badge id="notifications-badge" color="danger" *ngIf="note.notificationCounterForAll != 0">{{note.notificationCounterForAll}}</ion-badge>
+            </ion-icon>              
+        </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div class="item profilepic-border" align="center">
+    <img class="profilepic padding-bottom" *ngIf="!loaded" src="./assets/imgs/giphy.gif"/>
+    <img class="profilepic padding-bottom" *ngIf="companyLogo!=''" [hidden]="!loaded" (load)="loaded = true" [src]="companyLogo"  (click)="openImage(companyLogo,'0')" />
+    <img class="profilepic padding-bottom" *ngIf="companyLogo==''" [hidden]="!loaded" (load)="loaded = true" src="./assets/icon/profile.png"  (click)="openImage(companyLogo,'0')" />
+  </div>
+  <div class="comp_name">Business Readiness :
+    <b>{{prof.businessReadiness}} %</b> 
+  </div>
+  <div style="padding:15px;background:white">
+    <ion-list class="margin-top-5">
+      <button ion-item class="bg-white" (click)="pushPage('ProfileBasicDetailsPage')">
+        Basic Info
+        <div showWhen="android" class="item-note" item-end>
+          <fa-icon name="angle-right"></fa-icon>
+        </div>
+      </button>
+      <button ion-item class="bg-white" (click)="pushPage('ProfileCompanyDetailsPage')">
+        Company Info
+        <div showWhen="android" class="item-note" item-end>
+          <fa-icon name="angle-right"></fa-icon>
+        </div>
+      </button>
+      <button ion-item class="bg-white" (click)="pushPage('ProfileAwardsPage')">
+        Awards & Membership
+        <div showWhen="android" class="item-note" item-end>
+          <fa-icon name="angle-right"></fa-icon>
+        </div>
+      </button>
+      <button ion-item class="bg-white" (click)="pushPage('ProfileMembershipPage')">
+        Brochures & Trademarks
+        <div showWhen="android" class="item-note" item-end>
+          <fa-icon name="angle-right"></fa-icon>
+        </div>
+      </button>
+      <button ion-item class="bg-white" (click)="pushPage('ProfileBankdetailsPage')">
+        Bank Details
+        <div showWhen="android" class="item-note" item-end>
+          <fa-icon name="angle-right"></fa-icon>
+        </div>
+      </button>
+      <button ion-item class="bg-white" (click)="logOut()">
+        Logout
+        <div showWhen="android" class="item-note" item-end>
+          <fa-icon class="col-title-head" name="sign-out"></fa-icon>
+        </div>
+      </button>
+     
+    </ion-list>
+  </div>
+  
+</ion-content>

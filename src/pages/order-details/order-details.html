@@ -1,0 +1,191 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Order Details</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-card class="margin-top-0">
+    <ion-card-content>
+      <ion-row>
+        <ion-col col-12>
+          <strong>PO Details</strong>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+  <ion-card class="margin-top-0">
+    <ion-card-content>
+      <ion-row>
+        <ion-col col-auto class="col-title-head">
+          PO Number :
+        </ion-col>
+        <ion-col>
+          {{poDetail.poNumber}}
+        </ion-col>
+      </ion-row>
+      <ion-row class="">
+        <ion-col col-auto class="col-title-head">
+          PO Date :
+        </ion-col>
+        <ion-col>
+          {{poDetail.poDate}}
+        </ion-col>
+      </ion-row>
+      <ion-row class="">
+        <ion-col col-auto class="col-title-head">
+          PO Valid Till :
+        </ion-col>
+        <ion-col>
+          {{poDetail.poValidTill}}
+        </ion-col>
+      </ion-row>
+      <ion-row class="">
+        <ion-col col-auto class="col-title-head">
+          PO Status :
+        </ion-col>
+        <ion-col>
+          {{poDetail.poStatus}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-auto>
+          <div class="font-size-1-2 col-link" (click)="presentPopover(poDetail.sellerDetails,'Seller')">
+            <strong>
+              <ion-icon name="person-add"></ion-icon> SELLER DETAILS</strong>
+          </div>
+        </ion-col>
+        <ion-col>
+          <div class="font-size-1-2 col-primary"></div>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="poDetail.deliveryTo!=''">
+        <ion-col col-auto>
+          <div class="col-title-head">
+            Deliver To,
+          </div>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-12>
+          {{poDetail.deliveryTo}}
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-content>
+      <ion-row>
+        <ion-col col-12>
+          <strong>Product Details</strong>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+  <ion-card [ngClass]="{'margin-top-0':in === 0}" *ngFor="let pro of productDetails;let in = index;">
+    <ion-card-content>
+      <ion-row>
+        <ion-col col-auto class="col-title-head">
+          Product :
+        </ion-col>
+        <ion-col>
+          {{toHTML(pro.productName)}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-auto class="col-title-head">
+          Variant :
+        </ion-col>
+        <ion-col>
+          {{toHTML(pro.variant)}}
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="pro.code!=''">
+        <ion-col col-auto class="col-title-head">
+          Code :
+        </ion-col>
+        <ion-col>
+          {{pro.code}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-auto class="col-title-head">
+          Quantity :
+        </ion-col>
+        <ion-col>
+          {{pro.quantity}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-auto class="col-title-head">
+          Unit Cost :
+        </ion-col>
+        <ion-col>
+          <fa-icon name="inr"></fa-icon> {{pro.unitCost}}
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="pro.discount">
+        <ion-col col-auto class="col-title-head">
+          Discount :
+        </ion-col>
+        <ion-col  *ngIf="pro.discount =='0'">
+          <fa-icon name="inr"></fa-icon> {{pro.discount}}
+        </ion-col>
+        <ion-col *ngIf="pro.discount !='0'">
+          {{pro.discount}}
+        </ion-col>
+      </ion-row>
+      <!-- <ion-row>
+        <ion-col col-4 class="col-title-head">
+          Tax Apply On :
+        </ion-col>
+        <ion-col col-8>
+            {{pro.taxAppliedOn}}
+        </ion-col>
+      </ion-row> -->
+      <ion-row *ngIf="pro.totalTax.length!=0">
+        <ion-col col-auto class="col-title-head">
+          Total Tax :
+        </ion-col>
+        <ion-col >
+          <span *ngFor="let tax of pro.totalTax;let i=index">
+            <span *ngIf="i!=0">,
+              <br />
+            </span>
+            <fa-icon name="inr"></fa-icon> {{tax.taxAmount}} ( {{tax.taxPercentage}} % {{tax.taxTitle}} )
+          </span>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-auto class="col-title-head">
+          Total Amount :
+        </ion-col>
+
+        <ion-col >
+          <fa-icon name="inr"></fa-icon> {{pro.totalAmount}}
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="pro.creditDays!=''">
+        <ion-col col-auto class="col-title-head">
+          Credit Days :
+        </ion-col>
+        <ion-col >
+          {{pro.creditDays}} Days
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="pro.termsAndCondition!=''">
+        <ion-col col-12 class="col-title-head">
+          Terms & Condition :
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-12>
+          {{pro.termsAndCondition}}
+        </ion-col>
+      </ion-row>
+
+    </ion-card-content>
+  </ion-card>
+</ion-content>

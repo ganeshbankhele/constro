@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-navbar color="primary">
+      <ion-row>
+            <div  (click)="dismiss()" class="topArrow">
+              <ion-icon name="arrow-back"></ion-icon>
+            </div>
+             <ion-title class="topArrow">Select Variant</ion-title>
+      </ion-row>
+</ion-navbar>
+
+</ion-header>
+<ion-content>
+    <ion-card class="card-bg" [ngClass]="{'margin-top-0':i === 0}" style="border:2px solid #EBECF0;padding-left:2px" *ngFor="let data_var of data;let i=index">
+        <ion-grid class="padding-bottom-0">
+    
+          <ion-row class="padding-bottom-0">
+    
+            <ion-col col-11>
+              <span class="span-head"> {{toHTML(data_var.Variant_Name)}}</span>
+            </ion-col>
+            <ion-col col-1>
+              <ion-checkbox (click)="addToGetquote(data_var)" [checked]='data_var.selected' color="primary"></ion-checkbox>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <ion-grid class="padding-top-0">
+          <ion-row>
+            <ion-col col-4>
+              <img [src]="data_var.VariantImage" />
+            </ion-col>
+            <ion-col col-8>
+              <p>
+                <span class="span-title font-size-1-2">Brand :</span>
+                <span class="span-body font-size-1-2" *ngIf="data_var.Brand_Title != ''"> {{data_var.Brand_Title}}</span>
+                <span class="span-body font-size-1-2" *ngIf="data_var.Brand_Title == ''"> Not Provided</span>
+              </p>
+              <p>
+                <span class="span-title font-size-1-2">Code :</span>
+                <span class="span-body font-size-1-2" *ngIf="data_var.Product_Code != ''"> {{data_var.Product_Code}}</span>
+                <span class="span-body font-size-1-2" *ngIf="data_var.Product_Code == ''"> Not Provided</span>
+                
+              </p>
+              <p>
+                <span class="span-title font-size-1-2">Price :</span>
+                <span class="span-body font-size-1-2" *ngIf="data_var.Min_Product_Price == 'Not Provided'">{{data_var.Min_Product_Price}}</span>
+                <span class="span-body font-size-1-2" *ngIf="data_var.Min_Product_Price != 'Not Provided'">{{data_var.Min_Product_Price}} To {{data_var.Max_Product_Price}}</span>
+              </p>
+              <p>
+                <span class="span-title font-size-1-2">MOQ :</span>
+                <span class="span-body font-size-1-2">{{data_var.Min_Order_Qty}}</span>
+              </p>
+              <ion-row>
+                <ion-col class="span-title col-link" (click)="openCompanyPage(data_var.catId,data_var.subCatId,data_var.seller_product_id,false)">View Details</ion-col>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+    
+      </ion-card>
+    </ion-content>
+    <ion-footer class="bg-white">
+      <button ion-button block icon-start (click)="getQuotes()">Proceed</button>
+    </ion-footer>

@@ -1,0 +1,143 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Post Your Requirement</ion-title>
+        <ion-buttons end *ngIf="authProvider.userType!=''">
+            <button id="notification-button" ion-button clear (click)="openNotification('NotificationPage')">
+                <ion-icon name="notifications" style="font-size: 1.8em">
+                    <ion-badge id="notifications-badge" color="danger" *ngIf="note.notificationCounterForAll != 0">{{note.notificationCounterForAll}}</ion-badge>
+                </ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content class="bg-white" padding>
+    <div *ngIf="postBefore">
+        <form [formGroup]="postRequirementFormBefore">
+
+            <ion-item>
+                <ion-label color="primary" floating>Product Name
+                    <span class="required">*</span>
+                </ion-label>
+                <ion-input class="no-validation-line" (click)="productSearch()" type="text" maxLength="50" formControlName="productName"
+                    clearInput></ion-input>
+            </ion-item>
+            <div *ngIf="!postRequirementFormBefore.controls.productName.valid && (postRequirementFormBefore.controls.productName.dirty || submitAttemptBefore)"
+                class="invalidMessage">
+                Please Enter Product Name.
+            </div>
+
+            <ion-row class="padding-0">
+                <ion-col class="padding-0">
+                    <ion-item>
+                        <ion-label color="primary" floating>Order Quantity
+                            <span class="required">*</span>
+                        </ion-label>
+                        <ion-input type="tel" maxLength="7" formControlName="orderQuantity" clearInput></ion-input>
+                    </ion-item>
+                    <div *ngIf="!postRequirementFormBefore.controls.orderQuantity.valid && (postRequirementFormBefore.controls.orderQuantity.dirty || submitAttemptBefore)"
+                        class="invalidMessage">
+                        Please Enter Order Quantity.
+                    </div>
+                </ion-col>
+                <ion-col class="padding-0">
+                    <ion-item>
+                        <ion-label color="primary" floating>Order Unit
+                            <span class="required">*</span>
+                        </ion-label>
+                        <ion-input type="text" #d maxLength="20" (click)="openUnits()"  formControlName="unit" clearInput></ion-input>
+                    </ion-item>
+                    <div *ngIf="!postRequirementFormBefore.controls.unit.valid && (postRequirementFormBefore.controls.unit.dirty || submitAttemptBefore)"
+                        class="invalidMessage">
+                        Please Enter Unit.
+                    </div>
+                </ion-col>
+            </ion-row>
+
+
+
+
+
+            <ion-item>
+                <ion-label color="primary" floating>Delivery Location
+                    <span class="required">*</span>
+                </ion-label>
+                <ion-input class="no-validation-line" (click)="locationSearch()" type="text" maxLength="50" formControlName="deliveryLocation"
+                    clearInput></ion-input>
+            </ion-item>
+            <div *ngIf="!postRequirementFormBefore.controls.deliveryLocation.valid && (postRequirementFormBefore.controls.deliveryLocation.dirty || submitAttemptBefore)"
+                class="invalidMessage">
+                Please Enter Delivery Location.
+            </div>
+
+            <ion-item>
+                <ion-label color="primary" floating>Enter Your Requirement Here
+
+                </ion-label>
+                <ion-textarea autosize class="no-validation-line" type="text" maxLength="500" formControlName="requirement" clearInput></ion-textarea>
+            </ion-item>
+
+            <ion-row class="padding-0">
+                <ion-col class="file_upload">
+                    <div class="borderAlli">
+                        <div *ngFor="let img of uploadedDocs">
+                            {{ img.fileName}}
+                            <ion-icon ios="ios-trash" md="md-trash" (click)="deleteImage(img.fileLink)" style="float:right;font-size:2.5rem"></ion-icon>
+                        </div>
+
+                    </div>
+                    <div class="borderAll">
+                        <div (click)="presentActionSheet()">
+                            <ion-icon name="cloud-upload"></ion-icon> Upload Files
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row>
+            <button ion-button full (click)="postRequirement()">Submit</button>
+        </form>
+    </div>
+    <div *ngIf="postAfter">
+        <button *ngIf="postAfter" ion-button icon-start (click)="back()">
+            <ion-icon name="ios-arrow-back"></ion-icon> Back
+        </button>
+        <form [formGroup]="postRequirementFormAfter">
+            <ion-item>
+                <ion-label color="primary" floating>Name
+                    <span class="required">*</span>
+                </ion-label>
+                <ion-input type="text" maxLength="45" formControlName="name" [readonly]="nameExist"></ion-input>
+            </ion-item>
+            <div *ngIf="!postRequirementFormAfter.controls.name.valid && (postRequirementFormAfter.controls.name.dirty || submitAttemptAfter)"
+                class="invalidMessage">
+                Please Enter Your Name.
+            </div>
+
+            <ion-item>
+                <ion-label color="primary" floating>Mobile Number
+                    <span class="required">*</span>
+                </ion-label>
+                <ion-input formControlName="mobile" maxLength="10" maxLength="16" [readonly]="mobileExist" type="number"></ion-input>
+            </ion-item>
+            <div *ngIf="!postRequirementFormAfter.controls.mobile.valid && (postRequirementFormAfter.controls.mobile.dirty || submitAttemptAfter)"
+                class="invalidMessage">
+                Please Enter Mobile Number.
+            </div>
+
+            <ion-item>
+                <ion-label color="primary" floating>Email Id
+                    <span class="required">*</span>
+                </ion-label>
+                <ion-input formControlName="email" maxLength="80" type="email" [readonly]="emailExist"></ion-input>
+            </ion-item>
+            <div *ngIf="!postRequirementFormAfter.controls.email.valid && (postRequirementFormAfter.controls.email.dirty || submitAttemptAfter)"
+                class="invalidMessage">
+                Please Enter Valid Email Id.
+            </div>
+            <br />
+            <button ion-button full (click)="postRequirementAfter()">Submit</button>
+        </form>
+    </div>
+
+</ion-content>

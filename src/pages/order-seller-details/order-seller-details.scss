@@ -1,0 +1,18 @@
+.ios, .md {
+    page-order-seller-details {
+        
+        ion-card{
+            background: white;
+            ion-item{
+                background: white;
+            }
+            .col-primary{
+                color: map-get($colors, primary);
+            }
+            .col-secondary{
+                color: map-get($colors, secondary);
+            }
+           
+        }
+    }
+    }

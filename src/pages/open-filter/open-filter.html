@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-row>
+      <div (click)="dismiss()" class="topArrow">
+        <ion-icon name="arrow-back"></ion-icon>
+      </div>
+      <!-- <ion-title class="topArrow" *ngIf="dataReceived.Filter_Name!='CompanyLocation'">{{dataReceived.Filter_Name}}</ion-title> -->
+      <ion-title class="topArrow" *ngIf="dataReceived.Filter_Name=='CompanyLocation'">Select Company Location</ion-title>
+      <ion-title class="topArrow" *ngIf="dataReceived.Filter_Name=='SellerType'">Select Seller Type</ion-title>
+      <ion-title class="topArrow" *ngIf="dataReceived.Filter_Name=='Variant Name'">Select Variants </ion-title>
+      <ion-title class="topArrow" *ngIf="dataReceived.Filter_Name=='Brand'">Select Brands</ion-title>
+      <ion-title class="topArrow" *ngIf="dataReceived.Filter_Name=='Sellers'">Select Company Name </ion-title>
+    </ion-row>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div *ngFor="let fil of dataReceived.Filter_Value;let i = index;">
+    <ion-card *ngIf="dataReceived.Filter_Name!='CompanyLocation'" [ngClass]="{'margin-top-0':i === 0}">
+      <ion-card-content>
+        <ion-row>
+          <ion-col col-11>
+            {{ toHTML(fil.value) }}
+          </ion-col>
+          <ion-col col-1>
+            <ion-checkbox (click)="setValue(fil,i)" [checked]='fil.applied'></ion-checkbox>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+    <ion-card *ngIf="dataReceived.Filter_Name=='CompanyLocation'" [ngClass]="{'margin-top-0':i === 0}">
+      <ion-card-content>
+        <ion-row>
+          <ion-col col-11>
+            {{fil.Location}}
+          </ion-col>
+          <ion-col col-1>
+            <ion-checkbox (click)="setValue(fil,i)" [checked]='fil.applied'></ion-checkbox>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+</ion-content>
+<ion-footer class="bg-white">
+  <ion-row>
+    <ion-col>
+      <button ion-button block (click)="dismiss()">Done</button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

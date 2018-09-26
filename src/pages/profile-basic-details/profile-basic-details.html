@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Basic Info <span class="font-size-1">{{authProvider.userType}}</span></ion-title>
+    <!--  <ion-buttons end>
+      <button *ngIf="modeType=='Edit'" ion-button icon-only (click)="editMode()">{{modeType}}</button>
+    </ion-buttons> -->
+  </ion-navbar>
+</ion-header>
+<ion-content class="bg-white" padding>
+  <form [formGroup]="basicForm">
+    <ion-item>
+      <ion-label color="primary" floating>Email Address</ion-label>
+      <ion-input formControlName="emailId" readonly></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" floating>Mobile Number</ion-label>
+      <ion-input formControlName="mobileNo" readonly></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label color="primary" floating>First Name</ion-label>
+      <ion-input formControlName="fName"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label color="primary" floating>Company Full Name</ion-label>
+      <ion-input formControlName="companyFullName"></ion-input>
+    </ion-item>
+    <ion-row *ngIf="!basicForm.controls.companyFullName.valid" class="invalidMessage">
+      <ion-col col-12>
+        <br /> Please Enter Valid Company Name.
+      </ion-col>
+    </ion-row>
+
+    <ion-item class="dob">
+      <ion-label color="primary" floating>Enter DOB</ion-label>
+      <ion-datetime formControlName="DOB" displayFormat="D MMM YYYY"></ion-datetime>
+    </ion-item>
+    <br />
+  </form>
+</ion-content>
+<ion-footer>
+  <ion-row>
+    <ion-col class="bottombtn" (click)="submitBasicDetails()">
+      Submit
+    </ion-col>
+  </ion-row>
+
+</ion-footer>

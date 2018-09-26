@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Buy Leads <span class="font-size-1">Seller</span></ion-title>
+    <ion-buttons end>
+        <button id="notification-button" ion-button clear (click)="openNotification('NotificationPage')">
+            <ion-icon name="notifications" style="font-size: 1.8em">
+              <ion-badge id="notifications-badge" color="danger" *ngIf="note.notificationCounterForAll != 0">{{note.notificationCounterForAll}}</ion-badge>
+            </ion-icon>              
+        </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngIf="totalPurchasedLeads==0">
+    <ion-card-content>
+      <ion-row>
+        <ion-col>
+          You have not purchased any lead yet
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-card style="background:rgb(167, 195, 239,0.1)" [ngClass]="{'margin-top-0':i === 0}" *ngFor="let data of myLeads;let i=index;">
+    <ion-card-content>
+      <ion-row>
+        <ion-col class="font-size-1-8 padding-0" >
+          <strong>{{toHTML(data.Product_Name)}}</strong>
+          <br />
+          <span class="font-size-1-5" style="color:red">{{toHTML(data.Variant_Name)}}</span>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="padding-0">
+          <span class="col-title-head">Order Qty : </span> {{data.Quantity}} {{data.Unit}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="padding-0">
+          <span class="col-title-head">Location : </span> {{data.Delivery_Location}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="padding-0">
+          <span class="col-title-head">End Response Date : </span> {{data.End_Response_Date}}
+        </ion-col>
+      </ion-row>
+      <ion-card style="background:#fff">
+        <ion-card-content>
+            <ion-row>
+                <ion-col class="padding-0">
+                  <span class="col-title-head">Name : </span> {{data.Buyer_Name}} </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col class="padding-0">
+                  <span class="col-title-head">Email Address :</span> {{data.Buyer_Email_Id}}
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col class="padding-0">
+                  <span class="col-title-head">Phone No: </span> {{data.Buyer_Phone_No}}
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col class="padding-0">
+                  <span class="col-title-head">Company Name: </span> {{data.Buyer_Company}}
+                </ion-col>
+              </ion-row>
+        </ion-card-content>
+      </ion-card>
+     
+    </ion-card-content>
+  </ion-card>
+  <div style="height:6%">
+    <div *ngIf="noMoreResult" class="text-center padding-top-10">No More Result Found</div>
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="!noMoreResult">
+      <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+  </div>
+</ion-content>

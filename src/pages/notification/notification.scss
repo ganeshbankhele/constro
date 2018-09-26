@@ -1,0 +1,22 @@
+.ios, .md {
+page-notification {
+    
+    ion-card{
+        animation-duration: 1.5s;
+        animation-delay: 0.5s;
+        background: white;
+        ion-item{
+            background: white;
+        }
+        .col-primary{
+            color: map-get($colors, primary);
+        }
+        .col-secondary{
+            color: map-get($colors, secondary);
+        }
+       ion-col{
+           padding: 0px 0px 0px 4px !important;
+       }
+    }
+}
+}

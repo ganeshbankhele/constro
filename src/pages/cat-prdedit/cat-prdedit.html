@@ -1,0 +1,155 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Product/Service</ion-title>
+    <ion-buttons end>
+      <button id="notification-button" ion-button clear (click)="openNotification('NotificationPage')">
+        <ion-icon name="notifications" style="font-size: em">
+          <ion-badge id="notifications-badge" color="danger" *ngIf="note.notificationCounterForAll != 0">{{note.notificationCounterForAll}}</ion-badge>
+        </ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <form [formGroup]="productForm">
+    <ion-card>
+      <ion-card-header class="padding-bottom-0 padding-top-0">
+        <b>Basic Information</b>
+      </ion-card-header>
+      <ion-card-content>
+
+        <ion-item>
+          <ion-label color="primary" floating>Product Name</ion-label>
+          <ion-input formControlName="productName" value="AAC Block"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating style="color:black">Select Variant</ion-label>
+          <ion-select>
+            <ion-option value="f">1</ion-option>
+            <ion-option value="m">2</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary" floating>Product Code</ion-label>
+          <ion-input formControlName="productCode"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary" floating>Minimun Order Quantity</ion-label>
+          <ion-input formControlName="minOrderQty"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary" floating>Minimun Order Quantity Unit</ion-label>
+          <ion-input formControlName="minOrderQtyUnit"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary" floating>Minimun Price</ion-label>
+          <ion-input formControlName="minPrice"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" floating>Maximum Price</ion-label>
+          <ion-input formControlName="maxPrice"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" floating>Product Description</ion-label>
+          <ion-input formControlName="prodDescription"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary" floating>Brand Name</ion-label>
+          <ion-input formControlName="brandName"></ion-input>
+        </ion-item>
+        <div formArrayName="locations" *ngFor="let item of productForm.get('locations').controls; let i = index;">
+            <div [formGroupName]="i">
+          <ion-item>
+            <ion-label color="primary" floating>Location</ion-label>
+            <ion-input formControlName="location"></ion-input>
+          </ion-item>
+          <ion-input type="hidden" formControlName="countryId"></ion-input>
+          <ion-input type="hidden" formControlName="stateId"></ion-input>
+          <ion-input type="hidden" formControlName="cityId"></ion-input>
+          <ion-input type="hidden" formControlName="locationId"></ion-input>
+          <ion-input type="hidden" formControlName="pincode"></ion-input>
+          </div>
+        </div>
+        <ion-item>
+          <ion-label color="primary" floating>Call This Product As</ion-label>
+          <ion-input formControlName="callAsProduct"></ion-input>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header class="padding-bottom-0 padding-top-0">
+        <b>Product Images</b>
+      </ion-card-header>
+      <ion-card-content class="padding-top-0">
+        <ion-row>
+          <ion-col>
+            <ion-row class="margin-top-5 margin-bottom-5 border-bottom-1" *ngFor="let awd of awardsPhotos" (click)="openImage(awd)">
+              <ion-col>
+                <img src="" style="height: 8.3rem;width: 9rem;">
+              </ion-col>
+              <ion-col>
+                <ion-item>
+                  <ion-label color="primary" floating>Award Description :</ion-label>
+                  <ion-input [value]="awd.Description"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row (click)="presentActionSheet()">
+              <ion-col>
+                <button ion-button block outline icon-start>
+                  <ion-icon name="cloud-upload"></ion-icon> Upload Images
+                </button>
+              </ion-col>
+            </ion-row>
+
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header class="padding-bottom-0 padding-top-0">
+        <b>Product Specification</b>
+      </ion-card-header>
+      <ion-card-content class="padding-top-0">
+        <ion-item>
+          <ion-label color="primary" floating>Recomended Use</ion-label>
+          <ion-input formControlName="reccUse"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary" floating>Product gread</ion-label>
+          <ion-input formControlName="prodGread"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Is Product Innovative</ion-label>
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary" floating>Add Innovative Description</ion-label>
+          <ion-input formControlName="innoDesc"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Is Product Latest Launch</ion-label>
+          <ion-checkbox></ion-checkbox>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary" floating>Add Latest Launch Description</ion-label>
+          <ion-input formControlName="latestLaunchDesc"></ion-input>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </form>
+</ion-content>

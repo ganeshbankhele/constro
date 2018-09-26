@@ -1,0 +1,124 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Request
+            <span class="font-size-1">Seller</span>
+        </ion-title>
+        <ion-buttons end>
+                <button id="notification-button" ion-button clear (click)="openNotification('NotificationPage')">
+                    <ion-icon name="notifications" style="font-size: 1.8em">
+                      <ion-badge id="notifications-badge" color="danger" *ngIf="note.notificationCounterForAll != 0">{{note.notificationCounterForAll}}</ion-badge>
+                    </ion-icon>              
+                </button>
+            </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher>
+    <ion-card *ngIf="noRequest">
+        <ion-card-content>
+            <ion-row>
+                <ion-col>
+                    You Have No Request Received Yet.
+                </ion-col>
+            </ion-row>
+        </ion-card-content>
+    </ion-card>
+    <ion-list>
+        <ion-item (click)="openRequest(req.rfqProductLineId)" class="animated fadeIn item-remove-animate " *ngFor="let req of responseobj;let in=index;">
+            <ion-avatar item-start>
+                <img [src]="req.sellerProductImage">
+            </ion-avatar>
+            <ion-row class="">
+                <ion-col col-12 class="padding-2">{{toHTML(req.productName) | sliceWord:50 }}</ion-col>
+            </ion-row>
+            <ion-row class="font-size-1-2">
+                <ion-col col-12 class="padding-2">
+                    <span class="col-title-head">Variant :</span> {{toHTML(req.variantName) | sliceWord:40 }}</ion-col>
+            </ion-row>
+            <ion-row class="">
+                    <ion-col class="padding-2 font-size-1-2">
+                            <span class="col-title-head">Buyer :</span> {{req.compName}}
+                    </ion-col>
+                </ion-row>
+            <ion-row class=" font-size-1-2">
+                <ion-col class="padding-2">
+                    <span class="col-title-head">QTY. :</span> {{req.qty}}
+                </ion-col>
+            </ion-row>
+            <ion-row class=" font-size-1-2">
+                <ion-col class="padding-2 col-title-head" col-auto>Location :</ion-col>
+                <ion-col class="padding-2">{{req.location | sliceWord:50}}</ion-col>
+            </ion-row>
+            <ion-row class=" font-size-1-2">
+                <ion-col class="padding-2" col-auto>
+                    RFQ Status -  <span [style.color]="req.rfqStatus =='Po Placed' || req.rfqStatus =='Open' ? 'green' : 'red'">{{req.rfqStatus}}</span>
+                </ion-col>
+                <ion-col class="padding-2 text-right">
+                    <span class="col-title-head">End date :</span> {{req.endDate}}
+                </ion-col>
+            </ion-row>
+        </ion-item>
+    </ion-list>
+    <!-- <ion-card (click)="openRequest(req.rfqProductLineId)" class="animated fadeIn item-remove-animate" [ngClass]="{'margin-top-0':in === 0}"
+        *ngFor="let req of responseobj;let in=index;">
+        <ion-card-content>
+            <ion-row class="padding-0">
+                <ion-col class="padding-0">
+                    <strong>{{req.productName}}</strong>
+                    <span style="color:red">{{req.variantName}}</span>
+                </ion-col>
+            </ion-row>
+            <ion-row class="padding-0">
+                <ion-col col-8 class="padding-0">
+                    <ion-row class="padding-0">
+                        <ion-col class="padding-0 col-title-head">
+                            {{req.compName}}
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="padding-0">
+                        <ion-col class="padding-0">
+                            <span class="col-title-head">Received On :</span> {{req.receivedOn}}
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="padding-0">
+                        <ion-col class="padding-0">
+                            <span class="col-title-head">End date :</span> {{req.endDate}}
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="padding-0">
+                        <ion-col class="padding-0">
+                            <span class="col-title-head">QTY. :</span> {{req.qty}}
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="padding-0">
+                        <ion-col class="padding-0">
+                            <span class="col-title-head"> Location :</span> {{req.location | sliceWord:20 }}
+                        </ion-col>
+                    </ion-row>
+
+                </ion-col>
+                <ion-col col-4 class="padding-0">
+                    <img [src]="req.sellerProductImage" style="width:7em" />
+                </ion-col>
+            </ion-row>
+            <ion-row class="padding-0">
+                <ion-col class="padding-0">
+                  
+                    <span [style.color]="req.rfqStatus =='Po Placed' ? 'green' : 'red'" style="float:right;color:green">{{req.rfqStatus}}</span>
+                </ion-col>
+            </ion-row>
+        </ion-card-content>
+    </ion-card> -->
+    <div style="height:6%" *ngIf="responseobj.length > 19">
+        <div *ngIf="noMoreResult" class="text-center padding-top-10">No More Result Found</div>
+        <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="!noMoreResult">
+            <ion-infinite-scroll-content></ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+    </div>
+</ion-content>

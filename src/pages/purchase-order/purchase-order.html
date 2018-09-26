@@ -1,0 +1,187 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Purchase Order
+      <span class="font-size-1">Buyer</span>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <form [formGroup]="rsponseSend">
+    <ion-card class="margin-top-0">
+      <ion-card-content>
+        <ion-row>
+          <ion-col col-auto>
+            <b>To :</b>
+          </ion-col>
+          <ion-col>{{ toHTML(response.companyName) }}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-auto>
+            <b>Product :</b>
+          </ion-col>
+          <ion-col>{{ toHTML(response.genericProductName) }}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-auto>
+            <b>Variant :</b>
+          </ion-col>
+          <ion-col>{{ toHTML(response.variantName) }}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-auto>
+            <b>Qty :</b>
+          </ion-col>
+          <ion-col>{{response.quantity}} {{ toHTML(response.unitOfQuantity) }}</ion-col>
+        </ion-row>
+        <ion-input type="hidden" [value]="response.quantity" formControlName="qty" clearInput></ion-input>
+        <ion-input type="hidden" [value]="response.unitOfQuantity" formControlName="unit" clearInput></ion-input>
+        <ion-item>
+          <ion-label color="primary" floating>Unit Cost (<fa-icon name="inr"></fa-icon>)</ion-label>
+          <ion-input type="tel" maxLength="7" formControlName="unitCost" clearInput (keyup)="calculateTotal()"></ion-input>
+        </ion-item>
+        <ion-row *ngIf="!rsponseSend.controls.unitCost.valid && (rsponseSend.controls.unitCost.dirty || responseAttempt)" class="invalidMessage">
+          <ion-col col-12 class="padding-0">
+            Please enter unit cost.
+          </ion-col>
+        </ion-row>
+        <div formArrayName="taxes" *ngFor="let item of rsponseSend.get('taxes').controls; let i = index;">
+          <div [formGroupName]="i">
+            <ion-row class="padding-0">
+              <ion-col col-3 class="padding-0">
+                <ion-item>
+                  <ion-label color="primary" floating>Tax</ion-label>
+                  <ion-select interface="popover" #d name="taxName[i]" [(ngModel)]="taxName[i]" [ngModelOptions]="{standalone: true}" (ionChange)="changeTaxName(item,d.value)">
+                    <ion-option *ngFor="let data of activeTax" [disabled]="data.applied" [value]="data.id">{{data.title}}</ion-option>
+                  </ion-select>
+                </ion-item>
+                <ion-input type="hidden" formControlName="taxName"></ion-input>
+                <ion-row *ngIf="!item.get('taxName').valid && (item.get('taxName').dirty || responseAttempt)" class="invalidMessage">
+                  <ion-col class="padding-0" col-12>
+                    Select Tax.
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+             
+              <ion-col col-4 class="padding-0">
+                <ion-item>
+                  <ion-label color="primary" floating> % </ion-label>
+                  <ion-input type="tel" maxLength="3" formControlName="taxPersontage" (keyup)="calculateTax(item)"></ion-input>
+                </ion-item>
+                <ion-row *ngIf="!item.get('taxPersontage').valid && (item.get('taxPersontage').dirty || responseAttempt)" class="invalidMessage">
+                  <ion-col col-12 class="padding-0">
+                    Enter digit.
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            
+              <ion-col col-5 class="padding-0">
+                <ion-item>
+                  <ion-label color="primary" floating>Tax Amount (<fa-icon name="inr"></fa-icon>)</ion-label>
+                  <ion-input [readonly]="true" formControlName="taxAmount"></ion-input>
+                </ion-item>
+                <ion-row class="invalidMessage">
+                  <ion-col col-12 class="padding-0">
+                    <u style="color:blue" (click)="removeTax(d.value,i)">Remove Tax</u>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </div>
+        </div>
+        <ion-row class="padding-0" *ngIf="taxCount < 3">
+          <ion-col class="text-left padding-0">
+            <u style="color:blue" (click)="addTax()">Add More Tax</u>
+          </ion-col>
+        </ion-row>
+        <ion-row class=" padding-0">
+          <ion-col class="padding-0">
+            <ion-item>
+              <ion-label color="primary" floating>Discount</ion-label>
+              <ion-input type="tel" maxLength="10" formControlName="discount" clearInput (keyup)="setDiscountType()"></ion-input>
+            </ion-item>
+            <!-- <ion-row *ngIf="rsponseSend.controls['discount'].hasError('required') && (rsponseSend.controls.discount.dirty || signUpAttempt)" class="invalidMessage">
+                <ion-col col-12 class="padding-0">
+                  Please Enter Qty.
+                </ion-col>
+              </ion-row> -->
+            <ion-row *ngIf="rsponseSend.controls['discount'].hasError('maxPerc')" class="invalidMessage">
+              <ion-col col-12 class="padding-0">
+                Discount should not greater than 100%.
+              </ion-col>
+            </ion-row>
+            <ion-row *ngIf="rsponseSend.controls['discount'].hasError('maxFlat')" class="invalidMessage">
+              <ion-col col-12 class="padding-0">
+                Discount should not greater than total Amount.
+              </ion-col>
+            </ion-row>
+          </ion-col>
+          <ion-col col-1 class="padding-0"></ion-col>
+          <ion-col class="padding-0">
+            <ion-item>
+              <ion-label color="primary" floating>Type</ion-label>
+              <ion-select interface="popover" #c name="discountType" [(ngModel)]="discountType" [ngModelOptions]="{standalone: true}" (ionChange)="changeDiscountType(c.value)">
+                <ion-option value="P">%</ion-option>
+                <ion-option value="F">Flat</ion-option>
+              </ion-select>
+            </ion-item>
+            <ion-input type="hidden" formControlName="discountType"></ion-input>
+          </ion-col>
+        </ion-row>
+        <ion-item>
+          <ion-label color="primary" floating>Total Amount (<fa-icon name="inr"></fa-icon>)</ion-label>
+          <ion-input readonly clearInput formControlName="totalAmount"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" floating>Credit Days</ion-label>
+          <ion-input type="tel" formControlName="creditDays" maxLength="3" clearInput></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color="primary" floating [class.invalid]="!rsponseSend.controls.endQuoteValidityDate.valid && (rsponseSend.controls.endQuoteValidityDate.dirty || responseAttempt)">PO Valid till</ion-label>
+          <ion-datetime formControlName="endQuoteValidityDate" displayFormat="D MMM YYYY" min="{{minDate}}" max="{{maxDate}}" [(ngModel)]="myDate"></ion-datetime>
+        </ion-item>
+        <ion-row *ngIf="!rsponseSend.controls.endQuoteValidityDate.valid && (rsponseSend.controls.endQuoteValidityDate.dirty || responseAttempt)"
+          class="invalidMessage">
+          <ion-col col-12>
+            Please Enter End Response Date.
+          </ion-col>
+        </ion-row>
+        <ion-item>
+          <ion-label color="primary" floating>Delivery Address</ion-label>
+          <ion-textarea formControlName="deliveryAddress" clearInput autosize></ion-textarea>
+        </ion-item>
+        <ion-row *ngIf="!rsponseSend.controls.deliveryAddress.valid && (rsponseSend.controls.deliveryAddress.dirty || responseAttempt)"
+        class="invalidMessage">
+        <ion-col col-12>
+          Please Enter Delivery Address.
+        </ion-col>
+      </ion-row>
+        <ion-item>
+          <ion-label color="primary" floating>GST No.</ion-label>
+          <ion-input formControlName="userGSTNumber" clearInput></ion-input>
+        </ion-item>
+        <ion-row class="invalidMessage" *ngIf="!rsponseSend.controls.userGSTNumber.valid && (rsponseSend.controls.userGSTNumber.dirty || paymentSubmit)">
+          <ion-col col-12>
+            <span *ngIf="!stateError">GST Identification Number is not valid. It should be in this "11AAAAA1111Z1A1" format.</span>
+          </ion-col>
+        </ion-row>
+        <ion-item>
+          <ion-label color="primary" floating>Terms & Condition</ion-label>
+          <ion-textarea formControlName="tandc" clearInput></ion-textarea>
+        </ion-item>
+        <ion-input type="hidden" formControlName="totalTaxAmount" autosize></ion-input>
+      </ion-card-content>
+    </ion-card>
+    <ion-card class="margin-top-0 ">
+      <ion-card-content>
+        <ion-row>
+          <ion-col>
+            <button ion-button block (click)="submitResponse()">Submit</button>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </form>
+</ion-content>

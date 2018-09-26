@@ -1,0 +1,123 @@
+<ion-header class="header">
+  <ion-navbar color="primary">
+    <ion-row>
+      <ion-col col-1>
+        <div (click)="cancelQuote()" class="topArrow">
+          <ion-icon name="arrow-back"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col col-11>
+        <ion-title>Get Quote
+          <span class="font-size-1">Buyer</span>
+        </ion-title>
+      </ion-col>
+    </ion-row>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+
+  <form  [formGroup]="getQuoteForm">
+    <ion-card class="margin-top-0">
+      <ion-card-content>
+          <ion-item class="unit">
+              <ion-label color="primary" floating [class.invalid]="!getQuoteForm.controls.location.valid && (getQuoteForm.controls.location.dirty || GetQuoteBeforeAttempted)">Delivery Location</ion-label>
+              <ion-input formControlName="location" readonly (click)="location()" autofocus></ion-input>
+            </ion-item>
+            <ion-row *ngIf="!getQuoteForm.controls.location.valid && (getQuoteForm.controls.location.dirty || GetQuoteBeforeAttempted)"
+              class="invalidMessage">
+              <ion-col col-12>
+                Please Enter Delivery Location.
+              </ion-col>
+            </ion-row>
+    
+            <ion-item>
+              <ion-label color="primary" floating [class.invalid]="!getQuoteForm.controls.endResponseDate.valid && (getQuoteForm.controls.endResponseDate.dirty || GetQuoteBeforeAttempted)">End Response date</ion-label>
+              <ion-datetime formControlName="endResponseDate" displayFormat="D MMM YYYY" min="{{minDate}}" max="{{maxDate}}" [(ngModel)]="myDate"></ion-datetime>
+            </ion-item>
+            <ion-row *ngIf="!getQuoteForm.controls.endResponseDate.valid && (getQuoteForm.controls.endResponseDate.dirty || GetQuoteBeforeAttempted)"
+              class="invalidMessage">
+              <ion-col col-12>
+                Please Enter End Response Date.
+              </ion-col>
+            </ion-row>
+      </ion-card-content>
+    </ion-card>
+      
+    
+    <div formArrayName="items" *ngFor="let item of getQuoteForm.get('items').controls; let i = index;">
+      <div [formGroupName]="i">
+        <ion-card>
+          <ion-card-content>
+            <ion-row class="padding-0">
+              <ion-col class="padding-0">
+                {{ toHTML(getQuoteData[i].Seller_Product_Name)}}
+                <span style="color:red">{{ toHTML(getQuoteData[i].variant_name) }}</span>
+                <br />
+                <span class="col-secondary" (click)="openSellerName(getQuoteData[i].comapnyName,$event)">by <span class="link">{{ getQuoteData[i].comapnyName | appliedFilter }} </span></span>
+                <ion-input type="hidden" formControlName="sellerProId" [value]="getQuoteData[i].Seller_Product_Id" clearInput></ion-input>
+              </ion-col>
+            </ion-row>
+            <ion-row class="padding-0">
+              <ion-col class="padding-0">
+                <ion-item>
+                  <ion-label color="primary" floating [class.invalid]="!item.get('qty').valid && (item.get('qty').dirty || GetQuoteBeforeAttempted)">Qty</ion-label>
+                  <ion-input type="tel" maxLength="7" formControlName="qty" clearInput></ion-input>
+                </ion-item>
+                <ion-row *ngIf="!item.get('qty').valid && (item.get('qty').dirty || GetQuoteBeforeAttempted)" class="invalidMessage">
+                  <ion-col col-12 class="padding-0">
+                    Please Enter Valid Qty.
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+              <ion-col col-1 class="padding-0"></ion-col>
+              <ion-col class="padding-0">
+                <ion-item class="unit">
+                  <ion-label color="primary" floating [class.invalid]="!item.get('unit').valid && (item.get('unit').dirty || GetQuoteBeforeAttempted)">Select Unit</ion-label>
+                  <ion-input formControlName="unit" readonly (click)="openUnit(getQuoteData[i].Unit,item.get('unit'))"></ion-input>
+                </ion-item>
+                <ion-row *ngIf="!item.get('unit').valid && (item.get('unit').dirty || GetQuoteBeforeAttempted)" class="invalidMessage">
+                  <ion-col class="padding-0" col-12>
+                    Please Select Unit.
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+            <ion-item>
+              <ion-label color="primary" floating>Credit Days</ion-label>
+              <ion-input type="tel" maxLength="3" formControlName="creaditDays" clearInput></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label color="primary" floating>Specification</ion-label>
+              <ion-textarea formControlName="specification" type="text" maxLength="500" autosize></ion-textarea>
+            </ion-item>
+            <ion-item>
+              <ion-label color="primary" floating>If sample is required, put address here</ion-label>
+              <ion-textarea formControlName="address" maxLength="250" type="text" clearInput autosize></ion-textarea>
+            </ion-item>
+            <ion-input type="hidden" formControlName="fileUploads" clearInput></ion-input>
+            <ion-row class="padding-0">
+              <ion-col class="file_upload">
+                <div class="borderAlli">
+                  <div *ngFor="let img of uploadedDocs[i]">
+                    {{ img.fileName}}
+                    <ion-icon ios="ios-trash" md="md-trash" (click)="deleteImage(img.fileLink,i)" style="float:right;font-size:2.5rem"></ion-icon>
+                  </div>
+                </div>
+                <div class="borderAll">
+                  <div (click)="presentActionSheet(item.get('fileUploads'),i)">
+                    <ion-icon name="cloud-upload"></ion-icon> Add Attachment
+                  </div>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
+    <ion-card class="margin-top-0" *ngIf="getQuoteForm.get('items').controls.length > 0">
+      <ion-card-content>
+          <button ion-button block (click)="submitGetQuoteAfter()">Submit</button>
+      </ion-card-content>
+    </ion-card>
+  </form>
+</ion-content>

@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Enquiry Details
+      <span  *ngIf="auth.userType =='Seller'" class="font-size-1">Seller</span>
+      <span  *ngIf="auth.userType =='Buyer'" class="font-size-1">Buyer</span>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-card class="margin-top-0">
+    <ion-card-content>
+      <ion-row>
+        <ion-col>
+          <strong>
+            <h2>Product/Service Details</h2>
+          </strong>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+  <ion-card class="margin-top-0">
+    <ion-card-content>
+      <ion-row>
+        <ion-col>
+          <span class="col-title-head">Product/Service :</span>  {{data.Seller_Product_Name}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+      <ion-col>
+        <span class="col-title-head">Variant :</span>  {{data.Variant_Name}}
+        </ion-col>
+      </ion-row>
+      <ion-row *ngIf="data.Seller_Produst_Code!=''">
+        <ion-col>
+          <span class="col-title-head">code :</span> {{data.Seller_Produst_Code}}
+          </ion-col>
+        </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <ion-row>
+        <ion-col *ngIf="auth.userType =='Seller'">
+          <strong>
+            <h2>Buyer Details</h2>
+          </strong>
+        </ion-col>
+        <ion-col *ngIf="auth.userType =='Buyer'">
+          <strong>
+            <h2>Seller Details</h2>
+          </strong>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+  <ion-card class="margin-top-0">
+    <ion-card-content>
+      <ion-row>
+        <ion-col>
+          <span class="col-title-head">Company Name : </span>{{data.Company_Name}}
+        </ion-col>
+      </ion-row>
+      <!-- <ion-row>
+        <ion-col>
+          <span class="col-title-head">Name :</span> {{data.User_Name}}
+        </ion-col>
+      </ion-row> -->
+      <ion-row *ngIf="data.User_Email">
+      <ion-col>
+        <span class="col-title-head">Email Id :</span> {{data.User_Email}}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <span class="col-title-head">Phone No :</span> {{data.User_Phone}}
+          </ion-col>
+        </ion-row>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

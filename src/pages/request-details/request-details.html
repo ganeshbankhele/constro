@@ -1,0 +1,129 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <ion-title>Request Details
+            <span class="font-size-1">Buyer</span>
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+        <ion-card class="margin-top-0">
+                <ion-card-content>
+                    <ion-row class="margin-top-0">
+                        <ion-col col-6 class="font-size-1-5">
+                            <strong>Buyer Request Details</strong>
+                        </ion-col>
+                        <ion-col col-6 class="text-right font-size-1-2 col-title-head">
+                            Sent On : {{buyerDetails.sentOn}}
+                        </ion-col>
+                    </ion-row>
+                </ion-card-content>
+            </ion-card>
+            <ion-card class="margin-top-0" *ngIf="showResult">
+                <ion-card-content>
+                    <ion-row>
+                        <ion-col col-12 class="padding-0 col-secondary">
+                            <strong>{{toHTML(buyerDetails.productName)}}</strong>
+                           
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col class="padding-0" col-8>
+                            <!-- <ion-row class="padd-zero margin-top-0 col-title-head">RFQ No - CB-RFQ-000123</ion-row> -->
+                               <ion-row class="padd-zero">
+                                    <ion-col class="padd-zero">
+                                        <span class="col-title-head"> Variant :</span>
+                                        {{toHTML(buyerDetails.variantName)}}</ion-col>
+                                </ion-row>
+                            
+                            <ion-row class="padd-zero">
+                                <ion-col class="padd-zero">
+                                    <span class="col-title-head"> Qty :</span>
+                                    {{buyerDetails.quantity}}</ion-col>
+                            </ion-row>
+                            <ion-row class="padd-zero">
+                                <ion-col class="padd-zero">
+                                    <span class="col-title-head"> End Date :</span>
+                                    {{buyerDetails.lastingDate}}
+                                </ion-col>
+                            </ion-row>
+                            <ion-row *ngIf="buyerDetails.creditdays!=''">
+                                <ion-col class="padd-zero">
+                                    <span class="col-title-head"> Credit Days :</span>
+                                    <span *ngIf="buyerDetails.creditdays=='-'">{{buyerDetails.creditdays}}</span>
+                                    <span *ngIf="buyerDetails.creditdays!='-'">{{buyerDetails.creditdays}} Days</span>
+                                </ion-col>
+                            </ion-row>
+                        </ion-col>
+                        <ion-col col-4 class="padding-0">
+                            <img [src]="buyerDetails.sellerProductImage" style="width:7em" />
+                        </ion-col>
+                    </ion-row>
+                    <ion-row class="padding-0">
+                            <ion-col class="padding-0 col-title-head" col-auto>Location :</ion-col>
+                            <ion-col class="padding-0">{{ buyerDetails.location }}</ion-col>
+                    </ion-row>
+                    <div *ngIf="buyerDetails.specification != ''">
+                        <ion-row (click)="showSpecfi();">
+                            <ion-col class="padding-0 col-link" col-12>Specification
+                                <ion-icon *ngIf="!showSpec" name="arrow-dropdown"></ion-icon>
+                                <ion-icon *ngIf="showSpec" name="arrow-dropup"></ion-icon>
+                            </ion-col>
+                        </ion-row>
+                        <ion-row *ngIf="showSpec">
+                            <ion-col class="padding-0" col-12 *ngIf="buyerDetails.specification != ''">
+                                {{toHTML(buyerDetails.specification)}}
+                            </ion-col>
+                        </ion-row>
+                    </div>
+        
+                </ion-card-content>
+            </ion-card>
+    <ion-card  style="border-bottom:2px solid #969696">
+        <ion-card-content>
+            <ion-row class="padding-top-0 padding-bottom-0 margin-top-0">
+                <ion-col col-12 class="font-size-1-5 padding-top-0 padding-bottom-0">
+                    <strong>Sent To</strong>
+                </ion-col>
+            </ion-row>
+        </ion-card-content>
+    </ion-card>
+    <ion-list>
+        <ion-item class="animated fadeIn item-remove-animate " *ngFor="let i of sellers;let in=index;" (click)="openResp(i.rfqProductLineId)">
+            <ion-avatar item-start>
+                <img *ngIf="i.sellerLogo!=''" [src]="i.sellerLogo">
+                <img *ngIf="i.sellerLogo==''" src="./assets/icon/profile.png" />
+            </ion-avatar>
+            <ion-row>
+                <ion-col col-12 class="padding-0">{{i.sellerName | sliceWord:20}}</ion-col>
+            </ion-row>
+            <div *ngIf="i.reqState=='response'">
+                <ion-row>
+                    <ion-col col-6 class="padding-0 font-size-1-2 col-title-head text-left"></ion-col>
+                    <ion-col col-6 class="padding-0 font-size-1-2 col-title-head text-right" style="color:blue">View Response</ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-12 class="padding-0 font-size-1-2 text-left">Quote Validity : {{i.quoteValidityDate}}
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-6 class="padding-0 font-size-1-2 text-left">Unit Cost :
+                        <span class="col-danger">
+                            <fa-icon name="inr"></fa-icon> {{i.unitCost}}</span>
+                    </ion-col>
+                    <ion-col col-6 class="padding-0 font-size-1-2"></ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col col-6 class="padding-0 font-size-1-2 text-left">Total Amount :
+                        <fa-icon name="inr"></fa-icon> {{i.totalAmount}}</ion-col>
+                    <ion-col col-6 class="padding-0 font-size-1-2 text-right">Recv On : {{i.receivedOn}}</ion-col>
+                </ion-row>
+            </div>
+            <div *ngIf="i.reqState!='response'">
+                <ion-row>
+                    <ion-col col-6 class="padding-0 font-size-1-2 col-title-head text-left">Sent On :{{i.sentOn}}</ion-col>
+                    <ion-col col-6 class="padding-0 font-size-1-2 col-title-head text-right" style="color:red">No Response</ion-col>
+                </ion-row>
+            </div>
+        </ion-item>
+    </ion-list>
+</ion-content>

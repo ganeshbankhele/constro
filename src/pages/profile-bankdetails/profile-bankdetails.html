@@ -1,0 +1,84 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Bank Details <span class="font-size-1">{{authProvider.userType}}</span></ion-title>
+    <!--   <ion-buttons end>
+      <button *ngIf="modeType=='Edit'" ion-button icon-only (click)="editMode()">{{modeType}}</button>
+    </ion-buttons> -->
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <ion-card class="margin-top-0">
+    <ion-card-content>
+      <form [formGroup]="bankForm">
+        <ion-label style="color: #DC1f26;font-size: 12px;margin-left:2px">(Note:Upload image only in .jpg,.png,.gif file format)</ion-label>
+        
+        <ion-item>
+          <ion-label color="primary" floating>Bank Name</ion-label>
+          <ion-input formControlName="bankName" [clearInput]="!bNameEdit" clearInput></ion-input>
+        </ion-item>
+        <ion-row *ngIf="!bankForm.controls.bankName.valid" class="invalidMessage">
+          <ion-col col-12>
+            <br /> Please Enter Valid Bank Name.
+          </ion-col>
+        </ion-row>
+
+        <ion-item>
+          <ion-label color="primary" floating [class.invalid]="!bankForm.controls.bankIfscCode.valid && (bankForm.controls.bankIfscCode.dirty)">IFSC Code</ion-label>
+          <ion-input formControlName="bankIfscCode" minlength="11" [clearInput]="!iNameEdit" clearInput></ion-input>
+        </ion-item>
+        <ion-row *ngIf="!bankForm.controls.bankIfscCode.valid && (bankForm.controls.bankIfscCode.dirty)" class="invalidMessage">
+          <ion-col col-12>
+            <br /> Please Enter Valid IFSC code.
+          </ion-col>
+        </ion-row>
+
+        <ion-item>
+          <ion-label color="primary" floating>Account Number</ion-label>
+          <ion-input formControlName="bankAccountNo" [clearInput]="!aNameEdit" clearInput></ion-input>
+        </ion-item>
+
+        <div class="pan">
+          <ion-row>
+            <ion-col>Cancelled Cheque Scanned Copy :</ion-col>
+          </ion-row>
+        </div>
+        
+        <ion-row class="padding-0">
+          <ion-col class="file_upload">
+            <div class="borderAlli" (click)="openImageSingle(data.ccUrl,'0')">
+              <div style="position:ccUrl"  *ngIf="data.ccUrl!=''">
+                <img height="80.3" width="90" [src]="data.ccUrl">
+              </div>
+            </div>
+            <div *ngIf="data.ccUrl==''" class="borderAll">
+              <div (click)="presentActionSheet('CC')">
+                <ion-icon name="cloud-upload"></ion-icon>
+                <br />Upload Cancel Cheque Photo
+              </div>
+            </div>
+
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <div *ngIf="data.ccUrl!==''">
+            <div style="margin-left:14px" (click)="presentActionSheet('CC')"> Change Image </div>
+          </div>
+        </ion-row>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+<ion-footer>
+  <ion-row>
+    <ion-col class="bottombtn" (click)="submitBankDetails()">
+      Submit
+    </ion-col>
+  </ion-row>
+
+</ion-footer>
+
+<!-- <ion-row *ngIf="data.ccUrl==''">
+          <ion-col>
+            Cancelled Cheque Scanned Copy Not Uploaded.
+          </ion-col>
+        </ion-row> -->

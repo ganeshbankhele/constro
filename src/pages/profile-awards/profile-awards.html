@@ -1,0 +1,86 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <ion-title>Awards & Membership
+            <span class="font-size-1">{{authProvider.userType}}</span>
+        </ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-card class="margin-top-0">
+        <ion-label style="color: #DC1f26;font-size: 12px;margin-left:2px">(Note:Upload image only in .jpg,.png,.gif file format)</ion-label>
+        <br>
+        <ion-card-content>
+            <div class="pan">
+                <ion-item>
+                    <ion-label color="primary">Company Awards :</ion-label>
+                </ion-item>
+            </div>
+            <!-- <ion-row *ngIf="membershipPhotos.length==0">
+                <ion-col>
+                    Awards Photos Not Uploaded.
+                </ion-col>
+            </ion-row> -->
+            <ion-row>
+                <ion-col>
+                    <ion-row class="margin-top-5 margin-bottom-5 border-bottom-1" *ngFor="let awd of awardsPhotos">
+                        <ion-col col-4>
+                            <img src="{{awd.Image}}" style="height: 8.3rem;width: 9rem;" (click)="openImage(awd)">
+                        </ion-col>
+                        <ion-col  col-7>
+                            <ion-item>
+                                <ion-label color="primary" floating>Award Description :</ion-label>
+                                <ion-input [value]="awd.Description" (click)="presentPrompt(awd.Id,'AI',awd)"></ion-input>
+                            </ion-item>
+                        </ion-col>
+                        <ion-col  col-1>
+                            <ion-icon align-center ios="ios-trash" md="md-trash" (click)="showDeleteAlert(awd.Id,'AI',awd.Id)" style="color: #DC1f26"></ion-icon>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row (click)="presentActionSheet(imageId,'AI',awd)">
+                        <ion-col>
+                            <button ion-button block outline icon-start>
+                                <ion-icon name="cloud-upload"></ion-icon> Upload Company Award
+                            </button>
+
+                        </ion-col>
+                    </ion-row>
+
+                </ion-col>
+            </ion-row>
+        </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+        <ion-card-content>
+            <div class="pan">
+                <ion-item>
+                    <ion-label color="primary">Company Membership :</ion-label>
+                </ion-item>
+            </div>
+            <ion-row>
+                <ion-col>
+                    <ion-row class="margin-top-5 margin-bottom-5 border-bottom-1" *ngFor="let mem of membershipPhotos" >
+                        <ion-col col-4>
+                            <img src="{{mem.Image}}" style="height: 8.3rem;width: 9rem;" (click)="openImage(mem)">
+                        </ion-col>
+                        <ion-col col-7>
+                            <ion-item>
+                                <ion-label color="primary" floating>Membership Description :</ion-label>
+                                <ion-input [value]="mem.Description" (click)="presentPrompt(mem.Id,'MI',mem)"></ion-input>
+                            </ion-item>
+                        </ion-col>
+                        <ion-col  col-1>
+                            <ion-icon align-center ios="ios-trash" md="md-trash" (click)="showDeleteAlert(mem.Id,'MI',mem.Id)" style="color: #DC1f26"></ion-icon>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row (click)="presentActionSheet(imageId,'MI',mem)">
+                        <ion-col>
+                            <button ion-button block outline icon-start>
+                                <ion-icon name="cloud-upload"></ion-icon> Upload Company Membership</button>
+                        </ion-col>
+                    </ion-row>
+                </ion-col>
+            </ion-row>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

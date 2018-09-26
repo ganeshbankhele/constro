@@ -1,0 +1,118 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title> {{productDetails.Seller_Product_Name}} </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div class="itemx" align="center">
+    <img class="profilepic" *ngIf="!loaded" src="./assets/imgs/giphy.gif" />
+    <img class="profilepic" [hidden]="!loaded" (load)="loaded = true" [src]="responseobjResObj.genericImage" (click)="openImage(companyLogo,'0')"
+    />
+    <div class="comp_name">
+      {{productDetails.Company_Name}}
+    </div>
+  </div>
+  <ion-card class="margin-top-0">
+    <ion-card-content>
+      <ion-row>
+        <ion-col col-4 class="col-title-head">Variant :</ion-col>
+        <ion-col col-8>{{productDetails.Variant_Name}} {{productDetails.Seller_Produst_Code}}</ion-col>
+      </ion-row>
+      <ion-row *ngIf="productDetails.Brand_Title!=''">
+        <ion-col col-4 class="col-title-head">Brand :</ion-col>
+        <ion-col col-8>{{productDetails.Brand_Title}}</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-4 class="col-title-head">Price :</ion-col>
+        <ion-col col-8 *ngIf="productDetails.Min_Product_Price!='0'">{{productDetails.Min_Product_Price}} to {{productDetails.Max_Product_Price}}</ion-col>
+        <ion-col col-8 *ngIf="productDetails.Min_Product_Price=='0'">Not Provided</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-4 class="col-title-head">MOQ :</ion-col>
+        <ion-col col-8>{{productDetails.Min_Order_Qty}} {{productDetails.Min_Order_Quantity_Unit}}</ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-4 class="col-title-head">Location :</ion-col>
+        <ion-col col-8> {{productDeliveryLocation.DeliveryLocation}} </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-4 class="col-title-head">Description :</ion-col>
+        <ion-col col-8>{{productDetails.Seller_Product_Desc}}</ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-content>
+      <ion-row class="slideSwitch padding-0">
+        <ion-col (click)="goToSlideSpeci()" class="padding-top-10 padding-bottom-10" [ngClass]="currentIndex == '0' ? 'active' : 'inactive'">Specification</ion-col>
+        <ion-col (click)="goToSlideSell()" class="padding-top-10 padding-bottom-10" [ngClass]="currentIndex == '1' ? 'active' : 'inactive'">Seller Details</ion-col>
+        <ion-col (click)="goToSlideProd()" class="padding-top-10 padding-bottom-10" [ngClass]="currentIndex == '2' ? 'active' : 'inactive'">Other Sellers</ion-col>
+      </ion-row>
+      <div id="wrapper">
+        <ion-slides #Slides (ionSlideDidChange)="slideChanged()">
+          <ion-slide>
+            <ion-row *ngFor="let sp of productSpecification">
+              <ion-col class="col-title-head font-size-1-5 text-left">{{sp.attributeName}}</ion-col>
+              <ion-col class="font-size-1-5 text-left">{{sp.attributeValue}}</ion-col>
+            </ion-row>
+            <ion-row *ngIf="productSpecification.length==0" style="height:100px">
+              <ion-col class="font-size-1-5 text-left margin-top-10">Specifications Not Available</ion-col>
+            </ion-row>
+
+          </ion-slide>
+          <ion-slide>
+            <ion-row class="font-size-1-5 text-left">
+              <ion-col class="col-title-head " col-4>Contact Name :</ion-col>
+              <ion-col col-8>{{contactDetails.Contact_Person_Name}}</ion-col>
+            </ion-row>
+            <ion-row class="font-size-1-5 text-left">
+              <ion-col class="col-title-head" col-4>Contact No. :</ion-col>
+              <ion-col col-8>{{contactDetails.Contact_Person_Phone}}</ion-col>
+            </ion-row>
+            <ion-row class="font-size-1-5 text-left">
+              <ion-col class="col-title-head" col-4>Contact Email :</ion-col>
+              <ion-col col-8>{{contactDetails.Contact_Person_Email}}</ion-col>
+            </ion-row>
+            <ion-row class="font-size-1-5 text-left">
+              <ion-col class="col-title-head" col-4>Website :</ion-col>
+              <ion-col col-8>{{contactDetails.Company_Website}}</ion-col>
+            </ion-row>
+            <ion-row class="font-size-1-5 text-left">
+              <ion-col class="col-title-head" col-4>Address :</ion-col>
+              <ion-col col-8>{{contactDetails.Company_Address}}</ion-col>
+            </ion-row>
+            <ion-row style="height:60px">
+            </ion-row>
+          </ion-slide>
+          <ion-slide>
+     <!--       <ion-row>
+              <ion-col col-6 col-sm *ngFor="let sm of simmillarProducts">
+                <ion-card>
+                  <ion-card-content>
+                    <img [src]="sm.companyLogo" style="height:11em;width:11em" />
+                    <br />
+                    <span class="font-size-1-5">{{sm.companyName | sliceWord:15 }} </span>
+
+                  </ion-card-content>
+                </ion-card>
+
+              </ion-col>
+            </ion-row>  -->
+            <ion-row style="height:60px">
+            </ion-row>
+          </ion-slide>
+        </ion-slides>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+<ion-footer>
+  <ion-row>
+    <ion-col class="bottombtn" (click)="directGetQuotes(productDetails.Seller_Product_Id)" style="border-right:1px dotted #fff">
+      <fa-icon name="bars" style="margin-right: 3px;margin-top: -3px;"></fa-icon> Get Quote
+    </ion-col>
+    <ion-col *ngIf="showFooter" class="bottombtn" (click)="viewAllVariant(this.productVariants)">
+       View All Variant
+    </ion-col>
+  </ion-row>
+</ion-footer>

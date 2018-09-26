@@ -1,0 +1,48 @@
+.ios, .md {
+    page-catlog {
+        ion-card{
+            background: white;
+            text-align: justify;
+            ion-item{
+                background: white;
+                padding: 0px !important;
+            }
+            .col-primary{
+                color: map-get($colors, primary);
+            }
+            .col-secondary{
+                color: map-get($colors, secondary);
+            }
+            ion-row{
+                margin-top:8px;
+                padding: 5px;
+                font-size:1.3rem;
+            }
+            ion-input{
+                border-bottom: 1px solid map-get($colors, secondary);  
+            }
+            .text-input{
+                margin:2px !important;
+            }
+            ion-textarea{
+                border-bottom: 1px solid map-get($colors, secondary);
+                margin:0px !important;
+            }
+            ion-item{
+                padding: 0px !important;
+            }
+            .item-inner{
+                 border:none !important;
+                 padding: 0px !important;
+            }
+            img{
+                width: 75%;
+                float: right;
+            }
+            .item-md .toggle-md{
+                padding: 8px 8px 12px 16px;
+            }
+           // $toggle-ios-item-start-padding-end:0px;
+        }
+    }
+    }

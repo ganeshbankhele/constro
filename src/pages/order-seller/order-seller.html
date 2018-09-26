@@ -1,0 +1,53 @@
+<ion-header>
+    <ion-navbar color="primary">
+      <button ion-button menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+      <ion-title>Orders <span class="font-size-1">Seller</span></ion-title>
+      <ion-buttons end>
+          <button id="notification-button" ion-button clear (click)="openNotification('NotificationPage')">
+              <ion-icon name="notifications" style="font-size: 1.8em">
+                <ion-badge id="notifications-badge" color="danger" *ngIf="note.notificationCounterForAll != 0">{{note.notificationCounterForAll}}</ion-badge>
+              </ion-icon>              
+          </button>
+      </ion-buttons>
+    </ion-navbar>
+    
+ 
+  </ion-header>
+<ion-content>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles" refreshingText="Refreshing...">
+        </ion-refresher-content>
+    </ion-refresher>
+    <ion-card *ngIf="noOrders">
+      <ion-card-content>
+        <ion-row>
+            <ion-col>
+                You Have No Enquiries Yet.
+            </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+    <ion-list>
+        <ion-item (click)="openDetails(i.poNo);" class="animated fadeIn item-remove-animate " *ngFor="let i of orders;let in=index;">
+          <ion-avatar item-start>
+            <img [src]="i.imgUrl">
+          </ion-avatar>
+          <ion-row class="">
+            <ion-col col-8 class="">{{i.companyName | sliceWord:20}}</ion-col>
+            <ion-col col-4 class=" font-size-1-2 col-title-head text-right">{{i.poDate}}</ion-col>
+          </ion-row>
+          <ion-row class="">
+              <ion-col col-6 class=" font-size-1-2 col-title-head">{{i.poNumber}}</ion-col>
+              <ion-col col-6 class=" font-size-1-2"><span [style.color] = "i.poStatus =='Confirmed' ? 'green' : 'red'" style="float:right;color:green">{{i.poStatus}}</span></ion-col>
+            </ion-row>
+        </ion-item>
+      </ion-list>
+  <div style="height:6%">
+      <div *ngIf="noMoreResult" class="text-center padding-top-10">No More Result Found</div>
+      <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="!noMoreResult">
+          <ion-infinite-scroll-content></ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+  </div>
+</ion-content>

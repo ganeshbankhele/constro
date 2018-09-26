@@ -1,0 +1,309 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>Company Info
+      <span class="font-size-1">{{authProvider.userType}}</span>
+    </ion-title>
+    <!--  <ion-buttons end>
+      <button *ngIf="modeType=='Edit'" ion-button icon-only (click)="editMode()">{{modeType}}</button>
+    </ion-buttons> -->
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <form [formGroup]="compForm">
+    <ion-card class="margin-top-0">
+      <ion-card-content>
+        <ion-item>
+          <ion-label color="primary" floating>Contact Person Name</ion-label>
+          <ion-input formControlName="companyContactPersonName" [readonly]="!readcompanyContactPersonName"></ion-input>
+        </ion-item>
+        <ion-row *ngIf="!compForm.controls.companyContactPersonName.valid" class="invalidMessage">
+          <ion-col col-12>
+            <br /> Please Enter Valid Person Name.
+          </ion-col>
+        </ion-row>
+
+        <ion-item>
+          <ion-label color="primary" floating>Contact Person Phone No</ion-label>
+          <ion-input formControlName="companyContactPersonNumber" [readonly]="!readcompanyContactPersonNumber"></ion-input>
+        </ion-item>
+        <ion-row *ngIf="!compForm.controls.companyContactPersonNumber.valid" class="invalidMessage">
+          <ion-col col-12>
+            <br /> Please Enter Valid Phone Number.
+          </ion-col>
+        </ion-row>
+
+        <ion-item>
+          <ion-label color="primary" floating>Contact Person Email</ion-label>
+          <ion-input formControlName="companyContactPersonEmail" [readonly]="!readcompanyContactPersonEmail"></ion-input>
+        </ion-item>
+        <ion-row *ngIf="!compForm.controls.companyContactPersonEmail.valid" class="invalidMessage">
+          <ion-col col-12>
+            <br /> Please Enter Valid Email Id.
+          </ion-col>
+        </ion-row>
+
+        <ion-item>
+          <ion-label color="primary" floating>Company Description</ion-label>
+          <ion-textarea formControlName="companyDescription" [readonly]="!readcompanyDescription" autosize></ion-textarea>
+        </ion-item>
+        <ion-row *ngIf="!compForm.controls.companyDescription.valid" class="invalidMessage">
+          <ion-col col-12>
+            <br /> Maximum size should be 500 characters.
+          </ion-col>
+        </ion-row>
+
+        <ion-item>
+          <ion-label color="primary" floating>Company Address</ion-label>
+          <ion-textarea formControlName="companyAddress" [readonly]="!readcompanyAddress" autosize></ion-textarea>
+        </ion-item>
+        <ion-row *ngIf="!compForm.controls.companyAddress.valid" class="invalidMessage">
+          <ion-col col-12>
+            <br /> Maximum size should be 250 characters.
+          </ion-col>
+        </ion-row>
+
+        <ion-item>
+          <ion-label color="primary" floating>Company Location</ion-label>
+          <ion-input formControlName="companyLocation" (click)="locationSearch()"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label color="primary" floating>Company Website Url</ion-label>
+          <ion-input formControlName="website" [readonly]="!readwebsite"></ion-input>
+        </ion-item>
+
+        <ion-label floating style="color: #DC1f26;font-size: 12px;margin-left:2px">(Note:Upload image only in .jpg,.png,.gif file format)</ion-label>
+        <br>
+
+        <ion-row class="padding-0">
+          <ion-col class="file_upload">
+            <div class="borderAlli" (click)="openImageSingle(Company_Logo,'0')">
+              <div style="position:relative" *ngIf="data.Company_Logo!=''">
+                <img src="{{data.Company_Logo}}">
+              </div>
+            </div>
+            <div *ngIf="data.Company_Logo==''" class="borderAll">
+              <div (click)="presentActionSheet('LO')">
+                <ion-icon name="cloud-upload"></ion-icon>
+                <br /> Upload Logo
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <div *ngIf="data.Company_Logo!==''">
+            <div style="margin-left:14px" (click)="presentActionSheet('LO')"> Change Logo </div>
+          </div>
+        </ion-row>
+
+
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-content>
+        <ion-item>
+          <ion-label color="primary" floating>Company GST Number</ion-label>
+          <ion-input formControlName="gstNumber" [readonly]="!readgstNumber"></ion-input>
+        </ion-item>
+        <ion-row *ngIf="!compForm.controls.gstNumber.valid" class="invalidMessage">
+          <ion-col col-12>
+            <br /> Please Enter Valid GST Number.
+          </ion-col>
+        </ion-row>
+
+        <div class="pan">
+          <ion-item>
+            <ion-label color="primary">GST Scanned Copy :</ion-label>
+          </ion-item>
+
+        </div>
+
+        <ion-row class="padding-0">
+          <ion-col class="file_upload">
+            <div class="borderAlli" (click)="openImageSingle(gstScannedCopy,'0')">
+              <div style="position:relative" *ngIf="data.gstScannedCopy!=''">
+                <img height="80.3" width="90" src="{{data.gstScannedCopy}}">
+              </div>
+            </div>
+            <div *ngIf="data.gstScannedCopy==''" class="borderAll">
+              <div (click)="presentActionSheet('GST')">
+                <ion-icon name="cloud-upload"></ion-icon>
+                <br /> Upload Image
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <div *ngIf="data.gstScannedCopy!==''">
+            <div style="margin-left:14px" (click)="presentActionSheet('GST')"> Change Image </div>
+          </div>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-content>
+        <ion-item>
+          <ion-label color="primary" floating>PAN Number </ion-label>
+          <ion-input formControlName="panNo" [readonly]="!readpanNo"></ion-input>
+        </ion-item>
+        <ion-row *ngIf="!compForm.controls.panNo.valid" class="invalidMessage">
+          <ion-col col-12>
+            <br /> Please Enter Valid PAN Number.
+          </ion-col>
+        </ion-row>
+
+        <div class="pan">
+          <ion-item>
+            <ion-label color="primary">PAN Scanned Copy :</ion-label>
+          </ion-item>
+        </div>
+
+        <ion-row class="padding-0">
+          <ion-col class="file_upload">
+            <div class="borderAlli" (click)="openImageSingle(panScannedCopy,'0')">
+              <div style="position:relative" *ngIf="data.panScannedCopy!=''">
+                <img height="80.3" width="90" src="{{data.panScannedCopy}}">
+              </div>
+            </div>
+            <div *ngIf="data.panScannedCopy==''" class="borderAll">
+              <div (click)="presentActionSheet('PA')">
+                <ion-icon name="cloud-upload"></ion-icon>
+                <br /> Upload Photo
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <div *ngIf="data.panScannedCopy!==''">
+            <div style="margin-left:14px" (click)="presentActionSheet('PA')"> Change Image </div>
+          </div>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-content>
+        <ion-item>
+          <ion-label color="primary" floating>TIN Number </ion-label>
+          <ion-input type="number" formControlName="tinNo" [readonly]="!readtinNo"></ion-input>
+        </ion-item>
+        <ion-row *ngIf="!compForm.controls.tinNo.valid" class="invalidMessage">
+          <ion-col col-12>
+            <br /> Please Enter Valid TIN Number.
+          </ion-col>
+        </ion-row>
+        <div class="pan">
+          <ion-item>
+            <ion-label color="primary">TIN Scanned Copy :</ion-label>
+          </ion-item>
+        </div>
+        <ion-row class="padding-0">
+          <ion-col class="file_upload">
+            <div class="borderAlli" (click)="openImageSingle(tinScannedCopy,'0')">
+              <div style="position:relative" *ngIf="data.tinScannedCopy!=''">
+                <img height="80.3" width="90" src="{{data.tinScannedCopy}}">
+              </div>
+            </div>
+            <div *ngIf="data.tinScannedCopy==''" class="borderAll">
+              <div (click)="presentActionSheet('TI')">
+                <ion-icon name="cloud-upload"></ion-icon>
+                <br /> Upload Image
+              </div>
+            </div>
+
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <div *ngIf="data.tinScannedCopy!==''">
+            <div style="margin-left:14px" (click)="presentActionSheet('TI')"> Change Image </div>
+          </div>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-content>
+        <div class="pan">
+          <ion-item>
+            <ion-label color="primary">CST Scanned Copy :</ion-label>
+          </ion-item>
+        </div>
+        <ion-row class="padding-0">
+          <ion-col class="file_upload">
+            <div class="borderAlli" (click)="openImageSingle(cstScannedCopy,'0')">
+              <div style="position:relative" *ngIf="data.cstScannedCopy!=''">
+                <img height="80.3" width="90" src="{{data.cstScannedCopy}}">
+              </div>
+            </div>
+            <div *ngIf="data.cstScannedCopy==''" class="borderAll">
+              <div (click)="presentActionSheet('CST')">
+                <ion-icon name="cloud-upload"></ion-icon>
+                <br /> Upload Image
+              </div>
+            </div>
+
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <div *ngIf="data.cstScannedCopy!==''">
+            <div style="margin-left:14px" (click)="presentActionSheet('CST')"> Change Image </div>
+          </div>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-content>
+        <div class="pan">
+          <ion-item>
+            <ion-label color="primary">Company Photos :</ion-label>
+          </ion-item>
+        </div>
+
+
+        <ion-row class="padding-0">
+          <ion-col class="file_upload">
+            <div class="borderAlli" *ngFor="let comp of CompanyPhotos;let i=index">
+
+              <ion-col>
+                <ion-row>
+                  <div style="position:relative">
+                    <img src="{{comp.Image}}">
+                  </div>
+                </ion-row>
+                <br />
+                <ion-row>
+                  <ion-icon ios="ios-trash" md="md-trash" (click)="showDeleteAlert(comp.Id,'CP',comp.Id)" style="color: #DC1f26;margin-left: 40px;"></ion-icon>
+                </ion-row>
+
+              </ion-col>
+
+            </div>
+            <div class="borderAll">
+              <br>
+              <div (click)="presentActionSheet('CP')">
+                <ion-icon name="cloud-upload"></ion-icon>
+                <br /> Upload Company Photo
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+
+      </ion-card-content>
+    </ion-card>
+  </form>
+</ion-content>
+<ion-footer>
+  <ion-row>
+    <ion-col class="bottombtn" (click)="submitCompDetails()">
+      Submit
+    </ion-col>
+  </ion-row>
+
+</ion-footer>
+
+
+
+<!-- <ion-row *ngIf="data.panScannedCopy==''">
+      <ion-col>
+        GST Scanned Copy Not Uploaded
+      </ion-col>
+    </ion-row> -->

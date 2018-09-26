@@ -1,0 +1,19 @@
+.ios, .md {
+    page-cat-prdedit {
+        
+        ion-card{
+            background: white;
+            text-align: justify;
+            ion-item{
+                background: white;
+            }
+            .file_upload{
+                padding: 15px 0px 15px 0px;
+                text-align: center;
+                color: map-get($colors, primary);
+               // border: 1px solid map-get($colors, primary);
+                margin: 10px;
+            } 
+        }
+    }
+    }

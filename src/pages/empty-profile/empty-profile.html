@@ -1,0 +1,54 @@
+<ion-content padding>
+  <br />
+  <br />
+  <ion-icon name="arrow-back" style="font-size: 2em;" (click)="back()"></ion-icon>
+  <br />
+  <br />
+  
+  <form [formGroup]="emptyProfile">
+    <ion-item>
+      <ion-label color="primary" floating>Full Name <span style="color:red">*</span></ion-label>
+      <ion-input type="text" maxLength="30" formControlName="fullName" clearInput></ion-input>
+    </ion-item>
+    <ion-row *ngIf="!emptyProfile.controls.fullName.valid && (emptyProfile.controls.fullName.dirty || emptyProfileSubmitAttempt)" class="invalidMessage">
+        <ion-col col-12>
+            Please Enter Valid Mobile Number.
+         </ion-col>
+    </ion-row>
+
+    <ion-item>
+      <ion-label color="primary" floating>Email</ion-label>
+      <ion-input type="email" maxLength="50" formControlName="email" clearInput></ion-input>
+    </ion-item>
+    <ion-row *ngIf="!emptyProfile.controls.email.valid && (emptyProfile.controls.email.dirty || emptyProfileSubmitAttempt)" class="invalidMessage">
+        <ion-col col-12>
+             Please Enter Valid Email Id.
+        </ion-col>
+    </ion-row>
+    
+    <ion-item>
+        <ion-label color="primary" floating>Buyer Type <span style="color:red">*</span></ion-label>
+        <ion-select interface="popover" #d [(ngModel)]="buyerType" [ngModelOptions]="{standalone: true}" (ionChange)="changeType(d.value)">
+          <ion-option value="Company">Company</ion-option>
+          <ion-option value="Indivdual">Indivdual</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-input type="hidden" formControlName="buyerType" clearInput></ion-input>
+      <ion-row *ngIf="!emptyProfile.controls.buyerType.valid && (emptyProfile.controls.buyerType.dirty || emptyProfileSubmitAttempt)" class="invalidMessage">
+          <ion-col col-12>
+              Please Enter Valid Mobile Number.
+           </ion-col>
+      </ion-row>
+    <ion-item>
+      <ion-label color="primary" floating>Company Name <span *ngIf="buyerType=='Company'" style="color:red">*</span></ion-label>
+      <ion-input type="text" maxLength="50" formControlName="cfullName" clearInput></ion-input>
+    </ion-item>  
+    <ion-row *ngIf="emptyProfile.controls.cfullName.hasError('isRequred') && (emptyProfile.controls.cfullName.dirty || emptyProfileSubmitAttempt)" class="invalidMessage">
+        <ion-col col-12>
+            Please Enter Company Name.
+         </ion-col>
+    </ion-row>
+    <br />
+    <button ion-button block (click)="saveDetails();">Save</button>
+  </form>
+</ion-content>

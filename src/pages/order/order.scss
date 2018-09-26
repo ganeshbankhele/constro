@@ -1,0 +1,31 @@
+
+.ios, .md {
+   page-order {
+    .label {
+        margin: 5px 8px 5px 0;
+    }
+    .item-md ion-avatar[item-left],
+     .item-md ion-thumbnail[item-left],
+      .item-md ion-avatar[item-start],
+       .item-md ion-thumbnail[item-start] {
+        margin: 0px 10px 0px 10px;
+    }
+    .item-md ion-avatar ion-img, .item-md ion-avatar img {
+        border-radius: 0px !important; 
+        overflow: hidden;
+        width: 50px !important;;
+        height: 50px !important;;
+    } 
+    ion-card{
+        background: white;
+        //text-align: justify;
+        ion-item{
+            background: white;
+        } 
+    }
+   
+       
+    }
+
+}
+

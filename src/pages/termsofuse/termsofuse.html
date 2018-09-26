@@ -1,0 +1,27 @@
+<ion-header>
+    <ion-navbar color="primary">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>Terms Of Use</ion-title>
+        <ion-buttons end *ngIf="authProvider.userType!=''">
+                <button id="notification-button" ion-button clear (click)="openNotification('NotificationPage')">
+                    <ion-icon name="notifications" style="font-size: 1.8em">
+                      <ion-badge id="notifications-badge" color="danger" *ngIf="note.notificationCounterForAll != 0">{{note.notificationCounterForAll}}</ion-badge>
+                    </ion-icon>              
+                </button>
+            </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-card class="margin-top-0">
+        <ion-card-content>
+                <ion-row><h3><b>{{termstitle}}</b></h3></ion-row>
+                <ion-row *ngFor="let data of rows">
+                    {{data}}
+                </ion-row>
+        </ion-card-content>
+    </ion-card>
+
+
+</ion-content>

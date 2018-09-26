@@ -1,0 +1,37 @@
+
+.ios, .md{
+    page-buyer-revise-quote {
+      ion-card{
+        background: white;
+        //text-align: justify;
+        ion-item{
+            background: white;
+            padding: 0px !important;
+        }  
+    }
+    .col-primary{
+      color: map-get($colors, primary);
+  }
+  .col-secondary{
+      color: map-get($colors, secondary);
+  }
+  .invalidMessage{
+    color: #DC1f26;
+    
+}
+
+
+.unit{
+ .input-cover{
+  display: none;
+}
+}
+    }
+
+    .item {
+      background: white;
+      padding: 2px 5px 2px 5px !important;
+    }
+}
+
+

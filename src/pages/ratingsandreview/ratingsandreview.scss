@@ -1,0 +1,29 @@
+.ios, .md {
+    page-ratingsandreview {
+        ion-card{
+            background: white;
+            ion-item{
+                background: white;
+            }
+            .col-primary{
+                color: map-get($colors, primary);
+            }
+            .col-secondary{
+                color: map-get($colors, secondary);
+            }
+            .padding-col{
+                padding-right:0px !important;
+                padding-left:0px !important;
+            }
+        }
+        .rate_comment{
+            //background-color:rgba(121,14,139,0.1);
+            background-color:rgba(0,96,129,0.1);
+            padding:10px;
+            
+        }
+        p{
+            color:black;
+        }
+    }
+}

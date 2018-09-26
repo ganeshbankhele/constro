@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-row>
+      <ion-col col-1>
+        <div  (click)="dismiss()" class="topArrow">
+          <ion-icon name="arrow-back"></ion-icon>
+        </div>
+      </ion-col>
+      <ion-col col-11>
+          <ion-input style="color:white" class="out-line-none" clearInput type="text" (keyup)="updateList($event)" placeholder="Delivery Location" autofocus></ion-input>
+      </ion-col>
+   </ion-row>
+  </ion-navbar>
+</ion-header>
+<ion-content class="bg-white">
+  <ion-list inset>
+    <ion-item  class="bg-white" *ngFor="let st of filteredStates" (click)="slected(st)">
+        {{st.stateName}}
+    </ion-item>
+  </ion-list>
+</ion-content>

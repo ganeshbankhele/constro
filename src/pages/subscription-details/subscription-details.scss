@@ -1,0 +1,465 @@
+.ios, .md{
+page-subscription-details {
+    *,
+*:before,
+*:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.redcolor{
+    color:red;
+}
+.swiper-slide{
+    height: 90%;
+}
+.pricing-table {
+    text-align: center;
+    box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12);
+    -webkit-transition: all .2s cubic-bezier(.3, .6, .2, 1.8);
+    transition: all .2s cubic-bezier(.3, .6, .2, 1.8);
+    padding: 15px;
+}
+
+.pricing-item0 {
+    border-radius: 3px;
+    display: inline-block;
+    width: 260px;
+    height: auto;
+    background: #fff;
+    margin: 20px;
+    vertical-align: top;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12);
+    -webkit-transition: all .2s cubic-bezier(.3, .6, .2, 1.8);
+    transition: all .2s cubic-bezier(.3, .6, .2, 1.8);
+   
+    .pricing-title {
+        width: 100%;
+        color: white;
+        display: block;
+        position: relative;
+        background: #0080FF;
+        padding: 7px;
+        font-weight: bold;
+        font-size: 2rem;
+    }
+    &.pricing-featured .pricing-title {
+        background: #FF4136;
+    }
+   
+}
+
+.pricing-item1 {
+    border-radius: 3px;
+    display: inline-block;
+    width: 260px;
+    height: auto;
+    background: #fff;
+    margin: 20px;
+    vertical-align: top;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12);
+    -webkit-transition: all .2s cubic-bezier(.3, .6, .2, 1.8);
+    transition: all .2s cubic-bezier(.3, .6, .2, 1.8);
+   
+    
+    .pricing-title {
+        width: 100%;
+        color: white;
+        display: block;
+        position: relative;
+        background: #00A86B;
+        padding: 7px;
+        font-weight: bold;
+        font-size: 2rem;
+    }
+    &.pricing-featured .pricing-title {
+        background: #FF4136;
+    }
+}
+
+.pricing-item2 {
+    border-radius: 3px;
+    display: inline-block;
+    width: 260px;
+    height: auto;
+    background: #fff;
+    margin: 20px;
+    vertical-align: top;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12);
+    -webkit-transition: all .2s cubic-bezier(.3, .6, .2, 1.8);
+    transition: all .2s cubic-bezier(.3, .6, .2, 1.8);
+   
+    .pricing-title {
+        width: 100%;
+        color: white;
+        display: block;
+        position: relative;
+        background: #FFC30B;
+        padding: 7px;
+        font-weight: bold;
+        font-size: 2rem;
+    }
+    &.pricing-featured .pricing-title {
+        background: #FF4136;
+    }
+}
+
+.pricing-item3 {
+    border-radius: 3px;
+    display: inline-block;
+    width: 260px;
+    height: auto;
+    background: #fff;
+    margin: 20px;
+    vertical-align: top;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12);
+    -webkit-transition: all .2s cubic-bezier(.3, .6, .2, 1.8);
+    transition: all .2s cubic-bezier(.3, .6, .2, 1.8);
+   
+    .pricing-title {
+        width: 100%;
+        color: white;
+        display: block;
+        position: relative;
+        background: #898a89;
+        padding: 7px;
+        font-weight: bold;
+        font-size: 2rem;
+    }
+    &.pricing-featured .pricing-title {
+        background: #FF4136;
+    }
+}
+
+.pricing-item4 {
+    border-radius: 3px;
+    display: inline-block;
+    width: 260px;
+    height: auto;
+    background: #fff;
+    margin: 20px;
+    vertical-align: top;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1.5px 4px rgba(0, 0, 0, 0.24), 0 1.5px 6px rgba(0, 0, 0, 0.12);
+    -webkit-transition: all .2s cubic-bezier(.3, .6, .2, 1.8);
+    transition: all .2s cubic-bezier(.3, .6, .2, 1.8);
+   
+    .pricing-title {
+        width: 100%;
+        color: white;
+        display: block;
+        position: relative;
+        background: #0074D9;
+        padding: 7px;
+        font-weight: bold;
+        font-size: 2rem;
+    }
+    &.pricing-featured .pricing-title {
+        background: #FF4136;
+    }
+}
+
+
+/* pricing-value */
+
+.pricing-value {
+    width: 100px;
+    height: 100px;
+    padding-top: 20px;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 300;
+    margin: 10px auto;
+}
+
+.pricing-value .smallText {
+    font-size: 1rem;
+}
+
+.pricing-value .undertext {
+    display: block;
+   font-size: 1.3rem;
+}
+
+.selected {
+    z-index: 10;
+    width: 170px;
+    height: 22px;
+    padding: 0 20px;
+    font-size: 1rem;
+    line-height: 15px;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+    box-shadow: 0px 2px 5px #888888;
+    background: gold;
+    border-top: 5px solid gold;
+    border-bottom: 5px solid gold;
+    //background: #palegoldenrod;
+    transform: rotate(35deg);
+    position: absolute;
+    right: -47px;
+    top: 13px;
+}
+
+.pricing-item0 .pricing-value {
+    background: #0080FF;
+    border: 2px solid #0080FF;
+}
+
+.pricing-item0.pricing-featured .pricing-value {
+    background: #FF4136;
+    border: 2px solid #FF4136;
+}
+
+.pricing-item0 .pricing-features {
+    margin: 10px 0;
+    padding: 0;
+    list-style: none;
+    & li {
+        display: block;
+        width: 90%;
+        height: 25px;
+        line-height: 25px;
+        font-size: 1.3rem;
+        font-weight: 400;
+        border-bottom: 1px solid rgba( 0, 0, 0, 0.2);
+        margin: 0 auto;
+        .keywords {
+            font-weight: bold;
+            color: #0080FF;
+        }
+    }
+}
+
+.pricing-item0.pricing-featured .button {
+    color: #FF4136;
+    border: 2px solid #FF4136;
+    
+}
+
+.pricing-item1 .pricing-value {
+    background: #00A86B;
+    border: 2px solid #00A86B;
+}
+
+.pricing-item1.pricing-featured .pricing-value {
+    background: #FF4136;
+    border: 2px solid #FF4136;
+}
+
+.pricing-item1 .pricing-features {
+    margin: 10px 0;
+    padding: 0;
+    list-style: none;
+    & li {
+        display: block;
+        width: 90%;
+        height: 25px;
+        line-height: 25px;
+        font-size: 1.3rem;
+        font-weight: 400;
+        border-bottom: 1px solid rgba( 0, 0, 0, 0.2);
+        margin: 0 auto;
+        .keywords {
+            font-weight: bold;
+            color: #00A86B;
+        }
+    }
+}
+
+.pricing-item2.pricing-featured .button {
+    color: #FF4136;
+    border: 2px solid #FF4136;
+   
+}
+
+.pricing-item2 .pricing-value {
+    background: #FFC30B;
+    border: 2px solid #FFC30B;
+}
+
+.pricing-item2.pricing-featured .pricing-value {
+    background: #FF4136;
+    border: 2px solid #FF4136;
+}
+
+.pricing-item2 .pricing-features {
+    margin: 10px 0;
+    padding: 0;
+    list-style: none;
+    & li {
+        display: block;
+        width: 90%;
+        height: 25px;
+        line-height: 25px;
+        font-size: 1.3rem;
+        font-weight: 400;
+        border-bottom: 1px solid rgba( 0, 0, 0, 0.2);
+        margin: 0 auto;
+        .keywords {
+            font-weight: bold;
+            color: #FFC30B;
+        }
+    }
+}
+
+.pricing-item2.pricing-featured .button {
+    color: #FF4136;
+    border: 2px solid #FF4136;
+  
+}
+
+.pricing-item3.pricing-featured .button {
+    color: #FF4136;
+    border: 2px solid #FF4136;
+   
+}
+
+.pricing-item3 .pricing-value {
+    background: #898a89;
+    border: 2px solid #898a89;
+}
+
+.pricing-item3.pricing-featured .pricing-value {
+    background: #FF4136;
+    border: 2px solid #FF4136;
+}
+
+.pricing-item3 .pricing-features {
+    margin: 10px 0;
+    padding: 0;
+    list-style: none;
+    & li {
+        display: block;
+        width: 90%;
+        height: 25px;
+        line-height: 25px;
+        font-size: 1.3rem;
+        font-weight: 400;
+        border-bottom: 1px solid rgba( 0, 0, 0, 0.2);
+        margin: 0 auto;
+        .keywords {
+            font-weight: bold;
+            color: #898a89;
+        }
+    }
+}
+
+.pricing-item3.pricing-featured .button {
+    color: #FF4136;
+    border: 2px solid #FF4136;
+    
+}
+
+.buttonselected {
+    width: 140px;
+    height: 38px;
+    font-weight: 300;
+   
+    line-height: 32px;
+    margin: 0 auto;
+    background: #fff;
+    color: #FF4136;
+    border: 2px solid #FF4136;
+    cursor: pointer;
+    margin-bottom: 10px;
+    -webkit-transition: .2s ease-out;
+    -moz-transition: .2s ease-out;
+    -o-transition: .2s ease-out;
+    -ms-transition: .2s ease-out;
+    transition: .2s ease-out;
+    
+}
+
+.button0 {
+    width: 140px;
+    height: 38px;
+    font-weight: 300;
+   
+    line-height: 32px;
+    margin: 0 auto;
+    background: #fff;
+    color: #0080FF;
+    border: 2px solid #0080FF;
+    cursor: pointer;
+    margin-bottom: 10px;
+    -webkit-transition: .2s ease-out;
+    -moz-transition: .2s ease-out;
+    -o-transition: .2s ease-out;
+    -ms-transition: .2s ease-out;
+    transition: .2s ease-out;
+  
+}
+
+.button1 {
+    width: 140px;
+    height: 38px;
+    font-weight: 300;
+   
+    line-height: 32px;
+    margin: 0 auto;
+    background: #fff;
+    color: #00A86B;
+    border: 2px solid #00A86B;
+    cursor: pointer;
+    margin-bottom: 10px;
+    -webkit-transition: .2s ease-out;
+    -moz-transition: .2s ease-out;
+    -o-transition: .2s ease-out;
+    -ms-transition: .2s ease-out;
+    transition: .2s ease-out;
+   
+}
+
+.button2 {
+    width: 140px;
+    height: 38px;
+    font-weight: 300;
+   
+    line-height: 32px;
+    margin: 0 auto;
+    background: #fff;
+    color: #FFC30B;
+    border: 2px solid #FFC30B;
+    cursor: pointer;
+    margin-bottom: 10px;
+    -webkit-transition: .2s ease-out;
+    -moz-transition: .2s ease-out;
+    -o-transition: .2s ease-out;
+    -ms-transition: .2s ease-out;
+    transition: .2s ease-out;
+   
+}
+
+.button3 {
+    width: 140px;
+    height: 38px;
+    font-weight: 300;
+   
+    line-height: 32px;
+    margin: 0 auto;
+    background: #fff;
+    color: #898a89;
+    border: 2px solid #898a89;
+    cursor: pointer;
+    margin-bottom: 10px;
+    -webkit-transition: .2s ease-out;
+    -moz-transition: .2s ease-out;
+    -o-transition: .2s ease-out;
+    -ms-transition: .2s ease-out;
+    transition: .2s ease-out;
+   
+}
+}
+}

@@ -1,0 +1,25 @@
+<ion-header>
+    <ion-navbar class="bg-black">
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-slides centeredSlides>
+        <ion-slide>
+           <img [src]="images.url" />   
+        </ion-slide>
+    </ion-slides>
+</ion-content>
+<!-- <ion-footer>
+    <ion-row class="text-center font-size-2">
+        <ion-col></ion-col>
+        <ion-col></ion-col>
+        <ion-col></ion-col>
+        <ion-col></ion-col>
+        <ion-col>
+            <ion-icon name="trash" (click)="presentConfirm(images.id)"></ion-icon>
+        </ion-col>
+    </ion-row>
+</ion-footer> -->

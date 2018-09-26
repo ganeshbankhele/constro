@@ -1,0 +1,70 @@
+.ios, .md{
+    page-company-details {
+        ion-card{
+            background: white;
+            ion-item{
+                background: white;
+            }
+            .col-secondary{
+                color: map-get($colors, secondary);
+            }
+              
+          
+          ion-card-content{
+              padding: 5px 5px 5px 5px !important;
+          }
+
+
+        }    
+        .swiper-slide:not(.swiper-slide-active) > div {
+            display:none;
+          }        
+        .slideSwitch{
+            background: white;
+            padding: 5px;
+            text-align: center
+        }
+        .active{
+            border-bottom: 1px solid map-get($colors, primary);
+            color:map-get($colors, primary);
+            font-weight: bold
+        }
+        .inactive{
+            border-bottom: none;  
+            font-weight: normal;
+            color: black;        
+        }
+        ion-footer{
+            background: white !important;
+        }
+        .itemx {
+            position: relative;
+            padding:0px !important;
+            background: white;
+            .profilepic{
+                height:70%;
+                width:70%;
+            }
+           .comp_name{
+                z-index: 9;
+                position: absolute;
+                bottom: 0%;
+                font-size:1.5rem;
+                color: white;
+                padding: 2px 0px 2px 0px !important;
+                width:100%;
+                background: rgba(0, 0, 0, 0.5)
+               
+            }
+        } 
+        .bottombtn{
+            background: color($colors, primary);
+            color:white;
+            border-top: 1px solid #000;
+            padding: 14px;
+            text-align: center;
+            font-weight: bold;
+          }
+    }
+}
+

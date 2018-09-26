@@ -1,0 +1,70 @@
+.ios, .md{
+    page-profile-awards {
+       ion-card{
+        background: white;
+           ion-card-content{
+            ion-item{
+                background: white;
+                padding: 0px !important;
+            }
+            .col-secondary{
+                color: map-get($colors, secondary);
+            }
+           
+            .pan{
+                .item-inner{
+                    border-bottom:none !important;
+                }
+            }
+            .file_upload{
+                padding: 15px 0px 15px 0px;
+                text-align: center;
+                color: map-get($colors, primary);
+               // border: 1px solid map-get($colors, primary);
+                margin: 10px;
+            } 
+            .invalid {
+                color: #DC1f26;
+             }
+             .invalidMessage{
+                 color: #DC1f26;
+                 
+             }
+            //  .borderAlli{
+            //     padding:0.4rem;
+            //     float:left;
+            //     text-align: center;
+            //     div{
+            //         height: 8.3rem;
+            //         width: 9rem;
+            //         border:1px solid map-get($colors, primary); 
+            //         text-align: center;
+            //         ion-icon{
+            //             font-size: 2.5rem;
+            //             float: right;
+            //             position: absolute;
+            //             bottom: 0.1rem;
+            //             right:0.2rem;
+            //         }
+            //     }
+               
+            //  }
+             .borderAll{
+                padding:0.4rem;
+                float:left;
+                text-align: center;
+                div{
+                    height: 8.3rem;
+                    width: 9rem;
+                    border:1px solid map-get($colors, primary); 
+                //    padding: 0.8rem;
+                    
+                }
+             }
+           }
+       }
+           
+        }
+    
+}
+

@@ -1,0 +1,14 @@
+.ios, .md {
+page-orderpopover {
+   
+        ion-item{
+            background: white;
+            padding: 0px 15px 0px 15px !important;
+        }
+        .col-secondary{
+            color: map-get($colors, secondary);
+        }
+
+    
+}
+}

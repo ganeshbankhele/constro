@@ -1,0 +1,36 @@
+<ion-header class="header">
+    <ion-navbar color="primary">
+       
+          <ion-title>Request Status</ion-title>
+          <ion-buttons end>
+            <button ion-button icon-only (click)="close()">
+                 <ion-icon  name="close"></ion-icon>
+            </button>
+          </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+  <ion-content>
+
+<ion-content>
+<ion-card [ngClass]="{'margin-top-0':i === 0}" *ngFor="let sd of successDetails;let i=index;">
+  <ion-card-content>
+    <ion-row>
+      <ion-col>
+       Request for quotation of <b>{{sd.productName}}</b> <br />By <b>{{sd.compName}}</b>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+        <ion-col>
+         Status : <span *ngIf="sd.status=='Success'" style="color:green">Successfully sent. </span>
+         <span *ngIf="sd.status=='Failed'" style="color:red">Failed ( due to {{sd.reason}} did not match. )</span>
+         
+        </ion-col>
+      </ion-row>
+  </ion-card-content>
+</ion-card>
+<ion-card class="margin-top-0">
+  <ion-card-content>
+      <button ion-button block icon-start (click)="viewRequest()">View Request</button>      
+  </ion-card-content>
+</ion-card>
+</ion-content>

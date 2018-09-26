@@ -1,0 +1,23 @@
+<ion-header>
+    <ion-navbar color="primary">
+      <ion-row>
+        <ion-col col-1>
+          <div (click)="dismiss()" class="topArrow">
+            <ion-icon name="arrow-back"></ion-icon>
+          </div>
+        </ion-col>
+        <ion-col col-11>
+          <ion-title>Select Unit
+            <span class="font-size-1">Buyer</span>
+          </ion-title>
+        </ion-col>
+      </ion-row>
+    </ion-navbar>
+  </ion-header>
+  <ion-content class="bg-white">
+      <ion-list inset>
+        <ion-item  class="bg-white" *ngFor="let un of units" (click)="slected(un)">
+            {{un.Unit_Title}}
+        </ion-item>
+      </ion-list>
+    </ion-content>

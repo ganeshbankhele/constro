@@ -1,0 +1,41 @@
+.ios, .md {
+    page-profile {
+            .bg-primary{
+                height:210px;
+                padding-top:10px;
+                text-align: center;
+                position: relative
+            }
+            .comp_name{
+                color:map-get($colors, primary );
+                font-size: 2rem;
+                background: rgba(255,255,255,1);
+                padding: 10px;    
+                text-align: center;        
+               
+            }
+            .profile_image{
+               height:200px;width:200px;
+            }
+            .profilebutton {
+                z-index: 2;
+                position: absolute;
+                right: 25.8%;
+                bottom: 6.5%;
+                font-size:3rem;
+                margin: auto;
+                padding:0px 5px 0px 5px;
+                background: rgba(255,255,255,0.6)
+            }
+            .profilepic {
+                padding: 10px 0px 6px 0px;
+                width: 50%;
+                height: 50%;
+            }
+            .profilepic-border {
+                position: relative;
+                background: map-get($colors, bg );
+            }
+           
+    }
+}

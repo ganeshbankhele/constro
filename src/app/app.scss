@@ -1,0 +1,39 @@
+.navHeader{
+    background: color($colors,primary) !important;
+   color: #fff;
+  }
+  .navToolbar{
+      padding: 0px;
+      ion-item{ 
+        .item-inner{
+           border-bottom: none !important;
+         }
+       }
+  }
+    .width-12 {
+    flex: 0 0 12%;
+    max-width: 12%;
+    }
+
+    .width-88 {
+        flex: 0 0 88%;
+        max-width: 88%;
+    }
+    ion-avatar img{
+        background: #fff !important;
+    }
+   
+    .container {
+        display: flex; 
+        flex-direction: row;
+        justify-content: space-around;
+        padding-top: 15px;
+        padding-bottom: 15px;
+      }
+      #notifications-badge {
+        background-color: red;
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        border-radius: 100%;
+    }

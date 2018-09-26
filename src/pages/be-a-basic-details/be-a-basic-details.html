@@ -1,0 +1,166 @@
+<ion-content class="bg-white" padding>
+  <div class="beASeller" *ngIf="beASeller">
+    <div class="stage1" *ngIf="beASellerStage1">
+      <form [formGroup]="sellerStage1">
+        <ion-row>
+          <ion-col>
+            <h5>
+              <strong>Please Fill Your Basic Details First.</strong>
+            </h5>
+          </ion-col>
+        </ion-row>
+
+        <ion-item>
+          <ion-label color="primary" floating>Buyer Type
+            <span style="color:red">*</span>
+          </ion-label>
+          <ion-select interface="popover" #d [(ngModel)]="buyerType" [ngModelOptions]="{standalone: true}" (ionChange)="changeType(d.value)">
+            <ion-option value="Company">Company</ion-option>
+            <ion-option value="individual">individual</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-input type="hidden" formControlName="buyerType" clearInput></ion-input>
+        <ion-row *ngIf="!sellerStage1.controls.buyerType.valid && (sellerStage1.controls.buyerType.dirty || sellerStage1SubmitAttempt)"
+        class="invalidMessage">
+        <ion-col col-12>
+          Please Select Buyer Type.
+        </ion-col>
+      </ion-row>
+       
+        <ion-item [hidden]="!showComp">
+          <ion-label color="primary" floating>Company Name
+            <span *ngIf="buyerType=='Company'" style="color:red">*</span>
+          </ion-label>
+          <ion-input type="text" maxLength="80" formControlName="cfullName" clearInput></ion-input>
+        </ion-item>
+        <ion-row *ngIf="sellerStage1.controls.cfullName.hasError('isRequred') && (sellerStage1.controls.cfullName.dirty || sellerStage1SubmitAttempt)"
+          class="invalidMessage">
+          <ion-col col-12>
+            Please Enter Company Name.
+          </ion-col>
+        </ion-row>
+        <ion-item>
+          <ion-label color="primary" floating>Enter your full name</ion-label>
+          <ion-input type="text" formControlName="fullName" maxLength="50"></ion-input>
+        </ion-item>
+        <ion-row *ngIf="!sellerStage1.controls.fullName.valid && (sellerStage1.controls.fullName.dirty || sellerStage1SubmitAttempt)"
+          class="invalidMessage">
+          <ion-col col-12>
+            Please Your Full Name.
+          </ion-col>
+        </ion-row>
+        <br />
+        <button ion-button block (click)="sellerStage1Submit()">Submit</button>
+      </form>
+    </div>
+    <div class="stage2" *ngIf="beASellerStage2">
+      <ion-row>
+        <ion-col>
+          <h5>
+            <strong>Create Seller Account.</strong>
+          </h5>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          Do you want to create account with a different company name, other than <span style="color:red">{{this.buyerComp}}</span> ? If yes, please enter it below.
+        </ion-col>
+      </ion-row>
+      <form [formGroup]="sellerStage2">
+        <ion-item>
+          <ion-label color="primary" floating>Enter your company name</ion-label>
+          <ion-input type="text" formControlName="cfullName" maxLength="80"></ion-input>
+        </ion-item>
+        <br />
+        <button ion-button block (click)="sellerStage2Submit()">Create Account</button>
+      </form>
+    </div>
+
+  </div>
+  <div class="beABuyer" *ngIf="beABuyer">
+    <div class="stage1" *ngIf="beABuyerStage1">
+
+      <ion-row>
+        <ion-col>
+          <h5>
+            <strong>Please Fill Your Basic Details First.</strong>
+          </h5>
+        </ion-col>
+      </ion-row>
+      <form [formGroup]="buyerStage1">
+        <ion-item>
+          <ion-label color="primary" floating>Enter your full name</ion-label>
+          <ion-input type="text" formControlName="fullName" maxLength="50"></ion-input>
+        </ion-item>
+        <ion-row *ngIf="!buyerStage1.controls.fullName.valid && (buyerStage1.controls.fullName.dirty || buyerStage1SubmitAttempt)"
+          class="invalidMessage">
+          <ion-col col-12>
+            Please Enter Full Name.
+          </ion-col>
+        </ion-row>
+        <ion-item>
+          <ion-label color="primary" floating>Enter your company name</ion-label>
+          <ion-input type="text" formControlName="cfullName" maxLength="80"></ion-input>
+        </ion-item>
+        <ion-row *ngIf="!buyerStage1.controls.cfullName.valid && (buyerStage1.controls.cfullName.dirty || buyerStage1SubmitAttempt)"
+          class="invalidMessage">
+          <ion-col col-12>
+            Please Enter Company Name.
+          </ion-col>
+        </ion-row>
+
+        <br />
+        <button ion-button block (click)="buyerStage1Submit()">Submit</button>
+      </form>
+    </div>
+    <div class="stage2" *ngIf="beABuyerStage2">
+      <ion-row>
+        <ion-col>
+          <h5>
+            <strong>Create Buyer Account.</strong>
+          </h5>
+        </ion-col>
+      </ion-row>
+      
+      <form [formGroup]="buyerStage2">
+        <ion-item>
+          <ion-label color="primary" floating>Buyer Type
+            <span style="color:red">*</span>
+          </ion-label>
+          <ion-select interface="popover" #b [(ngModel)]="buyerType" [ngModelOptions]="{standalone: true}" (ionChange)="changeType2(b.value)">
+            <ion-option value="Company">Company</ion-option>
+            <ion-option value="individual">individual</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-input type="hidden" formControlName="buyerbType" clearInput></ion-input>
+        <ion-row *ngIf="!buyerStage2.controls.buyerbType.valid && (buyerStage2.controls.buyerbType.dirty || buyerStage2SubmitAttempt)"
+          class="invalidMessage">
+          <ion-col col-12>
+            Please Select Buyer Type.
+          </ion-col>
+        </ion-row>
+        <ion-row [hidden]="!showComp">
+            <ion-col>
+              Do you want to create account with a different company name, other than <span style="color:red">{{this.buyerComp}}</span> ? If yes, please enter it below.
+            </ion-col>
+          </ion-row>
+        <ion-item [hidden]="!showComp">
+          <ion-label color="primary" floating>Enter your company name</ion-label>
+          <ion-input type="text" formControlName="cfullName" maxLength="80"></ion-input>
+        </ion-item>
+        <ion-row *ngIf="buyerStage2.controls.cfullName.hasError('isRequred') && (buyerStage2.controls.cfullName.dirty || buyerStage2SubmitAttempt)"
+          class="invalidMessage">
+          <ion-col col-12>
+            Please Enter Company Name.
+          </ion-col>
+        </ion-row>
+
+
+        <br />
+        <button ion-button block (click)="buyerStage2Submit()">Create Account</button>
+      </form>
+    </div>
+  </div>
+
+
+</ion-content>

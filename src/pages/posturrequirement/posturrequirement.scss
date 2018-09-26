@@ -1,0 +1,54 @@
+.ios, .md {
+page-posturrequirement {
+        ion-item{
+            background: white;padding: 0px !important;
+        }
+        .col-primary{
+            color: map-get($colors, primary);
+        }
+        .col-secondary{
+            color: map-get($colors, secondary);
+        }
+        .col-warn{
+            color: map-get($colors, danger);
+        }
+        .input-cover{
+            display: none;
+        }
+        .padding-col{
+            padding-right:0px !important;
+            padding-left:0px !important;
+        }
+        .no-validation-line .item-inner {
+            box-shadow: none !important;
+        }
+        .file_upload
+        {
+            padding: 15px 0px 15px 0px;
+            color: map-get($colors, primary);
+            margin: 10px;
+        } 
+        .invalid {
+            color: #DC1f26;
+         }
+         .invalidMessage{
+             color: #DC1f26;   
+             padding: 2px 5px 5px 5px;
+         }
+         .borderAlli{
+            line-height: 2em;
+            div{
+                padding:10px 0px 10px 0px;
+            }
+           ion-icon{
+               float:right;
+           }
+         }
+         .borderAll{
+            border: 1px solid map-get($colors, primary);;
+            padding: 15px;
+            text-align: center;
+         }
+         .div{padding: 5px}
+    }
+}

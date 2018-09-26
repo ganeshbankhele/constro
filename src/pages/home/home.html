@@ -1,0 +1,191 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>ConstroBazaar</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="search_tool(sP.showSearchbar)">
+        <ion-icon *ngIf="sP.showSearchbar==false" name="md-search"></ion-icon>
+        <ion-icon *ngIf="sP.showSearchbar==true" name="ios-arrow-dropup-outline"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+  <ion-toolbar color="primary" *ngIf="sP.showSearchbar">
+    <ion-grid style="color:white;border-bottom:1px solid #fff;padding:0px !important">
+      <ion-row>
+        <ion-col col-6 style="padding:0px !important">
+          <ion-label class="padding-left-5">Search By</ion-label>
+        </ion-col>
+        <ion-col col-6 style="padding:0px !important">
+          <ion-select #C interface="popover" (ionChange)="sP.changeSelect(C.value)" style="max-width: 100% !important;">
+            <ion-option *ngFor="let sel of sP.searchSelect" [value]="sel.type" [selected]="sel.status">{{sel.type}}</ion-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-input class="padding-left-5" value="{{sP.product_text}}" (click)="productSearch()" style="color:white;border-bottom:1px solid #fff;"
+      clearInput type="text" placeholder="Product Or Service"></ion-input>
+    <ion-input class="padding-left-5" value="{{sP.location}}" (click)="locationSearch()" style="color:white;border-bottom:1px solid #fff;margin-top:2px"
+      clearInput type="text" placeholder="Delivery Location"></ion-input>
+    <button [@heroState]="state" ion-button block color="bg" (click)="setSearch(sP.product_text,sP.location)">Search</button>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <!-- <div style="height:200px">
+    <ion-slides pager *ngIf="showSlider" autoplay="5000" loop="true" speed="1000">
+      <ion-slide *ngFor="let img of homeData.SliderImages">
+        <img [src]="img.Image" style="height:200px" />
+      </ion-slide>
+    </ion-slides>
+  </div> -->
+  <ion-card class="margin-top-0">
+    <ion-card-content>
+      <ion-row>
+        <ion-col col-8>
+          <span style="font-size: 1.6rem;">
+            <strong> Do you have any requirement ?</strong>
+          </span>
+          <br />
+          <span class="col-title-head">get quick response from sellers</span>
+        </ion-col>
+        <ion-col col-4>
+          <button ion-button block (click)="postRequirement()">Post here</button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-row class="margin-top-10" *ngIf="recommendation.length!=0">
+    <ion-col class="slider_h padding-0" col-12>
+      <ion-row class="padding-top-10 padding-left-10">
+        <ion-col class="padding-0 col-title-head" col-12>
+          <strong>Recommended Product</strong>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="padding-0" col-12>
+          <ion-slides class="image-slider" slidesPerView="2.3">
+            <ion-slide class="padding-5" *ngFor="let recom of recommendation">
+              <ion-card>
+                <ion-card-content>
+                  <ion-row class="font-size-1-2 text-center" (click)="openCompanyPage(recom.Cat_Id,recom.Sub_Cat_Id,recom.Seller_Product_Id)">
+                    <img [src]="recom.Generic_Product_Img" class="thumb-img">
+                  </ion-row>
+                  <ion-row class="font-size-1-5 text-center" (click)="openCompanyPage(recom.Cat_Id,recom.Sub_Cat_Id,recom.Seller_Product_Id)">
+                    <ion-col class="padding-0 ">{{recom.Generic_Product_Name | sliceWord:15}} </ion-col>
+                  </ion-row>
+                  <ion-row class="font-size-1-5 text-center">
+                    <ion-col class="padding-0 ">
+                      <button ion-button block outline (click)="getQuote(recom.Seller_Product_Id)">Get Quote</button>
+                    </ion-col>
+                  </ion-row>
+                </ion-card-content>
+              </ion-card>
+            </ion-slide>
+
+          </ion-slides>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row class="margin-top-10" *ngIf="innovations.length!=0">
+    <ion-col class="slider_h padding-0" col-12>
+      <ion-row class="padding-top-10 padding-left-10">
+        <ion-col class="padding-0 col-title-head" col-12>
+          <strong>Innovation</strong>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="padding-0" col-12>
+          <ion-slides class="image-slider" slidesPerView="2.3">
+            <ion-slide class="padding-5" *ngFor="let innov of innovations">
+              <ion-card>
+                <ion-card-content>
+                  <ion-row class="font-size-1-2 text-center" (click)="openCompanyPage(innov.Cat_Id,innov.Sub_Cat_Id,innov.Seller_Product_Id)">
+                    <img [src]="innov.Generic_Product_Img" class="thumb-img">
+                  </ion-row>
+                  <ion-row class="font-size-1-5 text-center" (click)="openCompanyPage(innov.Cat_Id,innov.Sub_Cat_Id,innov.Seller_Product_Id)">
+                    <ion-col class="padding-0 ">{{innov.Generic_Product_Name | sliceWord:15}} </ion-col>
+                  </ion-row>
+                  <ion-row class="font-size-1-5 text-center">
+                    <ion-col class="padding-0 ">
+                      <button ion-button block outline (click)="getQuote(innov.Seller_Product_Id)">Get Quote</button>
+                    </ion-col>
+                  </ion-row>
+                </ion-card-content>
+              </ion-card>
+            </ion-slide>
+          </ion-slides>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row class="margin-top-10" *ngIf="latest_launch.length!=0">
+    <ion-col class="slider_h padding-0" col-12>
+      <ion-row class="padding-top-10 padding-left-10">
+        <ion-col class="padding-0 col-title-head" col-12>
+          <strong>Latest Launch</strong>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="padding-0" col-12>
+          <ion-slides class="image-slider" slidesPerView="2.3">
+            <ion-slide class="padding-5" *ngFor="let latt of latest_launch">
+              <ion-card>
+                <ion-card-content>
+                  <ion-row class="font-size-1-2 text-center" (click)="openCompanyPage(latt.Cat_Id,latt.Sub_Cat_Id,latt.Seller_Product_Id)">
+                    <img [src]="latt.Generic_Product_Img" class="thumb-img">
+                  </ion-row>
+                  <ion-row class="font-size-1-5 text-center" (click)="openCompanyPage(latt.Cat_Id,latt.Sub_Cat_Id,latt.Seller_Product_Id)">
+                    <ion-col class="padding-0 ">{{latt.Generic_Product_Name | sliceWord:15}} </ion-col>
+                  </ion-row>
+                  <ion-row class="font-size-1-5 text-center">
+                    <ion-col class="padding-0 ">
+                      <button ion-button block outline (click)="getQuote(latt.Seller_Product_Id)">Get Quote</button>
+                    </ion-col>
+                  </ion-row>
+                </ion-card-content>
+              </ion-card>
+            </ion-slide>
+          </ion-slides>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <ion-row class="margin-top-10" *ngIf="topBrands.length!=0">
+    <ion-col class="slider_h padding-0" col-12>
+      <ion-row class="padding-top-10 padding-left-10">
+        <ion-col class="padding-0 col-title-head" col-12>
+          <strong>Top Brands</strong>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col class="padding-0" col-12>
+          <ion-slides class="image-slider" slidesPerView="2.3">
+            <ion-slide class="padding-5" *ngFor="let feat of topBrands">
+              <ion-card (click)="openBrand(feat.Brand_Name)">
+                <ion-card-content>
+                  <ion-row class="font-size-1-2 text-center">
+                    <img [src]="feat.Brand_Logo" class="thumb-img">
+                  </ion-row>
+                  <ion-row class="font-size-1-5 text-center">
+                    <ion-col class="padding-0 ">{{feat.Brand_Name | sliceWord:15}} </ion-col>
+                  </ion-row>
+                </ion-card-content>
+              </ion-card>
+            </ion-slide>
+          </ion-slides>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+  <div style="height:60px">
+
+  </div>
+  <ion-fab bottom right>
+    <button ion-fab mini (click)="openChat();">
+      <ion-icon name="md-chatbubbles"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>

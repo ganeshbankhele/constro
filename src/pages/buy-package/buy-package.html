@@ -1,0 +1,194 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Buy Subscription</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content>
+  <div *ngIf="beforeSuccess">
+    <form [formGroup]="PaymentForm">
+      <ion-card>
+        <ion-card-content>
+
+          <ion-item [hidden]="userFullNamef">
+            <ion-label color="primary" floating>Enter Your Full Name <span class="required">*</span></ion-label>
+            <ion-input formControlName='userFullName' clearInput></ion-input>
+          </ion-item>
+          <ion-row class="invalidMessage" *ngIf="!PaymentForm.controls.userFullName.valid && (PaymentForm.controls.userFullName.dirty || paymentSubmit)">
+
+            <ion-col col-12>
+              Please Enter Your Full Name
+            </ion-col>
+          </ion-row>
+
+          <ion-item [hidden]="companyFullNamef">
+            <ion-label color="primary" floating>Enter Your Company Name <span class="required">*</span></ion-label>
+            <ion-input formControlName='userCompanyName' clearInput required></ion-input>
+          </ion-item>
+          <ion-row class="invalidMessage" *ngIf="!PaymentForm.controls.userCompanyName.valid && (PaymentForm.controls.userCompanyName.dirty || paymentSubmit)">
+            <ion-col col-12>
+              Enter Your Company Name.
+            </ion-col>
+          </ion-row>
+          <ion-item>
+            <ion-label color="primary" floating>Enter GST Number</ion-label>
+            <ion-input formControlName='userGSTNumber' clearInput (keyup)="gstValidator()" autocapitalize="characters"></ion-input>
+          </ion-item>
+          <ion-row class="invalidMessage" *ngIf="!PaymentForm.controls.userGSTNumber.valid && (PaymentForm.controls.userGSTNumber.dirty || paymentSubmit)">
+            <ion-col col-12>
+              <span *ngIf="stateError">Please enter valid GST Number for selected state.</span><span *ngIf="!stateError">GST Identification Number is not valid. It should be in this "11AAAAA1111Z1A1" format.</span>
+            </ion-col>
+          </ion-row>
+          <ion-item>
+            <ion-label color="primary" floating [class.invalid]="!PaymentForm.controls.userState.valid && (PaymentForm.controls.userState.dirty || paymentSubmit)">Select State
+
+            </ion-label>
+            <ion-input formControlName="userState" clearInput [ngModel]="userState" readonly (click)="stateSelect()"></ion-input>
+          </ion-item>
+          <ion-input type="hidden" formControlName="userStateNo" [ngModel]="userStateNo"></ion-input>
+
+          <ion-row class="invalidMessage" *ngIf="!PaymentForm.controls.userState.valid && (PaymentForm.controls.userState.dirty || paymentSubmit)">
+            <ion-col col-12>
+              Select Your State.
+            </ion-col>
+          </ion-row>
+
+
+          <!-- <ion-item>
+          <ion-label color="primary" floating>Select Your State *</ion-label>
+          <ion-select  [(ngModal)]="userState" (ionChange)="stateChanged($event)">
+            <ion-option *ngFor="let option of options" [value]="option.stateId">
+              {{ option.stateName }}
+            </ion-option>
+          </ion-select>
+        </ion-item> -->
+
+        </ion-card-content>
+      </ion-card>
+
+
+
+      <ion-card>
+        <ion-card-content>
+
+
+          <ion-row>
+            <ion-col col-6>
+              <div style="margin-top:12px;">
+                <strong>Select Months :</strong>
+              </div>
+            </ion-col>
+            <ion-col col-6>
+              <div style="margin-left: -18px;">
+                <ion-select #selectnoofmonths style="background: #ffffff;max-width: 100% !important;" class="form-control" (ionChange)="monthsChanged(selectnoofmonths.value)">
+                  <ion-option value="3" [selected]="noofmonths=='3'">3 Months</ion-option>
+                  <ion-option value="6" [selected]="noofmonths=='6'">6 Months</ion-option>
+                  <ion-option value="12" [selected]="noofmonths=='12'">12 Months</ion-option>
+                </ion-select>
+              </div>
+            </ion-col>
+            <div *ngIf='package.Package_Caption=="Regular"'>
+              <p style="padding: 2px;">&nbsp;</p>
+            </div>
+
+          </ion-row>
+
+
+          <ion-row>
+            <ion-col col-6>
+              <strong>Package Amount :</strong>
+            </ion-col>
+            <ion-col col-6>
+              <fa-icon name='inr'></fa-icon> {{package.Package_Amount | number: '1.2-2'}}
+            </ion-col>
+          </ion-row>
+
+          <!-- <ion-row>
+          <ion-col col-6>
+            <strong>Sub Total : </strong>
+          </ion-col>
+          <ion-col col-6>
+            <fa-icon name='inr'></fa-icon> {{package.Package_Amount | number: '1.2-2'}}
+          </ion-col>
+        </ion-row> -->
+          <ion-row *ngIf="userStateStatus == ''">
+            <ion-col col-6>
+              <strong>GST (18%) :</strong>
+            </ion-col>
+            <ion-col col-6>
+              <fa-icon name='inr'></fa-icon> {{GST | number: '1.2-2'}}
+            </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="isMaharashtra && userStateStatus != ''">
+            <ion-col col-6>
+              <strong>SGST (9%) :</strong>
+            </ion-col>
+            <ion-col col-6>
+              <fa-icon name='inr'></fa-icon> {{sGST | number: '1.2-2'}}
+            </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="isMaharashtra && userStateStatus != ''">
+            <ion-col col-6>
+              <strong>CGST (9%) : </strong>
+            </ion-col>
+            <ion-col col-6>
+              <fa-icon name='inr'></fa-icon> {{cGST | number: '1.2-2'}}
+            </ion-col>
+          </ion-row>
+
+          <ion-row *ngIf="!isMaharashtra && userStateStatus != ''">
+            <ion-col col-6>
+              <strong>IGST (18%) : </strong>
+            </ion-col>
+            <ion-col col-6>
+              <fa-icon name='inr'></fa-icon> {{iGST | number: '1.2-2'}}
+            </ion-col>
+          </ion-row>
+
+
+
+
+          <ion-row>
+            <ion-col col-6>
+              <strong>Total Amount : </strong>
+            </ion-col>
+            <ion-col col-6>
+              <fa-icon name='inr'></fa-icon> {{totalPackageAmount | number: '1.2-2'}}
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col>
+              By clicking on proceed to secure payment, I agree to the packages
+              <u class="col-link" (click)="openTerms()">Terms & Conditions.</u>
+            </ion-col>
+          </ion-row>
+
+
+
+          <ion-row>
+            <ion-col>
+              <button ion-button block
+                (click)="onSubmitForm()">Proceed to secure payment</button>
+            </ion-col>
+          </ion-row>
+
+        </ion-card-content>
+      </ion-card>
+    </form>
+  </div>
+  <div *ngIf="afterSuccess">
+    <div style="padding:15px;background-color:#fff" [innerHTML]="paymentDissplayMessage">
+
+    </div>
+  </div>
+
+
+</ion-content>
+
+
+<!--[disabled]="!PaymentForm.controls.userCompanyName.valid && PaymentForm.controls.userCompanyName.dirty"-->
